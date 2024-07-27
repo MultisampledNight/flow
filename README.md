@@ -17,6 +17,7 @@ but not today
 
 - checkboxes just like with markdown syntax!
 - color palette management for absolutely no reason!
+- callouts for questions, notes, hints and warnings!
 - metadata?
 
 compile `src/lib.typ` to see a demonstration and details!

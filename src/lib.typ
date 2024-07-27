@@ -1,5 +1,5 @@
 #import "gfx.typ"
-#import "palette.typ" as palette: bg, fg, gamut, dev
+#import "palette.typ": *
 
 #let _graceful-slice(it, start, end, default: []) = {
   if end == -1 {
@@ -50,7 +50,7 @@
   show enum.item: _checkboxize.with(kind: "enum")
 
   show link: if dev {
-    text.with(palette.duality.blue)
+    text.with(duality.blue)
   } else {
     underline
   }
@@ -65,12 +65,52 @@
   show raw.where(block: true): it => block(
     fill: luma(0%),
     radius: 0.5em,
-    inset: 8pt,
+    inset: 0.5em,
     text(if dev { fg } else { luma(100%) }, it),
   )
 
   body
 }
+
+#let _callout(body, accent: fg, icon: none) = {
+  let body = if icon == none {
+    body
+  } else {
+    grid(
+      columns: (1.5em, auto),
+      gutter: 0.5em,
+      align: (right + horizon, left),
+      gfx.icons.at(icon)(invert: false),
+      body,
+    )
+  }
+
+  block(
+    stroke: (left: accent),
+    inset: (
+      left: if icon == none { 0.5em } else { 0em },
+      y: 0.5em,
+    ),
+    body,
+  )
+}
+
+#let question = _callout.with(
+  accent: status.unknown,
+  icon: "?",
+)
+#let note = _callout.with(
+  accent: status.note,
+  icon: "i",
+)
+#let hint = _callout.with(
+  accent: status.hint,
+  icon: "o",
+)
+#let caution = _callout.with(
+  accent: status.urgent,
+  icon: "!",
+)
 
 
 // the actual user code
@@ -134,5 +174,26 @@
 - [] collapsed
 - [][ who knows
 -[ ] oops i missed the space before the checkbox
+
+
+= Callouts
+
+#question[
+  Something that is still to be examined.
+]
+
+#note[
+  Key takeaways from a section. \
+  Should be easy to remember.
+]
+
+#hint[
+  How to do something more easily. \
+  Or something that can be used to remember this better.
+]
+
+#caution[
+  Tries to warn the reader of something important or dangerous.
+]
 
 

@@ -158,6 +158,19 @@
   )
 })
 
+#let note = _icon.with(key: "note", {
+  import cetz.draw: *
+
+  circle((0.5, 0.95), radius: 0.5pt)
+  line((0.5, 0.65), (0.5, 0))
+})
+
+#let hint = _icon.with(key: "hint", {
+  import cetz.draw: *
+
+  circle((0.5, 0.5), radius: 0.5, fill: none)
+})
+
 #let icons = (
   " ": empty,
   "!": urgent,
@@ -167,6 +180,8 @@
   "-": block,
   "/": cancel,
   "?": unknown,
+  "i": note,
+  "o": hint,
 )
 
 

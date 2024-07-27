@@ -31,6 +31,9 @@
   complete: fg,
   cancel: gamut.sample(25%),
   unknown: if dev { duality.yellow },
+
+  note: if dev { duality.green } else { green },
+  hint: if dev { duality.violet } else { purple },
 )
 #for (name, value) in status {
   if value == none {
