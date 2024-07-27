@@ -1,4 +1,5 @@
 #import "gfx.typ"
+#import "metainfo.typ"
 #import "palette.typ": *
 
 #let _callout(body, accent: fg, icon: none) = {
@@ -86,69 +87,6 @@
   }
 }
 
-// Panics if known typo'd metadata fields are contained.
-#let _check-metadata(it) = {
-  let typos = (
-    "alias": "aliases",
-    "aliase": "aliases",
-    "content-warning": "cw",
-    "content-warnings": "cw",
-  )
-
-  for field in it.keys() {
-    if field in typos.keys() {
-      panic(
-        "metadata field `" + field + "` passed to template, which is a typo. "
-        + "use `" + typos.at(field) + "` instead.")
-    }
-  }
-}
-
-// Puts some well-known metadata fields into an array if they stand alone.
-// Returns the modified metadata.
-#let _normalize-metadata(it) = {
-  let arrayize = ("aliases", "cw")
-
-  for (name, data) in it {
-    if type(data) != array and name in arrayize {
-      it.at(name) = (data,)
-    }
-  }
-
-  it
-}
-
-// Accepts a dictionary where
-// the key denotes the metadata field name and
-// the value its, well, actual data.
-#let _render-metadata(it) = {
-  let field(name, data) = {
-    if "cw" in lower(name) {
-      data.map(invert).join()
-    } else if type(data) == array {
-      data.intersperse[, ].join()
-    } else {
-      [#data]
-    }
-  }
-
-  grid(
-    columns: 2,
-    align: (right, left),
-    gutter: 1em,
-    ..it
-    .pairs()
-    .map(
-      ((name, data)) => (dim(name), field(name, data))
-    )
-    .join()
-  )
-}
-
-#let _queryize-metadata(it) = [
-  #metadata(it) <metainfo>
-]
-
 // The args sink is used as metadata.
 // It'll exposed both in a table in the document and via `typst query`.
 #let template(
@@ -203,15 +141,7 @@
   let info = args.named()
   if info.len() > 0 {
     v(-1.75em)
-
-    _check-metadata(info)
-    info = _normalize-metadata(info)
-
-    // rendering it visually...
-    _render-metadata(info)
-    // ...then putting it into a query-able table
-    _queryize-metadata(info)
-
+    metainfo.process(info)
     separator
   }
 
@@ -223,8 +153,6 @@
 #show: template.with(
   title: [flow manual],
   aliases: ([flow], [how to procastinate]),
-  cw: ([bananas],),
-  cat: true,
 )
 
 #outline()
@@ -327,3 +255,14 @@ otherwise it'll go out of page like this one.]
 #v(1.5em)
 
 Hence it is best fit for #invert[a few words.]
+
+= Wishlist
+
+- [ ] Split this file into library and document
+- [ ] Custom outline with
+  + right-aligned title
+  + page number
+  + section number
+- [ ] Conversion helper from Obsidian's markdown dialect
+  - The math part will be the most interesting
+- [ ] Doclinks (even clickable?)
