@@ -16,7 +16,7 @@
   accent: none,
   ..args,
 ) = box(
-  inset: (y: -0.25em),
+  inset: (y: -0.175em),
   cetz.canvas(..args, length: 1em, {
     import cetz.draw: *
 
@@ -58,10 +58,19 @@
 )
 
 
-#let empty = _icon.with(key: "empty", {
+#let empty(
+  // argument is simply ignored
+  // since it is always just a shallow outline
+  invert: true,
+  ..args,
+) = _icon(
+  invert: true,
+  key: "empty",
+  ..args,
+{
   import cetz.draw: *
 
-  rect((0, 0), (1, 1), radius: 0.125)
+  rect((-0.125, -0.125), (1.125, 1.125), radius: 0.25)
 })
 
 #let urgent = _icon.with(key: "urgent", {

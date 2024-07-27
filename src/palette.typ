@@ -1,14 +1,42 @@
-#let fg = luma(0%)
-#let bg = luma(100%)
+#let duality = (
+  fg: rgb("#B6B3B4"),
+  bg: rgb("#212224"),
+
+  pink: rgb("#FA86CE"),
+  violet: rgb("#AAA9FF"),
+  blue: rgb("#00C7F7"),
+
+  orange: rgb("#FF9365"),
+  yellow: rgb("#C7B700"),
+  green: rgb("#11D396"),
+)
+
+#let print = (
+  fg: luma(0%),
+  bg: luma(100%),
+)
+
+#let dev = json.decode(sys.inputs.at("dev", default: "false"))
+
+#let fg = if dev { duality.fg } else { print.fg }
+#let bg = if dev { duality.bg } else { print.bg }
 #let gamut = gradient.linear(bg, fg, space: oklch)
 
 #let status = (
-  empty: gamut.sample(50%),
-  urgent: orange,
-  progress: purple,
-  pause: red,
-  block: teal,
+  empty: gamut.sample(75%),
+  urgent: if dev { duality.orange },
+  progress: if dev { duality.violet },
+  pause: if dev { duality.green },
+  block: if dev { duality.blue },
   complete: fg,
-  cancel: blue,
-  unknown: green,
+  cancel: gamut.sample(25%),
+  unknown: if dev { duality.yellow },
 )
+#for (name, value) in status {
+  if value == none {
+    // so we don't have to type out the non-dev case all the time
+    value = fg
+  }
+  status.at(name) = value
+}
+

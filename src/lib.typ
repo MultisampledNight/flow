@@ -1,4 +1,5 @@
 #import "gfx.typ"
+#import "palette.typ": bg, fg, gamut, dev
 
 #let _graceful-slice(it, start, end, default: []) = {
   if end == -1 {
@@ -42,6 +43,9 @@
 }
 
 #let template(body) = {
+  set page(fill: bg)
+  set text(fill: fg, font: "IBM Plex Sans", size: 14pt)
+
   show list.item: _checkboxize.with(kind: "list")
   show enum.item: _checkboxize.with(kind: "enum")
 
@@ -61,6 +65,7 @@
 - [x] Completed
 - [/] Cancelled
 - [-] Blocked
+- [?] Unknown
 
 == more funny cases which are checkboxes, too
 
