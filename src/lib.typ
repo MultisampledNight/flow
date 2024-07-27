@@ -1,53 +1,17 @@
-#import "callout.typ": question, note, hint, caution
+// Feel free to import this file's contents via a glob!
+
+#import "callout.typ"
+#import "checkbox.typ"
 #import "gfx.typ"
 #import "metainfo.typ"
 #import "palette.typ": *
 
-
+// global re-exports
+#let (question, note, hint, caution) = dictionary(callout)
 #let invert = gfx.invert
+
+// global definitions
 #let separator = line(length: 100%, stroke: gamut.sample(25%)) + v(-0.5em)
-
-
-#let _graceful-slice(it, start, end, default: []) = {
-  if end == -1 {
-    end = it.len()
-  }
-
-  let missing = calc.max(start, end - it.len(), 0)
-  it += (default,) * missing
-  it.slice(start, end)
-}
-
-#let _checkboxize(it, kind: "list") = {
-  let body = it.body.fields().at(
-    "children",
-    default: (it.body,),
-  )
-  let checkbox = _graceful-slice(body, 0, 3)
-
-  let is-checkbox = checkbox.at(0) == [\[] and checkbox.at(-1) == [\]]
-  if not is-checkbox {
-    return it
-  }
-
-  // convert the fill character to a showable icon
-  let fill = checkbox.at(1).fields().at("text", default: " ")
-  let checkbox = gfx.icons.at(fill, default: "?")
-  // just a few minor tweaks
-  let checkbox = box(move(dx: -0.1em, checkbox()))
-
-  // and remove the description from the checkbox itself
-  let desc = _graceful-slice(body, 4, -1).join()
-  
-  // then throw them together
-  let full-entry = [#checkbox #desc]
-
-  if kind == "list" {
-    [- #full-entry]
-  } else if kind == "enum" {
-    [+ #full-entry]
-  }
-}
 
 // The args sink is used as metadata.
 // It'll exposed both in a table in the document and via `typst query`.
@@ -72,9 +36,6 @@
     ),
   )
 
-  show list.item: _checkboxize.with(kind: "list")
-  show enum.item: _checkboxize.with(kind: "enum")
-
   show link: if dev {
     text.with(duality.blue)
   } else {
@@ -96,6 +57,8 @@
   )
 
   show outline: it => it + separator
+
+  show: checkbox.process
 
 
   text(2.5em, strong(title))
