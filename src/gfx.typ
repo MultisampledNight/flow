@@ -185,6 +185,50 @@
 )
 
 
+#let parallelopiped(start, end, shift: 0.5, ..args) = {
+  import cetz.draw: *
+
+  line(
+    start,
+    (start, "-|", end),
+    (to: end, rel: (shift, 0)),
+    (to: (start, "|-", end), rel: (shift, 0)),
+    close: true,
+    ..args,
+  )
+}
+
+// Draws any content over a parallelopiped.
+// Very useful for making a few words extra clear.
+#let invert(
+  accent: fg,
+  shift: 0.5,
+  padding: (x: 1em),
+  body
+) = box(context cetz.canvas(length: 1em, {
+  import cetz.draw: *
+  let body = pad(right: shift * -1em, pad(..padding, body))
+
+  // idea is to draw 2 parallelopiped
+  // then move them slightly above and below
+  // so they don't affect layouting
+  // but are still displayed out of line
+  let size = measure(body)
+  let half-backdrop = box(cetz.canvas(length: 1em, {
+    parallelopiped(
+      (0, 0),
+      (size.width, size.height),
+      shift: shift,
+      fill: accent,
+      stroke: accent,
+    )
+  }))
+  content((0, 0), move(dx: shift * 1em, dy: -size.height / 2, half-backdrop))
+  content((), move(dy: size.height / 2, half-backdrop))
+  content((), text(fill: bg, body))
+})) + h(0.75em, weak: true)
+
+
 // just showcasing them
 #set page(width: auto, height: auto)
 

@@ -21,6 +21,7 @@
 #let fg = if dev { duality.fg } else { print.fg }
 #let bg = if dev { duality.bg } else { print.bg }
 #let gamut = gradient.linear(bg, fg, space: oklch)
+#let dim(body) = text(fill: gamut.sample(60%), body)
 
 #let status = (
   empty: gamut.sample(75%),

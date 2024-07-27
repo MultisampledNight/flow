@@ -42,7 +42,12 @@
   }
 }
 
-#let template(body) = {
+#let template(
+  body,
+  title: [Untitled],
+  aliases: (),
+  created-at: none,
+) = {
   set page(fill: bg)
   set text(fill: fg, font: "IBM Plex Sans", size: 14pt)
 
@@ -68,6 +73,12 @@
     inset: 0.5em,
     text(if dev { fg } else { luma(100%) }, it),
   )
+
+  text(2.5em, strong(title))
+
+  if aliases.len() != 0 {
+    [\ aka ] + aliases.intersperse([, ]).join()
+  }
 
   body
 }
@@ -113,8 +124,14 @@
 )
 
 
+#let invert = gfx.invert
+
+
 // the actual user code
-#show: template
+#show: template.with(
+  title: [flow manual],
+  aliases: ([flow], [how to procastinate]),
+)
 
 = how do i use this
 
@@ -196,4 +213,11 @@
   Tries to warn the reader of something important or dangerous.
 ]
 
+= Effects
 
+== Invert
+
+For when you need to add #invert[extra importance] to some text.
+
+Note that #invert[it should always fit on one line though,
+otherwise it'll go out of page like this one.]
