@@ -9,7 +9,7 @@
   invert: true,
   // if `invert` is true, the radius of the accent rect
   radius: 0.25,
-  // the key under which to look information like accent up.
+  // the key under which to look information like accent up from `palette`'s `status`.
   // if neither this nor `accent` is set, default to the fg color.
   key: none,
   // overrides `key` if set. the color to tint the icon in.
@@ -57,6 +57,32 @@
   })
 )
 
+
+#let empty = _icon.with(key: "empty", {
+  import cetz.draw: *
+
+  rect((0, 0), (1, 1), radius: 0.125)
+})
+
+#let urgent = _icon.with(key: "urgent", {
+  import cetz.draw: *
+  let offset = 0.2
+
+  for (offset, y-scale) in (
+    ((x: -offset, y: 0), 1),
+    ((x: offset, y: 1), -1),
+  ) {
+    line(
+      (0.5 + offset.x, 1 * y-scale + offset.y),
+      (0.5 + offset.x, 0.35 * y-scale + offset.y),
+    )
+    circle(
+      (0.5 + offset.x, 0.05 * y-scale + offset.y),
+      radius: 0.5pt,
+    )
+  }
+})
+
 #let progress = _icon.with(key: "progress", {
   import cetz.draw: *
   let bendness = (x: 0.25, y: 0.5)
@@ -72,11 +98,34 @@
   }
 })
 
+#let pause = _icon.with(key: "pause", {
+  import cetz.draw: *
+
+  circle((0.5, 0.8), radius: 0.1)
+  circle((0.5, 0.2), radius: 0.1)
+})
+
+#let block = _icon.with(key: "block", {
+  import cetz.draw: *
+
+  line((0, 0.5), (1, 0.5))
+})
+
 #let complete = _icon.with(key: "complete", {
   import cetz.draw: *
 
   line((0, 0), (1, 1))
   line((0, 1), (1, 0))
+})
+
+#let cancel = _icon.with(key: "cancel", {
+  import cetz.draw: *
+  let slantedness = 0.25
+
+  line(
+    (0.5 - slantedness, 0),
+    (0.5 + slantedness, 1),
+  )
 })
 
 #let unknown = _icon.with(key: "unknown", {
@@ -92,7 +141,7 @@
   )
   line(
     (0.5, 0.5),
-    (0.5, 0.3),
+    (0.5, 0.35),
   )
   circle(
     (0.5, 0.05),
@@ -101,9 +150,14 @@
 })
 
 #let icons = (
-  progress: progress,
-  complete: complete,
-  unknown: unknown,
+  " ": empty,
+  "!": urgent,
+  ">": progress,
+  "x": complete,
+  ":": pause,
+  "-": block,
+  "/": cancel,
+  "?": unknown,
 )
 
 
@@ -117,7 +171,7 @@
   [*Name*], [*Icon*],
   ..icons.pairs().map(
     ((name, icon)) => (
-      [#name],
+      raw("\"" + name + "\""),
       move(dy: 0.175em, icon()),
     )
   ).join(),

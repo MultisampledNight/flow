@@ -10,11 +10,6 @@
   it.slice(start, end)
 }
 
-#let _fill_to_icon = (
-  ">": "progress",
-  "x": "complete",
-)
-
 #let _checkboxize(it, kind: "list") = {
   let body = it.body.fields().at(
     "children",
@@ -29,8 +24,7 @@
 
   // convert the fill character to a showable icon
   let fill = checkbox.at(1).fields().at("text", default: " ")
-  let icon-name = _fill_to_icon.at(fill, default: "unknown")
-  let checkbox = gfx.icons.at(icon-name, default: "unknown")
+  let checkbox = gfx.icons.at(fill, default: "?")
   // just a few minor tweaks
   let checkbox = box(move(dx: -0.1em, checkbox()))
 
@@ -61,6 +55,7 @@
 == normal and innocent
 
 - [ ] Not started
+- [!] Urgent
 - [>] In progress
 - [:] Paused
 - [x] Completed
