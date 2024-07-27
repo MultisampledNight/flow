@@ -1,6 +1,50 @@
 #import "gfx.typ"
 #import "palette.typ": *
 
+#let _callout(body, accent: fg, icon: none) = {
+  let body = if icon == none {
+    body
+  } else {
+    grid(
+      columns: (1.5em, auto),
+      gutter: 0.5em,
+      align: (right + horizon, left),
+      gfx.icons.at(icon)(invert: false),
+      body,
+    )
+  }
+
+  block(
+    stroke: (left: accent),
+    inset: (
+      left: if icon == none { 0.5em } else { 0em },
+      y: 0.5em,
+    ),
+    body,
+  )
+}
+
+#let question = _callout.with(
+  accent: status.unknown,
+  icon: "?",
+)
+#let note = _callout.with(
+  accent: status.note,
+  icon: "i",
+)
+#let hint = _callout.with(
+  accent: status.hint,
+  icon: "o",
+)
+#let caution = _callout.with(
+  accent: status.urgent,
+  icon: "!",
+)
+
+#let invert = gfx.invert
+#let separator = line(length: 100%, stroke: gamut.sample(25%)) + v(-0.5em)
+
+
 #let _graceful-slice(it, start, end, default: []) = {
   if end == -1 {
     end = it.len()
@@ -42,14 +86,91 @@
   }
 }
 
+// Panics if known typo'd metadata fields are contained.
+#let _check-metadata(it) = {
+  let typos = (
+    "alias": "aliases",
+    "aliase": "aliases",
+    "content-warning": "cw",
+    "content-warnings": "cw",
+  )
+
+  for field in it.keys() {
+    if field in typos.keys() {
+      panic(
+        "metadata field `" + field + "` passed to template, which is a typo. "
+        + "use `" + typos.at(field) + "` instead.")
+    }
+  }
+}
+
+// Puts some well-known metadata fields into an array if they stand alone.
+// Returns the modified metadata.
+#let _normalize-metadata(it) = {
+  let arrayize = ("aliases", "cw")
+
+  for (name, data) in it {
+    if type(data) != array and name in arrayize {
+      it.at(name) = (data,)
+    }
+  }
+
+  it
+}
+
+// Accepts a dictionary where
+// the key denotes the metadata field name and
+// the value its, well, actual data.
+#let _render-metadata(it) = {
+  let field(name, data) = {
+    if "cw" in lower(name) {
+      data.map(invert).join()
+    } else if type(data) == array {
+      data.intersperse[, ].join()
+    } else {
+      [#data]
+    }
+  }
+
+  grid(
+    columns: 2,
+    align: (right, left),
+    gutter: 1em,
+    ..it
+    .pairs()
+    .map(
+      ((name, data)) => (dim(name), field(name, data))
+    )
+    .join()
+  )
+}
+
+#let _queryize-metadata(it) = [
+  #metadata(it) <metainfo>
+]
+
+// The args sink is used as metadata.
+// It'll exposed both in a table in the document and via `typst query`.
 #let template(
   body,
   title: [Untitled],
-  aliases: (),
-  created-at: none,
+  ..args,
 ) = {
-  set page(fill: bg)
+  set page(fill: bg, numbering: "1 / 1")
   set text(fill: fg, font: "IBM Plex Sans", size: 14pt)
+
+  set rect(stroke: fg)
+  set line(stroke: fg)
+
+  set heading(numbering: "1.1")
+
+  set outline(
+    indent: auto,
+    fill: move(
+      dy: -0.25em,
+      line(length: 100%, stroke: gamut.sample(15%)),
+    ),
+  )
 
   show list.item: _checkboxize.with(kind: "list")
   show enum.item: _checkboxize.with(kind: "enum")
@@ -74,64 +195,39 @@
     text(if dev { fg } else { luma(100%) }, it),
   )
 
+  show outline: it => it + separator
+
+
   text(2.5em, strong(title))
 
-  if aliases.len() != 0 {
-    [\ aka ] + aliases.intersperse([, ]).join()
+  let info = args.named()
+  if info.len() > 0 {
+    v(-1.75em)
+
+    _check-metadata(info)
+    info = _normalize-metadata(info)
+
+    // rendering it visually...
+    _render-metadata(info)
+    // ...then putting it into a query-able table
+    _queryize-metadata(info)
+
+    separator
   }
 
   body
 }
-
-#let _callout(body, accent: fg, icon: none) = {
-  let body = if icon == none {
-    body
-  } else {
-    grid(
-      columns: (1.5em, auto),
-      gutter: 0.5em,
-      align: (right + horizon, left),
-      gfx.icons.at(icon)(invert: false),
-      body,
-    )
-  }
-
-  block(
-    stroke: (left: accent),
-    inset: (
-      left: if icon == none { 0.5em } else { 0em },
-      y: 0.5em,
-    ),
-    body,
-  )
-}
-
-#let question = _callout.with(
-  accent: status.unknown,
-  icon: "?",
-)
-#let note = _callout.with(
-  accent: status.note,
-  icon: "i",
-)
-#let hint = _callout.with(
-  accent: status.hint,
-  icon: "o",
-)
-#let caution = _callout.with(
-  accent: status.urgent,
-  icon: "!",
-)
-
-
-#let invert = gfx.invert
 
 
 // the actual user code
 #show: template.with(
   title: [flow manual],
   aliases: ([flow], [how to procastinate]),
+  cw: ([bananas],),
+  cat: true,
 )
+
+#outline()
 
 = how do i use this
 
@@ -221,3 +317,13 @@ For when you need to add #invert[extra importance] to some text.
 
 Note that #invert[it should always fit on one line though,
 otherwise it'll go out of page like this one.]
+
+#invert[
+  (Or if you really want to use a manual line break, \
+  well, the one parallelopiped goes over the whole body. \
+  Is that what you wanted?)
+]
+
+#v(1.5em)
+
+Hence it is best fit for #invert[a few words.]
