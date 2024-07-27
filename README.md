@@ -4,7 +4,7 @@ typst note template and utils
 
 ## how do i use
 
-uuuuh best compile `lib.typ` and look at the resulting pdf and compare it to the source file so you know what to do
+uuuuh best compile `src/doc/manual.typ` and look at the resulting pdf and compare it to the source file so you know what to do
 
 pass `--input dev=true` if you want some nicer colors
 
@@ -18,6 +18,5 @@ but not today
 - checkboxes just like with markdown syntax!
 - color palette management for absolutely no reason!
 - callouts for questions, notes, hints and warnings!
-- metadata?
+- metadata!
 
-compile `src/lib.typ` to see a demonstration and details!
