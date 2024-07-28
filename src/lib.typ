@@ -26,6 +26,7 @@
 
   set rect(stroke: fg)
   set line(stroke: fg)
+  set table(stroke: fg)
 
   set heading(numbering: "1.1")
 
@@ -37,10 +38,15 @@
     ),
   )
 
-  show link: if dev {
-    text.with(duality.blue)
-  } else {
-    underline
+  show link: it => {
+    let accent = if type(it.dest) == str {
+      reference.external
+    } else {
+      reference.same-file
+    }
+    let ret = text(fill: accent, it)
+    if not dev { ret = underline(ret) }
+    ret
   }
   show raw.where(block: false): it => highlight(
     top-edge: 0.9em,
@@ -54,6 +60,7 @@
     fill: luma(0%),
     radius: 0.5em,
     inset: 0.5em,
+    width: 100%,
     text(if dev { fg } else { luma(100%) }, it),
   )
 

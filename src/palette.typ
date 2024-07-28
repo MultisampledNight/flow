@@ -44,3 +44,8 @@
   status.at(name) = value
 }
 
+#let reference = (
+  external: if dev { duality.blue } else { blue },
+  other-file: if dev { duality.violet } else { purple },
+  same-file: if dev { duality.green } else { green },
+)
