@@ -19,20 +19,25 @@
     default: (it.body,),
   )
   let checkbox = _graceful-slice(body, 0, 3)
+  let fill = checkbox.at(1).fields().at("text", default: " ")
 
-  let is-checkbox = checkbox.at(0) == [\[] and checkbox.at(-1) == [\]]
+  let is-checkbox = (
+    checkbox.at(0) == [\[] and
+    fill.len() == 1 and
+    checkbox.at(-1) == [\]]
+  )
+
   if not is-checkbox {
     return it
   }
 
   // convert the fill character to a showable icon
-  let fill = checkbox.at(1).fields().at("text", default: " ")
-  let checkbox = gfx.icons.at(fill, default: "?")
+  let checkbox = gfx.icons.at(fill, default: gfx.unknown)
   // just a few minor tweaks
   let checkbox = box(move(dx: -0.1em, checkbox()))
 
   // and remove the description from the checkbox itself
-  let desc = _graceful-slice(body, 4, -1).join()
+  let desc = _graceful-slice(body, 3, -1).join()
 
   // then throw them together
   let full-entry = [#checkbox #desc]

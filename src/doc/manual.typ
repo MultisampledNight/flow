@@ -40,7 +40,7 @@
   "unknown": (gfx.unknown, <unknown>),
 )
 // i am not sure if i like this or not
-#show regex(
+#let fill-trigger = regex(
   "\b(" +
   name-to-info
     .keys()
@@ -53,7 +53,13 @@
     .intersperse("|")
     .join() +
   ")\b"
-): it => {
+)
+#let zwsp-hack(body) = body.text.at(0) + "\u{FEFF}" + body.text.slice(1)
+#show raw: it => {
+  show fill-trigger: zwsp-hack
+  it
+}
+#show fill-trigger: it => {
   let (icon, to-desc) = name-to-info.at(lower(it.text))
   link(to-desc)[#icon() #it]
 }
@@ -138,7 +144,7 @@ Hence, see these semantics merely as a suggestion.
     ("x", [${ 1 }$],    [Nobody],       [No]),
     ("/", [$[ 0, 1 )$], [Nobody],       [No]),
     ("-", [$[ 0, 1 )$], [Not you],      [No]),
-    ("?", [$[ 0, 1 ]$], [Unknown],      [Unknown]),
+    ("?", [$[ 0, 1 ]$], [Maybe you],    [Maybe]),
   )
   .map(((fill, ..args)) => (
     [
@@ -196,32 +202,40 @@ Hence, see these semantics merely as a suggestion.
 - Maybe it is your responsibility, maybe someone else's
 - Need to acquire more information to put it into a "proper" category
 - Try to have as few of these as possible as they make planning quite difficult
-  - And you may miss things that were your job
+  - And you might miss things that were your job
 
-=== More examples
+=== More examples of tasks
 
--     [    ]       extra space
-- [?] this is really long #lorem(20)
+```example
+-   [ ] you    _can_ be   extra spacious
+- [?] this is long: #lorem(20)
 
-+ [ ] i'm an enum uwu
-+ [x] expand me
++ [ ] Task lists can also be ordered!
++ [x] And advance as normal!
 
-- [>] parent task
-  + [x] nested
-  + [>] sub
-  + [ ] tasks
-    - [ ] extra
-    - [ ] nested
+- [>] This is a large parent task!
+  + [x] Which can have subtasks!
+  + [>] With even more nesting!
+    + [ ] Like here!
+    + [ ] And here!
 
-  - [ ] ducks
+- [ ]No space between checkbox and description needed!
+```
 
-=== not checkboxes
 
-- single
-- [lmao
-- [] collapsed
-- [][ who knows
--[ ] oops i missed the space before the checkbox
+=== Examples of non-tasks
+
+They are still completely fine text!
+Their checkboxes are just not rendered.
+
+```example
+- Still just a normal list entry
+- [Bracketized, but fill must be 1 char]
+  - [[Well, 1 grapheme cluster :3]]
+- [] Fill must not be empty
+- [ [ The brackets must be opposite
+-[ ] Space must be before checkbox qwq
+```
 
 
 == Callout
