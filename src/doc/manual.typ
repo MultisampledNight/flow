@@ -168,25 +168,6 @@ Hence, see these semantics merely as a suggestion.
     "x": ((2, 0), gfx.complete),
   )
 
-  let trans(a, b, ..args) = {
-    if args.pos().len() >= 1 {
-      let c = args.pos().at(0)
-      bezier-through(
-        a,
-        b,
-        c,
-        mark: (end: ">"),
-      )
-    } else {
-      line(
-        a,
-        b,
-        mark: (end: ">"),
-        ..args,
-      )
-    }
-  }
-
   for (name, details) in nodes {
     let (coord, icon) = details
     icon(
@@ -196,25 +177,53 @@ Hence, see these semantics merely as a suggestion.
     )
   }
 
+  set-style(mark: (end: ">", fill: fg))
+
+  let trans(from, to, ..args) = {
+    if args.pos().len() == 0 {
+      line(from, to)
+      return
+    }
+
+    arc-through(
+      from,
+      (
+        to: (from, 50%, to),
+        rel: args.pos().at(0),
+      ),
+      to,
+    )
+  }
+
   // no progress -> some progress or even finished
   for source in (" ", "!") {
-    for target in ("x", "/", ":", ">") {
+    for target in ("-", ">") {
       trans(source, target)
     }
   }
+  trans(" .east", "/.south", (0, -1.125))
+  trans("!.east", "x.north", (0, 1.125))
 
   // some progress internals and -> finished
-  for target in (":", "-", "/", "x") {
-    trans(">", target)
+  for (from, to) in (("-", ">"), (">", ":")) {
+    trans(from + ".north-east", to + ".south-east", (0.5, 0))
   }
-  trans(":", ">")
-  trans("-", ">")
+  for (from, to) in ((":", ">"), (">", "-")) {
+    trans(from + ".south-west", to + ".north-west", (-0.5, 0))
+  }
+  trans(":.east", "-.east", (1.5, 0))
+  trans("-.west", ":.west", (-1.5, 0))
+  trans(">", "/")
+  trans(">", "x")
 
   // and all the transitions from unknown
-  for target in nodes.keys() {
-    if target == "?" { continue }
-    trans("?", target)
-  }
+  trans("?", "-")
+  trans("?.east", ">.south-east", (1.25, 0))
+  trans("?.west", ":.west", (-6, 0))
+  trans("?.west", " .south", (angle: -90deg, radius: 1.25))
+  trans("?.west", "!.south-west", (angle: -180deg, radius: 3))
+  trans("?.east", "x.south", (angle: -90deg, radius: 1.25))
+  trans("?.east", "/.south-east", (angle: 0deg, radius: 3))
 }))
 
 ==== Not started <not-started>
