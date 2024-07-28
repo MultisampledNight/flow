@@ -155,23 +155,30 @@ Hence, see these semantics merely as a suggestion.
 
 #align(center, gfx.canvas(length: 1em, {
   import gfx.cetz.draw: *
-  let space = (x: 3, y: 3)
+  let space = 2
 
+  let ul(radius) = (angle: 135deg, radius: radius)
+  let ur(radius) = (angle: 45deg, radius: radius)
+  let d(radius) = (angle: -90deg, radius: radius)
   let nodes = (
-    " ": ((0, 0), gfx.empty),
-    "!": ((0, 1), gfx.urgent),
-    ":": ((1, 1.5), gfx.pause),
-    ">": ((1, 0.5), gfx.progress),
-    "-": ((1, -0.5), gfx.block),
-    "?": ((1, -1.5), gfx.unknown),
-    "/": ((2, 1), gfx.cancel),
-    "x": ((2, 0), gfx.complete),
+    "?": ((0, 0), gfx.unknown),
+
+    " ": (ul(1), gfx.empty),
+    "!": (ul(2), gfx.urgent),
+
+    ">": (d(1), gfx.progress),
+    ":": ((rel: ur(-1), to: d(1.25)), gfx.pause),
+    "-": ((rel: ul(-1), to: d(1.25)), gfx.block),
+
+    "x": (ur(1), gfx.complete),
+    "/": (ur(2), gfx.cancel),
   )
 
   for (name, details) in nodes {
     let (coord, icon) = details
+    let coord = ((0, 0), space * 100%, coord)
     icon(
-      at: (coord.at(0) * space.x, coord.at(1) * space.y),
+      at: coord,
       contentize: false,
       name: name,
     )
@@ -194,36 +201,6 @@ Hence, see these semantics merely as a suggestion.
       to,
     )
   }
-
-  // no progress -> some progress or even finished
-  for source in (" ", "!") {
-    for target in ("-", ">") {
-      trans(source, target)
-    }
-  }
-  trans(" .east", "/.south", (0, -1.125))
-  trans("!.east", "x.north", (0, 1.125))
-
-  // some progress internals and -> finished
-  for (from, to) in (("-", ">"), (">", ":")) {
-    trans(from + ".north-east", to + ".south-east", (0.5, 0))
-  }
-  for (from, to) in ((":", ">"), (">", "-")) {
-    trans(from + ".south-west", to + ".north-west", (-0.5, 0))
-  }
-  trans(":.east", "-.east", (1.5, 0))
-  trans("-.west", ":.west", (-1.5, 0))
-  trans(">", "/")
-  trans(">", "x")
-
-  // and all the transitions from unknown
-  trans("?", "-")
-  trans("?.east", ">.south-east", (1.25, 0))
-  trans("?.west", ":.west", (-6, 0))
-  trans("?.west", " .south", (angle: -90deg, radius: 1.25))
-  trans("?.west", "!.south-west", (angle: -180deg, radius: 3))
-  trans("?.east", "x.south", (angle: -90deg, radius: 1.25))
-  trans("?.east", "/.south-east", (angle: 0deg, radius: 3))
 }))
 
 ==== Not started <not-started>
