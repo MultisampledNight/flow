@@ -155,20 +155,19 @@ Hence, see these semantics merely as a suggestion.
 
 #align(center, gfx.canvas(length: 1em, {
   import gfx.cetz.draw: *
-  let space = 2
+  let space = 2.5
 
   let ul(radius) = (angle: 135deg, radius: radius)
   let ur(radius) = (angle: 45deg, radius: radius)
-  let d(radius) = (angle: -90deg, radius: radius)
+  let ll(radius) = (angle: -135deg, radius: radius)
+  let lr(radius) = (angle: -45deg, radius: radius)
   let nodes = (
-    "?": ((0, 0), gfx.unknown),
-
     " ": (ul(1), gfx.empty),
     "!": (ul(2), gfx.urgent),
 
-    ">": (d(1), gfx.progress),
-    ":": ((rel: ur(-1), to: d(1.25)), gfx.pause),
-    "-": ((rel: ul(-1), to: d(1.25)), gfx.block),
+    ">": ((0, 0), gfx.progress),
+    ":": (ll(1), gfx.pause),
+    "-": (lr(1), gfx.block),
 
     "x": (ur(1), gfx.complete),
     "/": (ur(2), gfx.cancel),
@@ -186,19 +185,54 @@ Hence, see these semantics merely as a suggestion.
 
   set-style(mark: (end: ">", fill: fg))
 
-  let trans(from, to, ..args) = {
-    if args.pos().len() == 0 {
-      line(from, to)
-      return
-    }
+  // Only uses the x component of the given coordinate.
+  let hori(coord) = (coord, "|-", ())
+  // Only uses the y component of the given coordinate.
+  let vert(coord) = (coord, "-|", ())
 
-    arc-through(
-      from,
+  line(" ", "x")
+  line(
+    " ",
+    (" ", 200%, (" ", "|-", "/")),
+    ((), "-|", "/"),
+    "/",
+  )
+  line("!", "/")
+  line(("!", "-|", "x"), "x")
+
+  for (source, shift) in ((" ", 25%), ("!", 75%)) {
+    line(
+      (source, "-|", (">.north-west", shift, ">.north-east")),
+      vert(">.north"),
+    )
+  }
+
+  line(">", (">", "-|", "x"), "x")
+  line((">", "-|", "x"), (">", "-|", "/"), "/")
+  line((">", "-|", "x"), "-")
+  line(">", (">", "-|", ":"), ":")
+
+  // lol it works well enough here
+  let ring-slice(it, start, end) = {
+    (it * 2).slice(start, end)
+  }
+
+  for i in range(2) {
+    let (a, b) = ring-slice(((":", "east"), ("-", "west")), i, i + 2)
+    let shift = 25% + i * 50%
+    let (start, end) = (
       (
-        to: (from, 50%, to),
-        rel: args.pos().at(0),
+        a.at(0) + ".south-" + a.at(1),
+        shift,
+        a.at(0) + ".north-" + a.at(1),
       ),
-      to,
+      hori(b.at(0) + "." + b.at(1)),
+    )
+
+    line(start, end)
+    line(
+      hori((">.south-west", shift, ">.south-east")),
+      vert(">.south-west")
     )
   }
 }))
