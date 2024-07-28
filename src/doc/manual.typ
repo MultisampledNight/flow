@@ -132,26 +132,23 @@ This is a model: In reality, progress is rarely well quantifiable.
 Hence, see these semantics merely as a suggestion.
 
 #table(
-  columns: 4,
-  align: (center,) + (left,) * 3,
+  columns: 5,
+  align: left,
   inset: 0.5em,
-  [Fill], [$p in ...$], [Assigned to?], [Actionable by you?],
+  [_Name_],         [_Fill_], [$p in ...$], [_Assigned to?_], [_Actionable by you?_],
   ..(
-    (" ", [${ 0 }$],    [Nobody yet],   [Yes]),
-    ("!", [$[ 0, 1 )$], [You],          [Yes]),
-    (">", [$[ 0, 1 )$], [You],          [Yes]),
-    (":", [$( 0, 1 )$], [You],          [Yes]),
-    ("x", [${ 1 }$],    [Nobody],       [No]),
-    ("/", [$[ 0, 1 )$], [Nobody],       [No]),
-    ("-", [$[ 0, 1 )$], [Not you],      [No]),
-    ("?", [$[ 0, 1 ]$], [Maybe you],    [Maybe]),
+    ([Not started], " ",      [${ 0 }$],    [Nobody yet],   [Yes]),
+    ([Urgent],      "!",      [$[ 0, 1 )$], [You],          [Yes]),
+    ([In progress], ">",      [$[ 0, 1 )$], [You],          [Yes]),
+    ([Paused],      ":",      [$( 0, 1 )$], [You],          [Yes]),
+    ([Completed],   "x",      [${ 1 }$],    [Nobody],       [No]),
+    ([Cancelled],   "/",      [$[ 0, 1 )$], [Nobody],       [No]),
+    ([Blocked],     "-",      [$[ 0, 1 )$], [Not you],      [No]),
+    ([Unknown],     "?",      [$[ 0, 1 ]$], [Maybe you],    [Maybe]),
   )
-  .map(((fill, ..args)) => (
-    [
-      #raw("[" + fill + "]")
-      #sym.arrow
-      #gfx.icons.at(fill)()
-    ],
+  .map(((name, fill, ..args)) => (
+    name,
+    raw("[" + fill + "]"),
     ..args,
   )).join()
 )
