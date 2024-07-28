@@ -153,6 +153,65 @@ Hence, see these semantics merely as a suggestion.
   )).join()
 )
 
+#align(center, gfx.canvas(length: 3em, {
+  import gfx.cetz.draw: *
+
+  let trans(a, b, ..args) = {
+    if args.pos().len() >= 1 {
+      let c = args.pos().at(0)
+      bezier-through(
+        a,
+        b,
+        (b, 80%, c),
+        mark: (end: ">"),
+      )
+    } else {
+      line(
+        a,
+        (a, 80%, b),
+        mark: (end: ">"),
+        ..args,
+      )
+    }
+  }
+
+  // no progress -> some progress or even finished
+  trans((0, 0), (1, 0.5))
+  trans((0, 1), (1, 0.5))
+  trans((0, 0), (1, -0.5))
+  trans((0, 1), (1, -0.5))
+  trans((0, 0), (2.25, 0))
+  trans((0, 1), (2.25, 1))
+  trans((0, 0), (0.75, 0.75), (2, 1))
+  trans((0, 1), (0.75, 0.25), (2, 0))
+
+  // some progress internals and -> finished
+  trans((1.05, 0.5), (rel: (0, 1)))
+  trans((1.05, 0.5), (rel: (0, -1)))
+  trans((0.95, 1.5), (rel: (0, -1)))
+  trans((0.95, -0.5), (rel: (0, 1)))
+  trans((1, 0.5), (2, 1))
+  trans((1, 0.5), (2, -0))
+
+  // and all the transitions from unknown
+  trans((1, -1.5), (1, -0.5))
+  trans((1, -1.5), (1.75, -1), (2, 0))
+  trans((1, -1.5), (2.5, -0.5), (2, 1))
+  trans((1, -1.5), (0.25, -1), (0, 0))
+  trans((1, -1.5), (-0.5, -0.5), (0, 1))
+  trans((1, -1.5), (1.5, -0.5), (1, 0.5))
+  trans((1, -1.5), (1.5, 0), (1, 1.5))
+
+  content((0, 0), gfx.empty())
+  content((0, 1), gfx.urgent())
+  content((1, 1.5), gfx.pause())
+  content((1, 0.5), gfx.progress())
+  content((1, -0.5), gfx.block())
+  content((1, -1.5), gfx.unknown())
+  content((2, 0), gfx.complete())
+  content((2, 1), gfx.cancel())
+}))
+
 ==== Not started <not-started>
 
 - No progress done yet
@@ -285,3 +344,8 @@ Hence it is best fit for #invert[a few words.]
   - The math part will be the most interesting
 - [ ] Doclinks (even clickable?)
 - [ ] DAG for possible checkbox transitions
+- [ ] Checkbox continuation and quick checking from `EmulateObsidian` function into typst
+- [ ] `diagram` helpers that facilitate and index diagrams (like the one with the checkbox transitions)
+  - Definitely needs to set the stroke color to `fg` (like `gfx.canvas` does already)
+  - Maybe I could make the automated DAG drawing routine I thought of to visualize graphs in iowo real..
+  - Maybe with defining the transitions with labels and mapping the labels to actual contents afterwards...

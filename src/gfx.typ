@@ -2,6 +2,15 @@
 
 #import "palette.typ": *
 
+#let canvas(body, ..args) = cetz.canvas(..args, {
+  import cetz.draw: *
+  set-style(
+    stroke: fg,
+  )
+
+  body
+})
+
 #let _icon(
   body,
   // if true, render the actual icon itself in bg on a rounded rectangle with the accent.
@@ -17,7 +26,7 @@
   ..args,
 ) = box(
   inset: (y: -0.175em),
-  cetz.canvas(..args, length: 1em, {
+  canvas(..args, length: 1em, {
     import cetz.draw: *
 
     let accent = if accent != none {
@@ -205,7 +214,7 @@
   shift: 0.5,
   padding: (x: 1em),
   body
-) = box(context cetz.canvas(length: 1em, {
+) = box(context canvas(length: 1em, {
   import cetz.draw: *
   let body = pad(right: shift * -1em, pad(..padding, body))
 
@@ -214,7 +223,7 @@
   // so they don't affect layouting
   // but are still displayed out of line
   let size = measure(body)
-  let half-backdrop = box(cetz.canvas(length: 1em, {
+  let half-backdrop = box(canvas(length: 1em, {
     parallelopiped(
       (0, 0),
       (size.width, size.height),

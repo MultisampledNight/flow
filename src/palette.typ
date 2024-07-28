@@ -30,7 +30,7 @@
   pause: if dev { duality.green },
   block: if dev { duality.blue },
   complete: fg,
-  cancel: gamut.sample(25%),
+  cancel: gamut.sample(40%),
   unknown: if dev { duality.yellow },
 
   note: if dev { duality.green } else { green },
