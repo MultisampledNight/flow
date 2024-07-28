@@ -157,20 +157,16 @@ Hence, see these semantics merely as a suggestion.
   import gfx.cetz.draw: *
   let space = 2.5
 
-  let ul(radius) = (angle: 135deg, radius: radius)
-  let ur(radius) = (angle: 45deg, radius: radius)
-  let ll(radius) = (angle: -135deg, radius: radius)
-  let lr(radius) = (angle: -45deg, radius: radius)
   let nodes = (
-    " ": (ul(1), gfx.empty),
-    "!": (ul(2), gfx.urgent),
+    " ": ((-1, 1), gfx.empty),
+    "!": ((-1, 2), gfx.urgent),
 
     ">": ((0, 0), gfx.progress),
-    ":": (ll(1), gfx.pause),
-    "-": (lr(1), gfx.block),
+    ":": ((-1, -1), gfx.pause),
+    "-": ((1, -1), gfx.block),
 
-    "x": (ur(1), gfx.complete),
-    "/": (ur(2), gfx.cancel),
+    "x": ((1, 1), gfx.complete),
+    "/": ((1, 2), gfx.cancel),
   )
 
   for (name, details) in nodes {
@@ -189,37 +185,42 @@ Hence, see these semantics merely as a suggestion.
   let hori(coord) = (coord, "|-", ())
   // Only uses the y component of the given coordinate.
   let vert(coord) = (coord, "-|", ())
-
-  line(" ", "x")
-  line(
-    " ",
-    (" ", 200%, (" ", "|-", "/")),
-    ((), "-|", "/"),
-    "/",
-  )
-  line("!", "/")
-  line(("!", "-|", "x"), "x")
-
-  for (source, shift) in ((" ", 25%), ("!", 75%)) {
-    line(
-      (source, "-|", (">.north-west", shift, ">.north-east")),
-      vert(">.north"),
-    )
-  }
-
-  line(">", (">", "-|", "x"), "x")
-  line((">", "-|", "x"), (">", "-|", "/"), "/")
-  line((">", "-|", "x"), "-")
-  line(">", (">", "-|", ":"), ":")
-
   // lol it works well enough here
   let ring-slice(it, start, end) = {
     (it * 2).slice(start, end)
   }
 
   for i in range(2) {
+    let (start, end, opposite-end) = ((" ", "x", "/"), ("!", "/", "x")).at(i)
+    let shift = 30% + 40% * i
+    let start = (start + ".south-east", shift, start + ".north-east")
+    line(start, hori(end + ".west"), mark: (harpoon: true, flip: i == 1))
+
+    let mid = (start, "-|", (">.north-west", shift, ">.north-east"))
+    let opposite-end = (opposite-end + ".south-west", shift, opposite-end + ".north-west")
+    line(
+      mid,
+      vert(opposite-end),
+      opposite-end,
+      mark: (harpoon: true, flip: i == 1),
+    )
+
+    line(
+      mid,
+      vert(">.north"),
+      mark: (harpoon: true, flip: i == 1),
+    )
+  }
+
+  let cross = (">", "-|", "x")
+  line(">", cross, "x")
+  line(cross, (">", 175%, cross), vert("/"), "/")
+  line(cross, "-")
+  line(">", (">", "-|", ":"), ":")
+
+  for i in range(2) {
     let (a, b) = ring-slice(((":", "east"), ("-", "west")), i, i + 2)
-    let shift = 25% + i * 50%
+    let shift = 30% + 40% * i
     let (start, end) = (
       (
         a.at(0) + ".south-" + a.at(1),
@@ -229,10 +230,11 @@ Hence, see these semantics merely as a suggestion.
       hori(b.at(0) + "." + b.at(1)),
     )
 
-    line(start, end)
+    line(start, end, mark: (harpoon: true))
     line(
       hori((">.south-west", shift, ">.south-east")),
-      vert(">.south-west")
+      vert(">.south-west"),
+      mark: (harpoon: true, flip: i == 0),
     )
   }
 }))
