@@ -153,8 +153,20 @@ Hence, see these semantics merely as a suggestion.
   )).join()
 )
 
-#align(center, gfx.canvas(length: 3em, {
+#align(center, gfx.canvas(length: 1em, {
   import gfx.cetz.draw: *
+  let space = (x: 3, y: 3)
+
+  let nodes = (
+    " ": ((0, 0), gfx.empty),
+    "!": ((0, 1), gfx.urgent),
+    ":": ((1, 1.5), gfx.pause),
+    ">": ((1, 0.5), gfx.progress),
+    "-": ((1, -0.5), gfx.block),
+    "?": ((1, -1.5), gfx.unknown),
+    "/": ((2, 1), gfx.cancel),
+    "x": ((2, 0), gfx.complete),
+  )
 
   let trans(a, b, ..args) = {
     if args.pos().len() >= 1 {
@@ -162,54 +174,47 @@ Hence, see these semantics merely as a suggestion.
       bezier-through(
         a,
         b,
-        (b, 80%, c),
+        c,
         mark: (end: ">"),
       )
     } else {
       line(
         a,
-        (a, 80%, b),
+        b,
         mark: (end: ">"),
         ..args,
       )
     }
   }
 
+  for (name, details) in nodes {
+    let (coord, icon) = details
+    icon(
+      at: (coord.at(0) * space.x, coord.at(1) * space.y),
+      contentize: false,
+      name: name,
+    )
+  }
+
   // no progress -> some progress or even finished
-  trans((0, 0), (1, 0.5))
-  trans((0, 1), (1, 0.5))
-  trans((0, 0), (1, -0.5))
-  trans((0, 1), (1, -0.5))
-  trans((0, 0), (2.25, 0))
-  trans((0, 1), (2.25, 1))
-  trans((0, 0), (0.75, 0.75), (2, 1))
-  trans((0, 1), (0.75, 0.25), (2, 0))
+  for source in (" ", "!") {
+    for target in ("x", "/", ":", ">") {
+      trans(source, target)
+    }
+  }
 
   // some progress internals and -> finished
-  trans((1.05, 0.5), (rel: (0, 1)))
-  trans((1.05, 0.5), (rel: (0, -1)))
-  trans((0.95, 1.5), (rel: (0, -1)))
-  trans((0.95, -0.5), (rel: (0, 1)))
-  trans((1, 0.5), (2, 1))
-  trans((1, 0.5), (2, -0))
+  for target in (":", "-", "/", "x") {
+    trans(">", target)
+  }
+  trans(":", ">")
+  trans("-", ">")
 
   // and all the transitions from unknown
-  trans((1, -1.5), (1, -0.5))
-  trans((1, -1.5), (1.75, -1), (2, 0))
-  trans((1, -1.5), (2.5, -0.5), (2, 1))
-  trans((1, -1.5), (0.25, -1), (0, 0))
-  trans((1, -1.5), (-0.5, -0.5), (0, 1))
-  trans((1, -1.5), (1.5, -0.5), (1, 0.5))
-  trans((1, -1.5), (1.5, 0), (1, 1.5))
-
-  content((0, 0), gfx.empty())
-  content((0, 1), gfx.urgent())
-  content((1, 1.5), gfx.pause())
-  content((1, 0.5), gfx.progress())
-  content((1, -0.5), gfx.block())
-  content((1, -1.5), gfx.unknown())
-  content((2, 0), gfx.complete())
-  content((2, 1), gfx.cancel())
+  for target in nodes.keys() {
+    if target == "?" { continue }
+    trans("?", target)
+  }
 }))
 
 ==== Not started <not-started>
@@ -336,6 +341,10 @@ Hence it is best fit for #invert[a few words.]
 = Wishlist
 
 - [x] Split into library and manual
+- [ ] Transition graph for possible checkbox transitions
+  - [x] Initial version
+  - [ ] Color edges
+  - [ ] Try alternative layouts
 - [ ] Custom outline with
   + right-aligned title
   + page number
@@ -343,7 +352,6 @@ Hence it is best fit for #invert[a few words.]
 - [ ] Conversion helper from Obsidian's markdown dialect
   - The math part will be the most interesting
 - [ ] Doclinks (even clickable?)
-- [ ] DAG for possible checkbox transitions
 - [ ] Checkbox continuation and quick checking from `EmulateObsidian` function into typst
 - [ ] `diagram` helpers that facilitate and index diagrams (like the one with the checkbox transitions)
   - Definitely needs to set the stroke color to `fg` (like `gfx.canvas` does already)

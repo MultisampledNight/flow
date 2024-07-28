@@ -23,48 +23,77 @@
   key: none,
   // overrides `key` if set. the color to tint the icon in.
   accent: none,
+  // If true, returns a `content` that can be directly put into text.
+  // If false, returns an array of draw commands that can be used in a cetz canvas.
+  contentize: true,
+  // If `contentize` is false, put the lower left corner of this icon at this position.
+  at: (0, 0),
+  name: none,
+  // Arguments to forward to `canvas` if `contentize` is true.
   ..args,
-) = box(
-  inset: (y: -0.175em),
-  canvas(..args, length: 1em, {
-    import cetz.draw: *
-
-    let accent = if accent != none {
-      accent
+) = {
+  import cetz.draw: *
+  let cmds = group(
+    ..if name != none {
+      (name: name)
     } else {
-      status.at(key, default: fg)
-    }
+      (:)
+    },
+    {
+      set-origin(at)
 
-    let icon-accent = accent
-    if invert {
-      rect(
-        (0, 0), (1, 1),
-        stroke: none,
-        fill: accent,
-        radius: radius,
+      let accent = if accent != none {
+        accent
+      } else {
+        status.at(key, default: fg)
+      }
+
+      let icon-accent = accent
+      if invert {
+        rect(
+          (0, 0),
+          (1, 1),
+          stroke: none,
+          fill: accent,
+          radius: radius,
+          ..if name != none {
+            (name: name)
+          } else {
+            (:)
+          }
+        )
+        icon-accent = bg
+      } else {
+        // hacking the boundary box in so the spacing is right
+        line((0, 0), (1, 1), stroke: none)
+      }
+
+      // intended to be selectively disabled via passing `none` explicitly
+      set-style(
+        stroke: (
+          cap: "round",
+          join: "round",
+          paint: icon-accent,
+        ),
+        fill: icon-accent,
       )
-      icon-accent = bg
-    } else {
-      // hacking the boundary box in so the spacing is right
-      line((0, 0), (1, 1), stroke: none)
-    }
 
-    // intended to be selectively disabled via passing `none` explicitly
-    set-style(
-      stroke: (
-        cap: "round",
-        join: "round",
-        paint: icon-accent,
-      ),
-      fill: icon-accent,
+      // so the user can just draw from 0 to 1 while the padding is outside
+      set-origin((0.2, 0.2))
+      scale(0.6)
+      body
+    },
+  )
+
+  if contentize {
+    box(
+      inset: (y: -0.175em),
+      canvas(..args, length: 1em, cmds)
     )
-
-    // so the user can just draw from 0 to 1 while the padding is outside
-    set-origin((0.2, 0.2))
-    scale(0.6)
-    body
-  })
-)
+  } else {
+    cmds
+  }
+}
 
 
 #let empty(
