@@ -238,7 +238,7 @@ Hence, see these semantics merely as a suggestion.
   // Typing a `)` pops the last position from the stack and continues from there.
   // This can nest arbitrarily often.
   let br(..args) = (branch: args.pos())
-  let is-br(part) = type(part) == dictionary and part.has("branch")
+  let is-br(part) = type(part) == dictionary and "branch" in part
   let trans(from, accent: none, ..parts) = {
     let accent = if accent != none {
       accent
@@ -269,12 +269,15 @@ Hence, see these semantics merely as a suggestion.
 
         if frame.reset-to != none {
           last = frame.reset-to
+        } else {
+          break
         }
 
         continue
       }
 
       let part = queue.pop()
+      depth.last().queue = queue
 
       // do we need to descend in depth or can just stay at this one?
       if is-br(part) {
@@ -301,8 +304,6 @@ Hence, see these semantics merely as a suggestion.
 
         last = coord
       }
-
-      depth.last().queue = queue
     }
   }
 
@@ -329,10 +330,14 @@ Hence, see these semantics merely as a suggestion.
   }
 
   let cross = (">", "-|", "x")
-  trans(">", cross, "x")
-  trans(cross, (">", 175%, cross), vert("/"), "/")
-  trans(cross, "-")
-  trans(">", (">", "-|", ":"), ":")
+  trans(
+    ">",
+      br((">", "-|", ":"), ":"),
+    cross,
+      br("x"),
+      br((">", 175%, cross), vert("/"), "/"),
+      br(cross, "-"),
+  )
 
   for i in range(2) {
     let (a, b) = ring-slice(((":", right), ("-", left)), i, i + 2)

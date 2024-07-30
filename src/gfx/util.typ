@@ -79,9 +79,7 @@
 
       // intended to be selectively disabled via passing `none` explicitly
       set-style(
-        stroke: (
-          paint: icon-accent,
-        ),
+        stroke: (paint: icon-accent),
         fill: icon-accent,
       )
 
