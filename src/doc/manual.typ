@@ -239,7 +239,23 @@ Hence, see these semantics merely as a suggestion.
   // This can nest arbitrarily often.
   let br(..args) = (branch: args.pos())
   let is-br(part) = type(part) == dictionary and "branch" in part
+  // shallowly replaces () with last
+  let make-concrete(coord, last) = if type(coord) == array {
+    coord.map(p => if p == () { last } else { p })
+  } else if type(coord) == dictionary {
+    for (key, p) in coord {
+      if p == () {
+        coord.insert(key, last)
+      }
+    }
+    coord
+  } else {
+    coord
+  }
   let trans(from, accent: none, ..parts) = {
+    if parts.pos().len() == 0 {
+      panic("need at least one target state to transition to")
+    }
     let accent = if accent != none {
       accent
     } else if type(from) == str {
@@ -291,7 +307,8 @@ Hence, see these semantics merely as a suggestion.
         ))
       } else {
         // just draw a casual line
-        let coord = part
+        // also ensuring relative coordinates are aware of resets
+        let coord = make-concrete(part, last)
 
         line(
           last, coord,
@@ -307,27 +324,26 @@ Hence, see these semantics merely as a suggestion.
     }
   }
 
-  for i in range(2) {
-    let (start, end, opposite-end) = ((" ", "x", "/"), ("!", "/", "x")).at(i)
-    let shift = 30% + 40% * i
-    let start = lerp-edge(start, right, shift)
-    trans(start, hori(end + ".west"), mark: (harpoon: true, flip: i == 0))
-
-    let mid = (start, "-|", lerp-edge(">", top, shift))
-    let opposite-end = lerp-edge(opposite-end, left, shift)
-    trans(
-      mid,
-      vert(opposite-end),
-      opposite-end,
-      mark: (harpoon: true, flip: i == 0),
-    )
-
-    trans(
-      mid,
-      vert(">.north"),
-      mark: (harpoon: true, flip: i == 1),
-    )
-  }
+  let progress-socket = lerp-edge(">", top, 30%)
+  trans(
+    " ",
+    hori(progress-socket),
+      br("x"),
+      br(progress-socket),
+    vert((" ", 160%, "!")),
+    hori("/"),
+    "/",
+  )
+  let progress-socket = lerp-edge(">", top, 70%)
+  trans(
+    "!",
+    hori(progress-socket),
+      br("/"),
+    vert(("!", 40%, " ")),
+      br(progress-socket),
+    hori("x"),
+    "x",
+  )
 
   let cross = (">", "-|", "x")
   trans(
@@ -335,21 +351,23 @@ Hence, see these semantics merely as a suggestion.
       br((">", "-|", ":"), ":"),
     cross,
       br("x"),
-      br((">", 175%, cross), vert("/"), "/"),
       br(cross, "-"),
+    (">", 160%, cross),
+    vert("/"),
+    "/",
   )
 
   for i in range(2) {
     let (a, b) = ring-slice(((":", right), ("-", left)), i, i + 2)
     let shift = 30% + 40% * i
     let start = lerp-edge(..a, shift)
-    let end = hori(b.at(0) + "." + to-anchor(b.at(1)))
+    let end = lerp-edge(..b, shift)
 
-    trans(start, end, mark: (harpoon: true, flip: true))
     trans(
+      start,
       hori(lerp-edge(">", bottom, shift)),
+        br(end),
       vert(">.south-west"),
-      mark: (harpoon: true, flip: i == 0),
     )
   }
 }))
