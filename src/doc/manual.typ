@@ -224,23 +224,34 @@ Hence, see these semantics merely as a suggestion.
     point.insert(1, value)
     point
   }
+  // Creates an edge denoting transition between two states.
+  let trans(from, ..points) = {
+    let accent = if type(from) == str {
+      gfx.markers.at(from).accent
+    } else if type(from) == array and type(from.at(0)) == str {
+      gfx.markers.at(from.at(0).split(".").at(0)).accent
+    } else {
+      fg
+    }
+    line(from, ..points, stroke: accent)
+  }
 
   for i in range(2) {
     let (start, end, opposite-end) = ((" ", "x", "/"), ("!", "/", "x")).at(i)
     let shift = 30% + 40% * i
     let start = lerp-edge(start, right, shift)
-    line(start, hori(end + ".west"), mark: (harpoon: true, flip: i == 0))
+    trans(start, hori(end + ".west"), mark: (harpoon: true, flip: i == 0))
 
     let mid = (start, "-|", lerp-edge(">", top, shift))
     let opposite-end = lerp-edge(opposite-end, left, shift)
-    line(
+    trans(
       mid,
       vert(opposite-end),
       opposite-end,
       mark: (harpoon: true, flip: i == 0),
     )
 
-    line(
+    trans(
       mid,
       vert(">.north"),
       mark: (harpoon: true, flip: i == 1),
@@ -248,10 +259,10 @@ Hence, see these semantics merely as a suggestion.
   }
 
   let cross = (">", "-|", "x")
-  line(">", cross, "x")
-  line(cross, (">", 175%, cross), vert("/"), "/")
-  line(cross, "-")
-  line(">", (">", "-|", ":"), ":")
+  trans(">", cross, "x")
+  trans(cross, (">", 175%, cross), vert("/"), "/")
+  trans(cross, "-")
+  trans(">", (">", "-|", ":"), ":")
 
   for i in range(2) {
     let (a, b) = ring-slice(((":", right), ("-", left)), i, i + 2)
@@ -259,8 +270,8 @@ Hence, see these semantics merely as a suggestion.
     let start = lerp-edge(..a, shift)
     let end = hori(b.at(0) + "." + to-anchor(b.at(1)))
 
-    line(start, end, mark: (harpoon: true, flip: true))
-    line(
+    trans(start, end, mark: (harpoon: true, flip: true))
+    trans(
       hori(lerp-edge(">", bottom, shift)),
       vert(">.south-west"),
       mark: (harpoon: true, flip: i == 0),
