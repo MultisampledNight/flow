@@ -3,11 +3,17 @@
 #import "@preview/cetz:0.2.2"
 #import "../palette.typ": *
 
+#let round-stroke(paint: fg) = (
+  cap: "round",
+  join: "round",
+  paint: paint,
+)
+
 #let canvas(body, ..args) = cetz.canvas(..args, {
   import cetz.draw: *
 
   set-style(
-    stroke: fg,
+    stroke: round-stroke(),
   )
 
   body
@@ -74,8 +80,6 @@
       // intended to be selectively disabled via passing `none` explicitly
       set-style(
         stroke: (
-          cap: "round",
-          join: "round",
           paint: icon-accent,
         ),
         fill: icon-accent,

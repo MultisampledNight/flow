@@ -179,8 +179,6 @@ Hence, see these semantics merely as a suggestion.
     )
   }
 
-  set-style(mark: (end: ">", fill: fg))
-
   // Only uses the x component of the given coordinate.
   let hori(coord) = (coord, "|-", ())
   // Only uses the y component of the given coordinate.
@@ -224,16 +222,88 @@ Hence, see these semantics merely as a suggestion.
     point.insert(1, value)
     point
   }
-  // Creates an edge denoting transition between two states.
-  let trans(from, ..points) = {
-    let accent = if type(from) == str {
+  // Creates an edge denoting transition away from a starting state,
+  // branching out arbitrarily.
+  // The syntax for branching is inspired by the IUPAC nomenclature of organic chemistry:
+  // https://en.wikipedia.org/wiki/IUPAC_nomenclature_of_organic_chemistry
+  // Only one initial starting point is needed.
+  // Afterwards, any number of branches can follow, and the default one is automatically entered.
+  // A branch is a sequence, where each element can be a coordinate or another branch.
+  // Coordinates can be specified in place.
+  // Branches are specified via the `br` function.
+  //
+  // Essentially, you can think of branches like save and restore points.
+  // Anytime you type `br(`, the current position in the tree is stored on a stack.
+  // Continuing to type more coordinates or branches after do not modify this stored entry.
+  // Typing a `)` pops the last position from the stack and continues from there.
+  // This can nest arbitrarily often.
+  let br(..args) = (branch: args.pos())
+  let is-br(part) = type(part) == dictionary and part.has("branch")
+  let trans(from, accent: none, ..parts) = {
+    let accent = if accent != none {
+      accent
+    } else if type(from) == str {
       gfx.markers.at(from).accent
     } else if type(from) == array and type(from.at(0)) == str {
       gfx.markers.at(from.at(0).split(".").at(0)).accent
     } else {
       fg
     }
-    line(from, ..points, stroke: accent)
+
+    // essentially an "inverse" depth first search
+    // we already have the tree and the search we want to follow
+    // we just need to repeat it along the plan
+
+    // basically manual recursion. each array entry is a stack frame
+    // each stack frame has a field `queue` for the coords/branches to next run through
+    // and every stack frame lower than the toplevel one has a field `reset-to` containing the position
+    let depth = ((queue: parts.pos().rev(), reset-to: none),)
+    let last = from
+
+    while depth.len() != 0 {
+      let queue = depth.last().queue
+      if queue.len() == 0 {
+        // oh, this frame has been fully processed already
+        // if we can reset, do so, otherwise we're finished with rendering
+        let frame = depth.pop()
+
+        if frame.reset-to != none {
+          last = frame.reset-to
+        }
+
+        continue
+      }
+
+      let part = queue.pop()
+
+      // do we need to descend in depth or can just stay at this one?
+      if is-br(part) {
+        // create a new stack frame remembering where to reset to
+        let subbranch = part.branch
+
+        depth.push((
+          // remember, pop works LIFO
+          queue: subbranch.rev(),
+          reset-to: last,
+        ))
+      } else {
+        // just draw a casual line
+        let coord = part
+
+        line(
+          last, coord,
+          stroke: (paint: accent),
+          // on the end of branches we want to draw arrows
+          mark: if queue.len() == 0 {
+            (end: ">", fill: accent)
+          },
+        )
+
+        last = coord
+      }
+
+      depth.last().queue = queue
+    }
   }
 
   for i in range(2) {
