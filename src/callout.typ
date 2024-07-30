@@ -1,15 +1,16 @@
 #import "gfx.typ"
 #import "palette.typ": *
 
-#let _callout(body, accent: fg, icon: none) = {
-  let body = if icon == none {
+#let _callout(body, accent: fg, marker: none) = {
+  let body = if marker == none {
     body
   } else {
+    let icon = gfx.markers.at(marker).icon
     grid(
       columns: (1.5em, auto),
       gutter: 0.5em,
       align: (right + horizon, left),
-      gfx.icons.at(icon)(invert: false),
+      icon(invert: false),
       body,
     )
   }
@@ -17,7 +18,7 @@
   block(
     stroke: (left: accent),
     inset: (
-      left: if icon == none { 0.5em } else { 0em },
+      left: if marker == none { 0.5em } else { 0em },
       y: 0.5em,
     ),
     body,
@@ -26,17 +27,17 @@
 
 #let question = _callout.with(
   accent: status.unknown,
-  icon: "?",
+  marker: "?",
 )
 #let note = _callout.with(
   accent: status.note,
-  icon: "i",
+  marker: "i",
 )
 #let hint = _callout.with(
   accent: status.hint,
-  icon: "o",
+  marker: "o",
 )
 #let caution = _callout.with(
   accent: status.urgent,
-  icon: "!",
+  marker: "!",
 )

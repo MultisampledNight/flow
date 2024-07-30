@@ -32,8 +32,8 @@
   }
 
   // convert the fill character to a showable icon
-  let checkbox = gfx.icons.at(fill, default: gfx.unknown)
-  // just a few minor tweaks
+  let checkbox = gfx.markers.at(fill, default: gfx.markers.at("?")).icon
+  // just a few minor positioning tweaks
   let checkbox = box(move(dx: -0.1em, checkbox()))
 
   // and remove the description from the checkbox itself
@@ -41,7 +41,6 @@
 
   // then throw them together
   let full-entry = [#checkbox #desc]
-
   if kind == "list" {
     [- #full-entry]
   } else if kind == "enum" {

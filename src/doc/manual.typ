@@ -28,16 +28,15 @@
   )
 }
 
-// TODO: throw this into gfx?
 #let name-to-info = (
-  "not started": (gfx.empty, <not-started>),
-  "urgent": (gfx.urgent, <urgent>),
-  "in progress": (gfx.progress, <in-progress>),
-  "paused": (gfx.pause, <paused>),
-  "completed": (gfx.complete, <completed>),
-  "cancelled": (gfx.cancel, <cancelled>),
-  "blocked": (gfx.block, <blocked>),
-  "unknown": (gfx.unknown, <unknown>),
+  "not started": (" ", <not-started>),
+  "urgent": ("!", <urgent>),
+  "in progress": (">", <in-progress>),
+  "paused": (":", <paused>),
+  "completed": ("x", <completed>),
+  "cancelled": ("/", <cancelled>),
+  "blocked": ("-", <blocked>),
+  "unknown": ("?", <unknown>),
 )
 // i am not sure if i like this or not
 #let fill-trigger = regex(
@@ -60,7 +59,8 @@
   it
 }
 #show fill-trigger: it => {
-  let (icon, to-desc) = name-to-info.at(lower(it.text))
+  let (marker, to-desc) = name-to-info.at(lower(it.text))
+  let icon = gfx.markers.at(marker).icon
   link(to-desc)[#icon() #it]
 }
 
@@ -158,20 +158,20 @@ Hence, see these semantics merely as a suggestion.
   let space = 2.5
 
   let nodes = (
-    " ": ((-1, 1), gfx.empty),
-    "!": ((-1, 2), gfx.urgent),
+    " ": (-1, 1),
+    "!": (-1, 2),
 
-    ">": ((0, 0), gfx.progress),
-    ":": ((-1, -1), gfx.pause),
-    "-": ((1, -1), gfx.block),
+    ">": (0, 0),
+    ":": (-1, -1),
+    "-": (1, -1),
 
-    "x": ((1, 1), gfx.complete),
-    "/": ((1, 2), gfx.cancel),
+    "x": (1, 1),
+    "/": (1, 2),
   )
 
-  for (name, details) in nodes {
-    let (coord, icon) = details
+  for (name, coord) in nodes {
     let coord = ((0, 0), space * 100%, coord)
+    let icon = gfx.markers.at(name).icon
     icon(
       at: coord,
       contentize: false,
