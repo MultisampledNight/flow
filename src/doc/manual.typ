@@ -189,20 +189,55 @@ Hence, see these semantics merely as a suggestion.
   let ring-slice(it, start, end) = {
     (it * 2).slice(start, end)
   }
+  // Convert from Typst alignment to cetz directions.
+  let to-anchor(it) = {
+    if it == top {
+      "north"
+    } else if it == bottom {
+      "south"
+    } else if it == left {
+      "west"
+    } else if it == right {
+      "east"
+    }
+  }
+  // Returns a point according to the given value
+  // on the edge of the given object.
+  let lerp-edge(object, edge, value) = {
+    // decide what bounds to use
+    let ys = if edge.y == none {
+      (top, bottom)
+    } else {
+      (edge.y,) * 2
+    }
+    let xs = if edge.x == none {
+      (left, right)
+    } else {
+      (edge.x,) * 2
+    }
+
+    let point = xs.zip(ys).map(
+      ((x, y)) => object +
+      "." + to-anchor(y) +
+      "-" + to-anchor(x)
+    )
+    point.insert(1, value)
+    point
+  }
 
   for i in range(2) {
     let (start, end, opposite-end) = ((" ", "x", "/"), ("!", "/", "x")).at(i)
     let shift = 30% + 40% * i
-    let start = (start + ".south-east", shift, start + ".north-east")
-    line(start, hori(end + ".west"), mark: (harpoon: true, flip: i == 1))
+    let start = lerp-edge(start, right, shift)
+    line(start, hori(end + ".west"), mark: (harpoon: true, flip: i == 0))
 
-    let mid = (start, "-|", (">.north-west", shift, ">.north-east"))
-    let opposite-end = (opposite-end + ".south-west", shift, opposite-end + ".north-west")
+    let mid = (start, "-|", lerp-edge(">", top, shift))
+    let opposite-end = lerp-edge(opposite-end, left, shift)
     line(
       mid,
       vert(opposite-end),
       opposite-end,
-      mark: (harpoon: true, flip: i == 1),
+      mark: (harpoon: true, flip: i == 0),
     )
 
     line(
@@ -219,20 +254,14 @@ Hence, see these semantics merely as a suggestion.
   line(">", (">", "-|", ":"), ":")
 
   for i in range(2) {
-    let (a, b) = ring-slice(((":", "east"), ("-", "west")), i, i + 2)
+    let (a, b) = ring-slice(((":", right), ("-", left)), i, i + 2)
     let shift = 30% + 40% * i
-    let (start, end) = (
-      (
-        a.at(0) + ".south-" + a.at(1),
-        shift,
-        a.at(0) + ".north-" + a.at(1),
-      ),
-      hori(b.at(0) + "." + b.at(1)),
-    )
+    let start = lerp-edge(..a, shift)
+    let end = hori(b.at(0) + "." + to-anchor(b.at(1)))
 
-    line(start, end, mark: (harpoon: true))
+    line(start, end, mark: (harpoon: true, flip: true))
     line(
-      hori((">.south-west", shift, ">.south-east")),
+      hori(lerp-edge(">", bottom, shift)),
       vert(">.south-west"),
       mark: (harpoon: true, flip: i == 0),
     )
