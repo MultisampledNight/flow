@@ -155,29 +155,6 @@ Hence, see these semantics merely as a suggestion.
 
 #align(center, gfx.canvas(length: 1em, {
   import gfx.cetz.draw: *
-  let space = 2.5
-
-  let nodes = (
-    " ": (-1, 1),
-    "!": (-1, 2),
-
-    ">": (0, 0),
-    ":": (-1, -1),
-    "-": (1, -1),
-
-    "x": (1, 1),
-    "/": (1, 2),
-  )
-
-  for (name, coord) in nodes {
-    let coord = ((0, 0), space * 100%, coord)
-    let icon = gfx.markers.at(name).icon
-    icon(
-      at: coord,
-      contentize: false,
-      name: name,
-    )
-  }
 
   // Only uses the x component of the given coordinate.
   let hori(coord) = (coord, "|-", ())
@@ -222,6 +199,10 @@ Hence, see these semantics merely as a suggestion.
     point.insert(1, value)
     point
   }
+  let over(object, value) = lerp-edge(object, top, value)
+  let under(object, value) = lerp-edge(object, bottom, value)
+  let right-to(object, value) = lerp-edge(object, right, value)
+  let left-to(object, value) = lerp-edge(object, left, value)
   // Creates an edge denoting transition away from a starting state,
   // branching out arbitrarily.
   // The syntax for branching is inspired by the IUPAC nomenclature of organic chemistry:
@@ -238,7 +219,14 @@ Hence, see these semantics merely as a suggestion.
   // Typing a `)` pops the last position from the stack and continues from there.
   // This can nest arbitrarily often.
   let br(..args) = (branch: args.pos())
+  let exchange(coord, other-accent, offset: 0.25em) = (
+    exchange: coord,
+    cfg: (other-accent: other-accent, offset: offset)
+  )
+  let styled(coord, ..args) = (coord: coord, styles: args.named())
   let is-br(part) = type(part) == dictionary and "branch" in part
+  let is-exchange(part) = type(part) == dictionary and "exchange" in part
+  let is-styled(part) = type(part) == dictionary and "coord" in part and "styles" in part
   // shallowly replaces () with last
   let make-concrete(coord, last) = if type(coord) == array {
     coord.map(p => if p == () { last } else { p })
@@ -247,6 +235,9 @@ Hence, see these semantics merely as a suggestion.
       if p == () {
         coord.insert(key, last)
       }
+    }
+    if "rel" in coord and "to" not in coord {
+      coord.to = last;
     }
     coord
   } else {
@@ -259,7 +250,7 @@ Hence, see these semantics merely as a suggestion.
     let accent = if accent != none {
       accent
     } else if type(from) == str {
-      gfx.markers.at(from).accent
+      gfx.markers.at(from.split(".").at(0)).accent
     } else if type(from) == array and type(from.at(0)) == str {
       gfx.markers.at(from.at(0).split(".").at(0)).accent
     } else {
@@ -306,69 +297,136 @@ Hence, see these semantics merely as a suggestion.
           reset-to: last,
         ))
       } else {
+        let (coord, styles) = if is-styled(part) {
+          part
+        } else {
+          (part, (:))
+        }
+
+        let (coord, exchange) = if is-exchange(coord) {
+          (coord.exchange, coord.cfg)
+        } else {
+          (coord, none)
+        }
+
         // just draw a casual line
         // also ensuring relative coordinates are aware of resets
-        let coord = make-concrete(part, last)
+        let coord = make-concrete(coord, last)
 
-        line(
-          last, coord,
-          stroke: (paint: accent),
-          // on the end of branches we want to draw arrows
-          mark: if queue.len() == 0 {
-            (end: ">", fill: accent)
-          },
-        )
+        if "mark" in styles {
+          styles.mark.fill = accent;
+        }
+        if exchange != none {
+          let cfg = exchange
+          let offset-line(from, to, styles, ..args) = line(
+            (from, cfg.offset, 90deg, to),
+            (to, cfg.offset, -90deg, from),
+            ..args,
+            ..parts.named(),
+            ..styles,
+          )
+          offset-line(last, coord, styles, stroke: (paint: accent))
+          if "mark" in styles {
+            styles.mark.fill = exchange.other-accent;
+          }
+          offset-line(coord, last, styles, stroke: (paint: cfg.other-accent))
+        } else {
+          line(
+            last, coord,
+            stroke: (paint: accent),
+            // on the end of branches we want to draw arrows
+            mark: if queue.len() == 0 {
+              (end: ">", fill: accent)
+            },
+            ..parts.named(),
+            ..styles,
+          )
+        }
 
         last = coord
       }
     }
   }
 
-  let prog-socket(shift) = lerp-edge(">", top, shift)
+  let space = 2.75
+
+  let nodes = (
+    ">": (0, 0),
+    " ": (-1, 1),
+    "!": (1, 1),
+
+    ":": (0, -2),
+    "-": (0, 2),
+
+    "x": (-1, -1),
+    "/": (1, -1),
+  )
+
+  for (name, coord) in nodes {
+    let coord = ((0, 0), space * 100%, coord)
+    let icon = gfx.markers.at(name).icon
+    icon(
+      at: coord,
+      contentize: false,
+      name: name,
+    )
+  }
+
   trans(
     " ",
-    hori(prog-socket(30%)),
-      br("x"),
-      br(prog-socket(30%)),
-    vert((" ", 160%, "!")),
-    hori("/"),
+    br("x"),
+    br("-"),
+    br(">"),
+    (rel: (0.75, 0), to: (">", 50%, "-")),
+    (rel: (space, -space)),
+    (rel: (0.25, 0.25), to: "/.north-east"),
     "/",
   )
   trans(
     "!",
-    hori(prog-socket(70%)),
-      br("/"),
-    vert(("!", 40%, " ")),
-      br(prog-socket(70%)),
-    hori("x"),
-    "x",
-  )
-
-  let cross = (">", "-|", "x")
-  trans(
+    br("-"),
     ">",
-      br((">", "-|", ":"), ":"),
-    cross,
-      br("x"),
-      br(cross, "-"),
-    (">", 160%, cross),
-    vert("/"),
-    "/",
+  )
+  trans(
+    under("!", 25%),
+    over("/", 25%)
   )
 
-  for i in range(2) {
-    let (a, b) = ring-slice(((":", right), ("-", left)), i, i + 2)
-    let shift = 30% + 40% * i
-    let start = lerp-edge(..a, shift)
-    let end = lerp-edge(..b, shift)
+  trans(
+    (rel: (0.25, 0), to: ("-", 50%, ">")),
+    (rel: (space / 2, -space / 2)),
+    br(
+      (rel: (0.25, 0), to: ("!", 50%, "/")),
+      over("/", 75%),
+    ),
+    (rel: (space / 2 + 0.25, -space / 2), to: ":"),
+    ":",
+    accent: gfx.markers.at("-").accent,
+  )
+  trans(
+    (rel: (0.25, 0), to: (":", 50%, ">")),
+    (rel: (-space / 2, space / 2)),
+    (rel: (-space / 2 + 0.25, space / 2), to: "-"),
+    "-",
+    accent: gfx.markers.at(":").accent,
+  )
 
-    trans(
-      start,
-      hori(lerp-edge(">", bottom, shift)),
-        br(end),
-      vert(">.south-west"),
-    )
-  }
+  trans(">", br("x"), br("/"))
+  trans(
+    ">.north",
+    styled(exchange(
+      "-.south",
+      gfx.markers.at("-").accent,
+    ), mark: (end: ">"))
+  )
+  trans(
+    ">.south",
+    styled(exchange(
+      ":.north",
+      gfx.markers.at(":").accent,
+      offset: -0.25em,
+    ), mark: (end: ">"))
+  )
 }))
 
 ==== Not started <not-started>
