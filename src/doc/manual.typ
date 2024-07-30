@@ -324,23 +324,22 @@ Hence, see these semantics merely as a suggestion.
     }
   }
 
-  let progress-socket = lerp-edge(">", top, 30%)
+  let prog-socket(shift) = lerp-edge(">", top, shift)
   trans(
     " ",
-    hori(progress-socket),
+    hori(prog-socket(30%)),
       br("x"),
-      br(progress-socket),
+      br(prog-socket(30%)),
     vert((" ", 160%, "!")),
     hori("/"),
     "/",
   )
-  let progress-socket = lerp-edge(">", top, 70%)
   trans(
     "!",
-    hori(progress-socket),
+    hori(prog-socket(70%)),
       br("/"),
     vert(("!", 40%, " ")),
-      br(progress-socket),
+      br(prog-socket(70%)),
     hori("x"),
     "x",
   )
