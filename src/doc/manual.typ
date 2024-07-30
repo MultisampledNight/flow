@@ -219,7 +219,7 @@ Hence, see these semantics merely as a suggestion.
   // Typing a `)` pops the last position from the stack and continues from there.
   // This can nest arbitrarily often.
   let br(..args) = (branch: args.pos())
-  let exchange(coord, other-accent, offset: 0.25em) = (
+  let exchange(coord, other-accent: fg, offset: 0.25em) = (
     exchange: coord,
     cfg: (other-accent: other-accent, offset: offset)
   )
@@ -313,9 +313,19 @@ Hence, see these semantics merely as a suggestion.
         // also ensuring relative coordinates are aware of resets
         let coord = make-concrete(coord, last)
 
-        if "mark" in styles {
-          styles.mark.fill = accent;
+        styles += parts.named()
+        let set-accent(styles, accent) = {
+          if "mark" in styles {
+            styles.mark.fill = accent;
+          }
+          if "stroke" in styles {
+            styles.stroke.paint = accent;
+          } else {
+            styles += (stroke: (paint: accent))
+          }
+          styles
         }
+        styles = set-accent(styles, accent)
         if exchange != none {
           let cfg = exchange
           let offset-line(from, to, styles, ..args) = line(
@@ -325,11 +335,8 @@ Hence, see these semantics merely as a suggestion.
             ..parts.named(),
             ..styles,
           )
-          offset-line(last, coord, styles, stroke: (paint: accent))
-          if "mark" in styles {
-            styles.mark.fill = exchange.other-accent;
-          }
-          offset-line(coord, last, styles, stroke: (paint: cfg.other-accent))
+          offset-line(last, coord, styles)
+          offset-line(coord, last, set-accent(styles, cfg.other-accent))
         } else {
           line(
             last, coord,
@@ -374,11 +381,14 @@ Hence, see these semantics merely as a suggestion.
 
   trans(
     " ",
-    br("x"),
     br("-"),
     br(">"),
-    (rel: (0.75, 0), to: (">", 50%, "-")),
-    (rel: (space, -space)),
+  )
+  trans(under(" ", 25%), over("x", 25%))
+  trans(
+    right-to(" ", 25%),
+    (rel: (space, 0)),
+    (rel: (space * 1.5, -space * 1.5 + 0.25)),
     (rel: (0.25, 0.25), to: "/.north-east"),
     "/",
   )
@@ -394,21 +404,14 @@ Hence, see these semantics merely as a suggestion.
 
   trans(
     (rel: (0.25, 0), to: ("-", 50%, ">")),
-    (rel: (space / 2, -space / 2)),
     br(
-      (rel: (0.25, 0), to: ("!", 50%, "/")),
-      over("/", 75%),
+      (rel: (-space, -space)),
+      over("x", 75%),
     ),
-    (rel: (space / 2 + 0.25, -space / 2), to: ":"),
-    ":",
+    (rel: (space / 2, -space / 2)),
+    (rel: (0.25, 0), to: ("!", 50%, "/")),
+    over("/", 75%),
     accent: gfx.markers.at("-").accent,
-  )
-  trans(
-    (rel: (0.25, 0), to: (":", 50%, ">")),
-    (rel: (-space / 2, space / 2)),
-    (rel: (-space / 2 + 0.25, space / 2), to: "-"),
-    "-",
-    accent: gfx.markers.at(":").accent,
   )
 
   trans(">", br("x"), br("/"))
@@ -416,17 +419,27 @@ Hence, see these semantics merely as a suggestion.
     ">.north",
     styled(exchange(
       "-.south",
-      gfx.markers.at("-").accent,
+      other-accent: gfx.markers.at("-").accent,
     ), mark: (end: ">"))
   )
   trans(
     ">.south",
     styled(exchange(
       ":.north",
-      gfx.markers.at(":").accent,
+      other-accent: gfx.markers.at(":").accent,
       offset: -0.25em,
     ), mark: (end: ">"))
   )
+
+  let dashes-into-dark(from, diff, other-marker) = trans(
+    from,
+    styled(exchange(
+      (rel: (0, diff)),
+      other-accent: gfx.markers.at(other-marker).accent,
+    ), mark: (end: ">"), stroke: (dash: "dashed"))
+  )
+  dashes-into-dark("-.north", 1.5, ":")
+  dashes-into-dark(":.south", -1.5, "-")
 }))
 
 ==== Not started <not-started>
