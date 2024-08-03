@@ -1,4 +1,4 @@
-#import "../lib.typ": *
+#import "../lib.typ" as flow: *
 #show: template.with(
   title: [flow manual],
   aliases: [how to procastinate],
@@ -23,7 +23,11 @@
         radius: 0.5em,
         inset: 0.5em,
         width: 100%,
-        normal(eval(mode: "markup", code))
+        normal(eval(
+          mode: "markup",
+          scope: dictionary(flow),
+          code,
+        ))
       ),
   )
 }
@@ -153,101 +157,6 @@ Hence, see these semantics merely as a suggestion.
   )).join()
 )
 
-#align(center, gfx.canvas({
-  import gfx.draw: *
-
-  // lol it works well enough here
-  let ring-slice(it, start, end) = {
-    (it * 2).slice(start, end)
-  }
-
-  let space = 2.75
-
-  let nodes = (
-    ">": (0, 0),
-    " ": (-1, 1),
-    "!": (1, 1),
-
-    ":": (0, -2),
-    "-": (0, 2),
-
-    "x": (-1, -1),
-    "/": (1, -1),
-  )
-
-  for (name, coord) in nodes {
-    let coord = ((0, 0), space * 100%, coord)
-    let icon = gfx.markers.at(name).icon
-    icon(
-      at: coord,
-      contentize: false,
-      name: name,
-    )
-  }
-
-  trans(
-    " ",
-    br("-"),
-    br(">"),
-  )
-  trans(under(" ", 25%), over("x", 25%))
-  trans(
-    right-to(" ", 25%),
-    (rel: (space, 0)),
-    (rel: (space * 1.5, -space * 1.5 + 0.25)),
-    (rel: (0.25, 0.25), to: "/.north-east"),
-    "/",
-  )
-  trans(
-    "!",
-    br("-"),
-    ">",
-  )
-  trans(
-    under("!", 25%),
-    over("/", 25%)
-  )
-
-  trans(
-    (rel: (0.25, 0), to: ("-", 50%, ">")),
-    br(
-      (rel: (-space, -space)),
-      over("x", 75%),
-    ),
-    (rel: (space / 2, -space / 2)),
-    (rel: (0.25, 0), to: ("!", 50%, "/")),
-    over("/", 75%),
-    accent: gfx.markers.at("-").accent,
-  )
-
-  trans(">", br("x"), br("/"))
-  trans(
-    ">.north",
-    styled(exchange(
-      "-.south",
-      other-accent: gfx.markers.at("-").accent,
-    ), mark: (end: ">"))
-  )
-  trans(
-    ">.south",
-    styled(exchange(
-      ":.north",
-      other-accent: gfx.markers.at(":").accent,
-      offset: -0.25em,
-    ), mark: (end: ">"))
-  )
-
-  let dashes-into-dark(from, diff, other-marker) = trans(
-    from,
-    styled(exchange(
-      (rel: (0, diff)),
-      other-accent: gfx.markers.at(other-marker).accent,
-    ), mark: (end: ">"), stroke: (dash: "dashed"))
-  )
-  dashes-into-dark("-.north", 1.5, ":")
-  dashes-into-dark(":.south", -1.5, "-")
-}))
-
 ==== Not started <not-started>
 
 - No progress done yet
@@ -369,6 +278,64 @@ otherwise it'll go out of page like this one.]
 
 Hence it is best fit for #invert[a few words.]
 
+== Diagram
+
+/ Diagram: Visually explains a certain concept in a canvas,
+  usually in the context of accompanying text.
+/ State: Frozen state of certain properties.
+  Usually represented by a node.
+/ Transition: Properties changing from one state to another.
+  Usually represented by an edge.U
+/ Canvas: Set of elements drawn into a confined `content`.
+
+Some minds like to build graphical representations
+of thought models in addition to having them just described in text.
+Diagrams fill this role.
+
+They are useful as a second line for conveying concepts.
+They do not replace a text description though:
+Since Typst doesn't support PDF accessibility yet,
+it is highly recommended that they don't add any new information
+that isn't in the text already
+
+Ultimately though your documents are your documents,
+so use them as you see fit.
+
+== Using them
+
+For drawing, manipulating and connecting shapes,
+the `gfx` module is your friend,
+which re-exports
+#link("https://typst.app/universe/package/cetz")[cetz]
+and adds neat helpers.
+Assumed you've glob-imported all out of `flow`,
+the usual boilerplate for a diagram looks like this:
+
+```example
+A typical rock-paper-scissors game
+consists of all players deciding for one of
+*rock*, *paper* or *scissors*,
+where:
+
++ *Rock* loses to *paper*
++ *Paper* loses to *scissors*
++ *Scissors* loses to *rock*
+
+#import gfx.draw: *
+#gfx.diagram(
+  nodes: (
+    rock: (angle: -150deg, length: 1),
+    paper: (angle: -30deg, length: 1),
+    scissors: (angle: 90deg, length: 1),
+  ),
+  edges: (
+    paper: tag(rock)[beats],
+    scissors: tag(paper)[beats],
+    rock: tag(scissors)[beats],
+  )
+})
+```
+
 = Wishlist
 
 - [x] Split into library and manual
@@ -378,6 +345,9 @@ Hence it is best fit for #invert[a few words.]
   - [x] Try alternative layouts
 - [ ] `diagram` helpers that facilitate and index diagrams (like the one with the checkbox transitions)
   - Probably just need to add a bit of sugar to what's already in this document
+  - Actually lol for the tags and the works I can just re-use the stack mechanism
+  - Modifiers like `styled`, `tag` and `exchange` can just open a new depth without `reset-to`
+  - If there's no `reset-to`, it's not... reset to, lol
 - [ ] Custom outline with
   + right-aligned title
   + page number
