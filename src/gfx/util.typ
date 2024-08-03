@@ -104,3 +104,19 @@
   }
 }
 
+#let diagram(nodes: (:), edges: (:), body: none, ..args) = {
+  let cmds = {
+    import draw: *
+    for (name, pos) in nodes {
+      content(pos, name)
+    }
+
+    for (from, to) in edges {
+      trans(from, to)
+    }
+
+    body
+  }
+
+  align(center, canvas(cmds, ..args))
+}

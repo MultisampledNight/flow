@@ -322,18 +322,20 @@ where:
 + *Scissors* loses to *rock*
 
 #import gfx.draw: *
+#let beats = tag.with(tag: [beats])
 #gfx.diagram(
   nodes: (
-    rock: (angle: -150deg, length: 1),
-    paper: (angle: -30deg, length: 1),
-    scissors: (angle: 90deg, length: 1),
+    rock: (angle: -150deg, radius: 1),
+    paper: (angle: -30deg, radius: 1),
+    scissors: (angle: 90deg, radius: 1),
   ),
   edges: (
-    paper: tag(rock)[beats],
-    scissors: tag(paper)[beats],
-    rock: tag(scissors)[beats],
-  )
-})
+    paper: beats("rock"),
+    scissors: beats("paper"),
+    rock: beats("scissors"),
+  ),
+  length: 3em,
+)
 ```
 
 = Wishlist

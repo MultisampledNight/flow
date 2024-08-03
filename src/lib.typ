@@ -54,6 +54,7 @@
     fill: luma(0%),
     radius: 0.25em,
     stroke: 4pt + luma(0%),
+    extent: 0em,
     text(if dev { fg } else { luma(100%) }, it),
   )
   show raw.where(block: true): it => block(

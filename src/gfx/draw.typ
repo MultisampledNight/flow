@@ -52,12 +52,13 @@
 #let right-to(object, value) = lerp-edge(object, right, value)
 #let left-to(object, value) = lerp-edge(object, left, value)
 
-#let br(..args) = (branch: args.pos())
-#let exchange(coord, other-accent: fg, offset: 0.25em) = (
-  exchange: coord,
+#let br(..args) = (queue: args.pos(), cfg: (branch: true))
+#let tag(..args, tag: none) = (queue: args.pos(), cfg: (tag: tag))
+#let exchange(..args, other-accent: fg, offset: 0.25em) = (
+  queue: args.pos(),
   cfg: (other-accent: other-accent, offset: offset)
 )
-#let styled(coord, ..args) = (coord: coord, styles: args.named())
+#let styled(..args) = (queue: args.pos(), cfg: (styled: args.named()))
 
 #let _is-br(part) = type(part) == dictionary and "branch" in part
 #let _is-exchange(part) = type(part) == dictionary and "exchange" in part
@@ -95,7 +96,7 @@
 // Continuing to type more coordinates or branches after do not modify this stored entry.
 // Typing a `)` pops the last position from the stack and continues from there.
 // This can nest arbitrarily often.
-#let trans(from, accent: fg, ..parts) = {
+#let trans(from, ..parts, accent: fg) = {
   if parts.pos().len() == 0 {
     panic("need at least one target state to transition to")
   }
@@ -109,6 +110,8 @@
   // and every stack frame lower than the toplevel one has a field `reset-to` containing the position
   let depth = ((queue: parts.pos().rev(), reset-to: none),)
   let last = from
+
+  content((0, 0), [#depth])
 
   while depth.len() != 0 {
     let queue = depth.last().queue
@@ -129,71 +132,6 @@
     let part = queue.pop()
     depth.last().queue = queue
 
-    // do we need to descend in depth or can just stay at this one?
-    if _is-br(part) {
-      // create a new stack frame remembering where to reset to
-      let subbranch = part.branch
-
-      depth.push((
-        // remember, pop works LIFO
-        queue: subbranch.rev(),
-        reset-to: last,
-      ))
-    } else {
-      let (coord, styles) = if _is-styled(part) {
-        part
-      } else {
-        (part, (:))
-      }
-
-      let (coord, exchange) = if _is-exchange(coord) {
-        (coord.exchange, coord.cfg)
-      } else {
-        (coord, none)
-      }
-
-      // just draw a casual line
-      // also ensuring relative coordinates are aware of resets
-      let coord = _make-concrete(coord, last)
-
-      styles += parts.named()
-      let set-accent(styles, accent) = {
-        if "mark" in styles {
-          styles.mark.fill = accent;
-        }
-        if "stroke" in styles {
-          styles.stroke.paint = accent;
-        } else {
-          styles += (stroke: (paint: accent))
-        }
-        styles
-      }
-      styles = set-accent(styles, accent)
-      if exchange != none {
-        let cfg = exchange
-        let offset-line(from, to, styles, ..args) = line(
-          (from, cfg.offset, 90deg, to),
-          (to, cfg.offset, -90deg, from),
-          ..args,
-          ..parts.named(),
-          ..styles,
-        )
-        offset-line(last, coord, styles)
-        offset-line(coord, last, set-accent(styles, cfg.other-accent))
-      } else {
-        line(
-          last, coord,
-          stroke: (paint: accent),
-          // on the end of branches we want to draw arrows
-          mark: if queue.len() == 0 {
-            (end: ">", fill: accent)
-          },
-          ..parts.named(),
-          ..styles,
-        )
-      }
-
-      last = coord
-    }
+    // TODO: write this whole part again, this time using the depth
   }
 }
