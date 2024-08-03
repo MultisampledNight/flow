@@ -2,6 +2,7 @@
 
 #import "@preview/cetz:0.2.2"
 #import "../palette.typ": *
+#import "draw.typ"
 
 #let round-stroke(paint: fg) = (
   cap: "round",
@@ -9,8 +10,11 @@
   paint: paint,
 )
 
-#let canvas(body, ..args) = cetz.canvas(..args, {
-  import cetz.draw: *
+#let canvas(body, length: 1em, ..args) = cetz.canvas(
+  ..args,
+  length: length,
+{
+  import draw: *
 
   set-style(
     stroke: round-stroke(),
@@ -40,7 +44,7 @@
   // Arguments to forward to `canvas` if `contentize` is true.
   ..args,
 ) = {
-  import cetz.draw: *
+  import draw: *
 
   let cmds = group(
     ..if name != none {
@@ -93,9 +97,10 @@
   if contentize {
     box(
       inset: (y: -0.175em),
-      canvas(..args, length: 1em, cmds)
+      canvas(..args, cmds)
     )
   } else {
     cmds
   }
 }
+

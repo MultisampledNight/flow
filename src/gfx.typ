@@ -29,7 +29,7 @@
 }
 
 #let parallelopiped(start, end, shift: 0.5, ..args) = {
-  import cetz.draw: *
+  import draw: *
 
   line(
     start,
@@ -49,7 +49,7 @@
   padding: (x: 1em),
   body
 ) = box(context canvas(length: 1em, {
-  import cetz.draw: *
+  import draw: *
   let body = pad(right: shift * -1em, pad(..padding, body))
 
   // idea is to draw 2 parallelopiped
