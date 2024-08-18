@@ -52,17 +52,50 @@
 #let right-to(object, value) = lerp-edge(object, right, value)
 #let left-to(object, value) = lerp-edge(object, left, value)
 
-#let br(..args) = (queue: args.pos(), cfg: (branch: true))
-#let tag(..args, tag: none) = (queue: args.pos(), cfg: (tag: tag))
-#let exchange(..args, other-accent: fg, offset: 0.25em) = (
-  queue: args.pos(),
-  cfg: (other-accent: other-accent, offset: offset)
+// Instruction to the `trans` function that a certain tree part has to be handled differently.
+// The `queue` is the tree part to be placed under the modifier,
+// the `cfg` specifies additional arguments for the `trans` function.
+#let _modifier(queue, cfg) = (queue: queue, cfg: cfg)
+#let _is-modifier(part) = (
+  type(part) == dictionary and
+  "queue" in part and
+  "cfg" in part
 )
-#let styled(..args) = (queue: args.pos(), cfg: (styled: args.named()))
 
-#let _is-br(part) = type(part) == dictionary and "branch" in part
-#let _is-exchange(part) = type(part) == dictionary and "exchange" in part
-#let _is-styled(part) = type(part) == dictionary and "coord" in part and "styles" in part
+// Create a new branch. After all coordinates in this branch have been processed,
+// return to the node before it.
+// At the end of a branch, an arrow mark is always placed.
+// TODO: implement in trans
+#let br(..args) = _modifier(args.pos(), (branch: true))
+
+// Label the edges created in this call.
+// The label is:
+//
+// - Only drawn once, after all edges and states have been drawn.
+// - Placed in the center of all states in this call.
+// TODO: implement in trans
+#let tag(..args, tag: none) = _modifier(args.pos(), (tag: tag))
+
+// Offsets drawn edges so that they can be drawn next to each other at different offsets
+// while still being distinguishable.
+//
+// This allows drawing states
+// with multiple inputs and outputs
+// on the same edge
+// more easily.
+//
+// Leaning with an amount of 0 is equivalent to not leaning at all,
+// and just passing all states at their center.
+//
+// TODO: implement in trans
+#let lean(..args, amount: 0.25em) = _modifier(args.pos(), (lean: amount))
+
+// Style all edges inside this call.
+// Styles can be stacked and will be merged, with deeper styles taking precedence.
+//
+// The function is suffixed with `d`
+// to avoid shadowing the builtin Typst `style` function.
+#let styled(..args) = _modifier(args.pos(), (styles: args.named()))
 
 // shallowly replaces () with last
 #let _make-concrete(coord, last) = if type(coord) == array {
@@ -85,7 +118,8 @@
 // branching out arbitrarily.
 // The syntax for branching is inspired by the IUPAC nomenclature of organic chemistry:
 // https://en.wikipedia.org/wiki/IUPAC_nomenclature_of_organic_chemistry
-// Only one initial starting point is needed.
+//
+// At least, one starting state and a target state are needed.
 // Afterwards, any number of branches can follow, and the default one is automatically entered.
 // A branch is a sequence, where each element can be a coordinate or another branch.
 // Coordinates can be specified in place.
@@ -94,10 +128,11 @@
 // Essentially, you can think of branches like save and restore points.
 // Anytime you type `br(`, the current position in the tree is stored on a stack.
 // Continuing to type more coordinates or branches after do not modify this stored entry.
-// Typing a `)` pops the last position from the stack and continues from there.
+// Typing a closing `)` of a `br` call pops the last position from the stack and
+// continues from there.
 // This can nest arbitrarily often.
-#let trans(from, ..parts, accent: fg) = {
-  if parts.pos().len() == 0 {
+#let trans(from, ..args) = {
+  if args.pos().len() == 0 {
     panic("need at least one target state to transition to")
   }
 
@@ -107,24 +142,24 @@
 
   // basically manual recursion. each array entry is a stack frame
   // each stack frame has a field `queue` for the coords/branches to next run through
-  // and every stack frame lower than the toplevel one has a field `reset-to` containing the position
-  let depth = ((queue: parts.pos().rev(), reset-to: none),)
+  // additionally each frame can be a *modifier* — that is, specially influencing processing somehow
+  // see the functions above calling _modifier for an explanation
+  let depth = ((queue: args.pos().rev(), cfg: (:)),)
   let last = from
-
-  content((0, 0), [#depth])
 
   while depth.len() != 0 {
     let queue = depth.last().queue
+
+    // has this frame has been fully processed?
     if queue.len() == 0 {
-      // oh, this frame has been fully processed already
-      // if we can reset, do so, otherwise we're finished with rendering
+      // if we should reset due to branching, do so
       let frame = depth.pop()
 
-      if frame.reset-to != none {
-        last = frame.reset-to
-      } else {
-        break
+      if frame.cfg.at("branch", default: false) {
+        last = frame.last
       }
+
+      // TODO: draw label between `part` and `last` if the frame was a `tag` one?
 
       continue
     }
@@ -132,6 +167,26 @@
     let part = queue.pop()
     depth.last().queue = queue
 
-    // TODO: write this whole part again, this time using the depth
+    if _is-modifier(part) {
+      // advance in depth
+      // can just make it a new frame
+      // some modifiers (e.g. branch, tag) need the last node,
+      // so store that one, too
+      part.last = last
+      depth.push(part)
+
+      continue
+    }
+
+    // then let's get to drawing!
+    // go through all modifiers we have atm, stack them and then draw them
+    let styles = depth
+      .filter(frame => "styles" in frame.cfg)
+      .map(frame => frame.cfg.styles)
+
+    let current = part
+    line(last, current)
+
+    // TODO: if the last one, draw arrowhead or label
   }
 }
