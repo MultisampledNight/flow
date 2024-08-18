@@ -108,7 +108,7 @@
   let cmds = {
     import draw: *
     for (name, pos) in nodes {
-      content(pos, name, name: name)
+      content(pos, pad(0.5em, name), name: name)
     }
 
     for (from, to) in edges {

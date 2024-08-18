@@ -91,6 +91,7 @@
 #let lean(..args, amount: 0.25em) = _modifier(args.pos(), (lean: amount))
 
 // Style all edges inside this call.
+// Use named arguments for doing so, just like any other cetz element.
 // Styles can be stacked and will be merged, with deeper styles taking precedence.
 //
 // The function is suffixed with `d`
@@ -183,9 +184,10 @@
     let styles = depth
       .filter(frame => "styles" in frame.cfg)
       .map(frame => frame.cfg.styles)
+      .join()
 
     let current = part
-    line(last, current)
+    line(last, current, ..styles)
 
     // TODO: if the last one, draw arrowhead or label
   }

@@ -330,7 +330,7 @@ where:
     scissors: (angle: 90deg, radius: 1),
   ),
   edges: (
-    paper: beats(styled("rock", fill: blue)),
+    paper: beats(styled("rock", stroke: blue)),
     scissors: beats("paper"),
     rock: beats("scissors"),
   ),
