@@ -1,8 +1,8 @@
 #import "../lib.typ" as flow: *
 #show: template.with(
-  title: [flow manual],
-  aliases: [how to procastinate],
-  author: [MultisampledNight],
+  title: "flow manual",
+  aliases: "how to procastinate",
+  author: "MultisampledNight",
   cw: "\"you\"",
 )
 

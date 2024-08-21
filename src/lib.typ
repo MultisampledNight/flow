@@ -19,10 +19,26 @@
 // It'll exposed both in a table in the document and via `typst query`.
 #let template(
   body,
-  title: [Untitled],
+  title: none,
   outlined: true,
   ..args,
 ) = {
+  let title = if title != none {
+    title
+  } else if cfg.filename != none {
+    cfg.filename.trim(
+      ".typ",
+      at: end,
+      repeat: false,
+    )
+  } else {
+    [Untitled]
+  }
+
+  set document(
+    title: title,
+    author: args.named().at("author", default: ()),
+  )
   set page(fill: bg, numbering: "1 / 1")
   set text(fill: fg, font: "IBM Plex Sans", size: 14pt)
 
