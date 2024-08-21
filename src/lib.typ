@@ -19,6 +19,7 @@
 #let template(
   body,
   title: [Untitled],
+  outlined: true,
   ..args,
 ) = {
   set page(fill: bg, numbering: "1 / 1")
@@ -65,8 +66,6 @@
     text(if dev { fg } else { luma(100%) }, it),
   )
 
-  show outline: it => it + separator
-
   show: checkbox.process
 
 
@@ -76,6 +75,11 @@
   if info.len() > 0 {
     v(-1.75em)
     metainfo.process(info)
+    separator
+  }
+
+  if outlined {
+    outline()
     separator
   }
 

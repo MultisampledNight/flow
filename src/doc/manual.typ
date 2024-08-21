@@ -69,8 +69,6 @@
 }
 
 
-#outline()
-
 = How do I get started?
 
 + Clone this repository into `{data-dir}/typst/packages/local/flow/0.1.0`
@@ -372,7 +370,7 @@ where:
   - Actually lol for the tags and the works I can just re-use the stack mechanism
   - Modifiers like `styled` and `tag` can just open a new depth
   - If there's no `reset-to`, it's not... reset to, lol
-- [ ] Custom outline with
+- [/] Custom outline with
   + right-aligned title
   + page number
   + section number
