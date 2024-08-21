@@ -64,9 +64,9 @@
 
 // Create a new branch. After all coordinates in this branch have been processed,
 // return to the node before it.
-// At the end of a branch, an arrow mark is always placed.
+// At the end of a branch, an arrow mark is always drawn.
 // TODO: implement in trans
-#let br(..args) = _modifier(args.pos(), (branch: true))
+#let br(..args) = _modifier(args.pos(), (branch: true, last-is-arrow: true))
 
 // Label the edges created in this call.
 // The label is:
@@ -132,7 +132,7 @@
 // Typing a closing `)` of a `br` call pops the last position from the stack and
 // continues from there.
 // This can nest arbitrarily often.
-#let trans(from, ..args) = {
+#let trans(from, ..args, arrow-mark: (symbol: ">")) = {
   if args.pos().len() == 0 {
     panic("need at least one target state to transition to")
   }
@@ -152,7 +152,8 @@
   let tags = ()
 
   while depth.len() != 0 {
-    let queue = depth.last().queue
+    let frame = depth.last()
+    let queue = frame.queue
 
     // has this frame has been fully processed?
     if queue.len() == 0 {
@@ -169,6 +170,17 @@
     let part = queue.pop()
     depth.last().queue = queue
 
+    let maybe-arrowhead = if queue.len() == 0 and frame.at("last-is-arrow", default: true) {
+      // oh that means we want to draw an arrowhead
+      // though if this is a modifier, that information needs to be propagated instead
+
+      if _is-modifier(part) {
+        part.last-is-arrow = true
+      }
+
+      (mark: (end: arrow-mark))
+    }
+
     if _is-modifier(part) {
       // advance in depth
       // can just make it a new frame
@@ -180,21 +192,21 @@
       // some modifiers (e.g. branch, tag) need the last node,
       // so store that one, too
       part.last = last
+
       depth.push(part)
 
       continue
     }
 
-    // TODO: if the last one, draw arrowhead or label
-
     // then let's get to drawing!
     // go through all modifiers we have atm, stack them and then draw them
+    // TODO: optimize this by instead keeping a stack of the styles depth
     let styles = depth
       .filter(frame => "styles" in frame.cfg)
       .map(frame => frame.cfg.styles)
       .join()
 
     let current = part
-    line(last, current, ..styles)
+    line(last, current, ..styles, ..maybe-arrowhead)
   }
 }
