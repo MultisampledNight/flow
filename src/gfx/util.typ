@@ -104,7 +104,7 @@
   }
 }
 
-#let diagram(nodes: (:), edges: (:), body: none, ..args) = {
+#let diagram(nodes: (:), edges: (:), ..args) = {
   let cmds = {
     import draw: *
     for (name, pos) in nodes {
@@ -115,8 +115,8 @@
       trans(from, to)
     }
 
-    body
+    args.pos().first()
   }
 
-  align(center, canvas(cmds, ..args))
+  align(center, canvas(cmds, ..args.named()))
 }

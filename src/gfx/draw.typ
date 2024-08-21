@@ -207,6 +207,13 @@
       .join()
 
     let current = part
-    line(last, current, ..styles, ..maybe-arrowhead)
+    line(
+      last,
+      current,
+      ..styles,
+      ..maybe-arrowhead,
+    )
+
+    last = current
   }
 }
