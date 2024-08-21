@@ -65,7 +65,6 @@
 // Create a new branch. After all coordinates in this branch have been processed,
 // return to the node before it.
 // At the end of a branch, an arrow mark is always drawn.
-// TODO: implement in trans
 #let br(..args) = _modifier(args.pos(), (branch: true, last-is-arrow: true))
 
 // Label the edges created in this call.
@@ -174,7 +173,7 @@
     // has this frame has been fully processed?
     if queue.len() == 0 {
       let frame = depth.pop()
-      
+
       // if this was the end of a section to be tagged, note where to draw it
       if "tag" in frame.cfg {
         tags.push((
