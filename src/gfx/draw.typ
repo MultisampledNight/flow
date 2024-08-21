@@ -87,7 +87,11 @@
 
 // Style all edges inside this call.
 // Use named arguments for doing so, just like any other cetz element.
-// Styles can be stacked and will be merged, with deeper styles taking precedence.
+// Styles can be stacked and will be merged.
+// Note that they are merged shallowly:
+// If there are multiple styles with the same key,
+// the deeper one will override the entire value, and
+// NOT be merged with the previous value.
 //
 // The function is suffixed with `d`
 // to avoid shadowing the builtin Typst `style` function.
