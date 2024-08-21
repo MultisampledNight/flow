@@ -85,20 +85,6 @@
   ),
 )
 
-// Offsets drawn edges so that they can be drawn next to each other at different offsets
-// while still being distinguishable.
-//
-// This allows drawing states
-// with multiple inputs and outputs
-// on the same edge
-// more easily.
-//
-// Leaning with an amount of 0 is equivalent to not leaning at all,
-// and just passing all states at their center.
-//
-// TODO: implement in trans
-#let lean(..args, amount: 0.25em) = _modifier(args.pos(), (lean: amount))
-
 // Style all edges inside this call.
 // Use named arguments for doing so, just like any other cetz element.
 // Styles can be stacked and will be merged, with deeper styles taking precedence.
@@ -108,14 +94,15 @@
 #let styled(..args) = _modifier(args.pos(), (styles: args.named()))
 
 // shallowly replaces () with last
-// TODO: make recursive
 #let _make-concrete(coord, last) = if type(coord) == array {
-  coord.map(p => if p == () { last } else { p })
+  if coord.len() == 0 {
+    last
+  } else {
+    coord.map(_make-concrete)
+  }
 } else if type(coord) == dictionary {
   for (key, p) in coord {
-    if p == () {
-      coord.insert(key, last)
-    }
+    coord.insert(key, _make-concrete(last))
   }
   if "rel" in coord and "to" not in coord {
     coord.to = last;

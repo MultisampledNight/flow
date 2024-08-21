@@ -5,7 +5,5 @@
   trans(
     (0, 0),
     (1, 0),
-    br(styled((1, 1), stroke: blue)),
-    br(tag((1, -1), tag: [useful edge])),
   )
 })
