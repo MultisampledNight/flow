@@ -1,3 +1,15 @@
+#import "cfg.typ"
+
+#let _key-on-theme(section) = {
+  for (name, value) in section {
+    if type(value) == dictionary {
+      value = value.at(cfg.theme)
+    }
+    section.at(name) = value
+  }
+  section
+}
+
 #let duality = (
   fg: rgb("#B6B3B4"),
   bg: rgb("#212224"),
@@ -16,36 +28,67 @@
   bg: luma(100%),
 )
 
-#let dev = json.decode(sys.inputs.at("dev", default: "false"))
-
-#let fg = if dev { duality.fg } else { print.fg }
-#let bg = if dev { duality.bg } else { print.bg }
+#let fg = (duality: duality.fg, bow: print.fg, wob: print.bg).at(cfg.theme)
+#let bg = (duality: duality.bg, bow: print.bg, wob: print.fg).at(cfg.theme)
 #let gamut = gradient.linear(bg, fg, space: oklch)
 #let dim(body) = text(fill: gamut.sample(60%), body)
 
-#let status = (
+#let status = _key-on-theme((
   empty: gamut.sample(75%),
-  urgent: if dev { duality.orange },
-  progress: if dev { duality.violet },
-  pause: if dev { duality.green },
-  block: if dev { duality.blue },
+  urgent: (
+    duality: duality.orange,
+    bow: orange,
+    wob: orange,
+  ),
+  progress: (
+    duality: duality.violet,
+    bow: purple,
+    wob: purple,
+  ),
+  pause: (
+    duality: duality.green,
+    bow: green,
+    wob: green,
+  ),
+  block: (
+    duality: duality.blue,
+    bow: blue,
+    wob: blue,
+  ),
   complete: fg,
   cancel: gamut.sample(40%),
-  unknown: if dev { duality.yellow },
+  unknown: (
+    duality: duality.yellow,
+    bow: yellow,
+    wob: yellow,
+  ),
 
-  note: if dev { duality.green } else { green },
-  hint: if dev { duality.violet } else { purple },
-)
-#for (name, value) in status {
-  if value == none {
-    // so we don't have to type out the non-dev case all the time
-    value = fg
-  }
-  status.at(name) = value
-}
+  note: (
+    duality: duality.green,
+    bow: green,
+    wob: green,
+  ),
+  hint: (
+    duality: duality.violet,
+    bow: purple,
+    wob: purple,
+  )
+))
 
-#let reference = (
-  external: if dev { duality.blue } else { blue },
-  other-file: if dev { duality.violet } else { purple },
-  same-file: if dev { duality.green } else { green },
-)
+#let reference = _key-on-theme((
+  external: (
+    duality: duality.blue,
+    bow: blue,
+    wob: blue,
+  ),
+  other-file: (
+    duality: duality.violet,
+    bow: purple,
+    wob: purple,
+  ),
+  same-file: (
+    duality: duality.green,
+    bow: green,
+    wob: green,
+  ),
+))

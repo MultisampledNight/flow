@@ -67,9 +67,14 @@
 #let dev = _default(dev, false)
 
 // What colors to display the document in.
-// - bow: Black on white. Typical sciency-looking papers, very well printable.
+// - bow: Black on white
 //   - Default if `dev` is false
-// - wob: White on black. Though for print preview but you don't want to be flashbanged.
+//   - Typical sciency-looking papers
+//   - Very well printable
+// - wob: White on black
+//   - Same as bow, just with foreground and background swapped
+//   - Essentially the "night mode" option in most PDF viewers
+//     - But without inverting other colors
 // - duality: Spacy theme that has never been published in full
 //   that I use a lot, personally.
 //   - Default if `dev` is true
