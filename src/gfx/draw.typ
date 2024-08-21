@@ -65,7 +65,6 @@
 // Create a new branch. After all coordinates in this branch have been processed,
 // return to the node before it.
 // At the end of a branch, an arrow mark is always drawn.
-// TODO: implement in trans
 #let br(..args) = _modifier(args.pos(), (branch: true, last-is-arrow: true))
 
 // Label the edges created in this call.
