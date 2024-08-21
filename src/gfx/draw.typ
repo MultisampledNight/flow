@@ -151,6 +151,12 @@
   let depth = ((queue: args.pos().rev(), cfg: (:)),)
   let last = from
 
+  // optimization: instead of going through the whole depth
+  // each edge to get the current style,
+  // just combine it at each new `styled` modifier and push it onto here,
+  // popping when the `styled` frame ends
+  let styles-depth = ()
+
   // collecting them while drawing edges so we can draw them all on the edges
   // each tag is a dictionary with fields:
   // - `pos` for where to draw the tag
@@ -177,6 +183,11 @@
         ))
       }
 
+      // if there are styles that end here, remove them
+      if "styles" in frame.cfg {
+        let _ = styles-depth.pop()
+      }
+
       // if we should reset due to branching, do so
       if frame.cfg.at("branch", default: false) {
         last = frame.last
@@ -188,7 +199,10 @@
     let part = queue.pop()
     depth.last().queue = queue
 
-    let maybe-arrowhead = if queue.len() == 0 and frame.at("last-is-arrow", default: true) {
+    let maybe-arrowhead = if (
+      queue.len() == 0
+      and frame.at("last-is-arrow", default: true)
+    ) {
       // oh that means we want to draw an arrowhead
       // though if this is a modifier, that information needs to be propagated instead
 
@@ -211,24 +225,25 @@
       // so store that one, too
       part.last = last
 
+      // if this is a style modifier, store the style
+      if "styles" in part.cfg {
+        let next-styles = (
+          styles-depth.at(-1, default: (:))
+          + part.cfg.styles
+        )
+        styles-depth.push(next-styles)
+      }
+
       depth.push(part)
 
       continue
     }
 
-    // then let's get to drawing!
-    // go through all modifiers we have atm, stack them and then draw them
-    // TODO: optimize this by instead keeping a stack of the styles depth
-    let styles = depth
-      .filter(frame => "styles" in frame.cfg)
-      .map(frame => frame.cfg.styles)
-      .join()
-
     let current = part
     line(
       last,
       current,
-      ..styles,
+      ..styles-depth.at(-1, default: (:)),
       ..maybe-arrowhead,
     )
 
