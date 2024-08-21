@@ -2,6 +2,7 @@
 // See `doc/manual.typ` for an example of how usage in practise looks like!
 
 #import "callout.typ"
+#import "cfg.typ"
 #import "checkbox.typ"
 #import "gfx.typ"
 #import "metainfo.typ"
