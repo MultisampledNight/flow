@@ -317,9 +317,16 @@ consists of all players deciding for one of
 *rock*, *paper* or *scissors*,
 where:
 
-+ *Rock* loses to *paper*
-+ *Paper* loses to *scissors*
-+ *Scissors* loses to *rock*
+#let rock = oklch(60%, 0.2, 60deg)
+#let paper = rock.rotate(120deg)
+#let scissors = paper.rotate(120deg)
+
++ #text(rock)[*Rock*]
+  loses to #text(paper)[*paper*]
++ #text(paper)[*Paper*]
+  loses to #text(scissors)[*scissors*]
++ #text(scissors)[*Scissors*]
+  loses to #text(rock)[*rock*]
 
 #import gfx.draw: *
 #let beats(it) = tag(
@@ -331,9 +338,18 @@ where:
 )
 #gfx.diagram(
   nodes: (
-    rock: (angle: -150deg, radius: 1),
-    paper: (angle: -30deg, radius: 1),
-    scissors: (angle: 90deg, radius: 1),
+    rock: (
+      pos: (angle: -150deg, radius: 1),
+      accent: rock,
+    ),
+    paper: (
+      pos: (angle: -30deg, radius: 1),
+      accent: paper,
+    ),
+    scissors: (
+      pos: (angle: 90deg, radius: 1),
+      accent: scissors,
+    ),
   ),
   edges: (
     paper: beats("rock"),
@@ -351,10 +367,10 @@ where:
   - [x] Initial version
   - [x] Color edges
   - [x] Try alternative layouts
-- [ ] `diagram` helpers that facilitate and index diagrams (like the one with the checkbox transitions)
+- [x] `diagram` helpers that facilitate and index diagrams (like the one with the checkbox transitions)
   - Probably just need to add a bit of sugar to what's already in this document
   - Actually lol for the tags and the works I can just re-use the stack mechanism
-  - Modifiers like `styled`, `tag` and `exchange` can just open a new depth without `reset-to`
+  - Modifiers like `styled` and `tag` can just open a new depth
   - If there's no `reset-to`, it's not... reset to, lol
 - [ ] Custom outline with
   + right-aligned title

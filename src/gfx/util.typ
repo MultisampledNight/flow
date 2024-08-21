@@ -104,19 +104,70 @@
   }
 }
 
-#let diagram(nodes: (:), edges: (:), ..args) = {
+#let diagram(
+  // Key is the name used for a node,
+  // value is a dictionary with the keys:
+  // - `pos`: where to place the node
+  // - (optional) `display`: what content to show at `pos`
+  //   - Defaults to the node name
+  // - (optional) `accent`: what color outgoing edges should have
+  //   - Defaults to the foreground color of the current theme
+  //   - Also determines the color of the `name` if `display` is not used
+  //
+  // If the value doesn't contain the `pos` key,
+  // it is assumed to be directly the position as coordinate or cetz position.
+  //
+  // The node names directly map to cetz names.
+  nodes: (:),
+
+  // Key is the name of the node used as source,
+  // value is the target coordinate or node name.
+  // Use the `br` function in `gfx.draw`
+  // if you want to target more than node and/or
+  // don't take the direct path.
+  edges: (:),
+
+  ..args,
+) = {
   let cmds = {
     import draw: *
-    for (name, pos) in nodes {
+    for (name, cfg) in nodes {
+      let cfg = if (
+        type(cfg) == dictionary
+        and "pos" in cfg
+      ) {
+        cfg
+      } else {
+        (pos: cfg)
+      }
+
+      cfg.accent  = cfg.at("accent", default: fg)
+      let display = cfg.at(
+        "display",
+        default: text(fill: cfg.accent, name),
+      )
+
       content(
-        pos,
-        pad(0.5em, name),
+        cfg.pos,
+        pad(0.5em, display),
         name: name,
       )
+
+      nodes.at(name) = cfg
     }
 
     for (from, to) in edges {
-      trans(from, to)
+      let source-cfg = nodes.at(from)
+      trans(
+        from,
+        styled(
+          stroke: round-stroke(
+            paint: source-cfg.accent,
+          ),
+          fill: source-cfg.accent,
+          to,
+        ),
+      )
     }
 
     args.pos().at(0, default: none)
