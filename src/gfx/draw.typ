@@ -148,6 +148,9 @@
   let depth = ((queue: args.pos().rev(), cfg: (:)),)
   let last = from
 
+  // collecting them while drawing edges so we can draw them all on the edges
+  let tags = ()
+
   while depth.len() != 0 {
     let queue = depth.last().queue
 
@@ -160,8 +163,6 @@
         last = frame.last
       }
 
-      // TODO: draw label between `part` and `last` if the frame was a `tag` one?
-
       continue
     }
 
@@ -171,6 +172,11 @@
     if _is-modifier(part) {
       // advance in depth
       // can just make it a new frame
+
+      // the queue is popped at the back to receive the next one
+      // so it is reversed here so it's in the right order again
+      part.queue = part.queue.rev()
+
       // some modifiers (e.g. branch, tag) need the last node,
       // so store that one, too
       part.last = last
@@ -178,6 +184,8 @@
 
       continue
     }
+
+    // TODO: if the last one, draw arrowhead or label
 
     // then let's get to drawing!
     // go through all modifiers we have atm, stack them and then draw them
@@ -188,7 +196,5 @@
 
     let current = part
     line(last, current, ..styles)
-
-    // TODO: if the last one, draw arrowhead or label
   }
 }
