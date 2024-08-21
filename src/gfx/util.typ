@@ -108,14 +108,18 @@
   let cmds = {
     import draw: *
     for (name, pos) in nodes {
-      content(pos, pad(0.5em, name), name: name)
+      content(
+        pos,
+        pad(0.5em, name),
+        name: name,
+      )
     }
 
     for (from, to) in edges {
       trans(from, to)
     }
 
-    args.pos().first()
+    args.pos().at(0, default: none)
   }
 
   align(center, canvas(cmds, ..args.named()))

@@ -65,6 +65,7 @@
 // Create a new branch. After all coordinates in this branch have been processed,
 // return to the node before it.
 // At the end of a branch, an arrow mark is always drawn.
+// TODO: implement in trans
 #let br(..args) = _modifier(args.pos(), (branch: true, last-is-arrow: true))
 
 // Label the edges created in this call.
@@ -72,8 +73,18 @@
 //
 // - Only drawn once, after all edges and states have been drawn.
 // - Placed in the center of all states in this call.
-// TODO: implement in trans
-#let tag(..args, tag: none) = _modifier(args.pos(), (tag: tag))
+#let tag(
+  ..args,
+  tag: none,
+  offset: (0, 0),
+) = _modifier(
+  args.pos(),
+  (
+    tag: tag,
+    offset: offset,
+    content-args: args.named(),
+  ),
+)
 
 // Offsets drawn edges so that they can be drawn next to each other at different offsets
 // while still being distinguishable.
@@ -98,6 +109,7 @@
 #let styled(..args) = _modifier(args.pos(), (styles: args.named()))
 
 // shallowly replaces () with last
+// TODO: make recursive
 #let _make-concrete(coord, last) = if type(coord) == array {
   coord.map(p => if p == () { last } else { p })
 } else if type(coord) == dictionary {
@@ -132,6 +144,7 @@
 // continues from there.
 // This can nest arbitrarily often.
 #let trans(from, ..args, arrow-mark: (symbol: ">")) = {
+  // ...one day, when typst has proper types, this will be hopefully much cleaner
   if args.pos().len() == 0 {
     panic("need at least one target state to transition to")
   }
@@ -141,13 +154,17 @@
   // we just need to repeat it along the plan
 
   // basically manual recursion. each array entry is a stack frame
-  // each stack frame has a field `queue` for the coords/branches to next run through
-  // additionally each frame can be a *modifier* — that is, specially influencing processing somehow
-  // see the functions above calling _modifier for an explanation
+  // each stack frame is a dictionary with fields:
+  // - `queue` for the coords/branches to next run through
+  // - `cfg` for modifier options (see above functions calling _modifier)
+  // - (optional) `last-is-arrow` if to draw an arrowhead at the end of this frame
   let depth = ((queue: args.pos().rev(), cfg: (:)),)
   let last = from
 
   // collecting them while drawing edges so we can draw them all on the edges
+  // each tag is a dictionary with fields:
+  // - `pos` for where to draw the tag
+  // - `display` for what to show at `pos`
   let tags = ()
 
   while depth.len() != 0 {
@@ -156,9 +173,21 @@
 
     // has this frame has been fully processed?
     if queue.len() == 0 {
-      // if we should reset due to branching, do so
       let frame = depth.pop()
+      
+      // if this was the end of a section to be tagged, note where to draw it
+      if "tag" in frame.cfg {
+        tags.push((
+          pos: (
+            to: (frame.last, 50%, last),
+            rel: frame.cfg.offset,
+          ),
+          display: frame.cfg.tag,
+          content-args: frame.cfg.content-args,
+        ))
+      }
 
+      // if we should reset due to branching, do so
       if frame.cfg.at("branch", default: false) {
         last = frame.last
       }
@@ -214,5 +243,20 @@
     )
 
     last = current
+  }
+
+  // draw all tags we collected
+  // they're drawn afterwards so they're always visible over the edges
+  for (pos, display, content-args) in tags {
+    content(
+      pos,
+      box(
+        fill: bg,
+        inset: 0.25em,
+        radius: 0.1em,
+        display,
+      ),
+      ..content-args,
+    )
   }
 }

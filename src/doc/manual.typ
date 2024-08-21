@@ -322,7 +322,13 @@ where:
 + *Scissors* loses to *rock*
 
 #import gfx.draw: *
-#let beats = tag.with(tag: [beats])
+#let beats(it) = tag(
+  it,
+  tag: emph(text(0.8em)[beats]),
+  anchor: "south",
+  angle: it,
+  padding: 0.1,
+)
 #gfx.diagram(
   nodes: (
     rock: (angle: -150deg, radius: 1),
@@ -334,7 +340,7 @@ where:
     scissors: beats("paper"),
     rock: beats("scissors"),
   ),
-  length: 3em,
+  length: 4em,
 )
 ```
 
