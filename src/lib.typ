@@ -39,7 +39,15 @@
     title: title,
     author: args.named().at("author", default: ()),
   )
-  set page(fill: bg, numbering: "1 / 1")
+  set page(
+    fill: bg,
+    numbering: "1 / 1",
+    header: if not cfg.render {
+      align(center, strong(emph[
+        No-render mode — intended for `typst query`, not viewing
+      ]))
+    },
+  )
   set text(fill: fg, font: "IBM Plex Sans", size: 14pt)
 
   set rect(stroke: fg)
