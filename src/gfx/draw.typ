@@ -1,6 +1,6 @@
 // cetz.draw but with extra utilities which are not needed when not drawing on a canvas
 
-#import "@preview/cetz:0.2.2"
+#import "maybe-stub.typ": cetz
 #import cetz.draw: *
 
 #import "../palette.typ": *

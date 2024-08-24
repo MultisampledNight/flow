@@ -1,6 +1,6 @@
 // Utilities for defining icons and other graphics.
 
-#import "@preview/cetz:0.2.2"
+#import "maybe-stub.typ": cetz
 #import "../palette.typ": *
 #import "draw.typ"
 

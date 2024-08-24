@@ -1,7 +1,7 @@
 // Actual implementations of individual rendered icons.
 
 #import "util.typ": *
-#import cetz.draw: *
+#import "draw.typ": *
 
 #let empty(
   // argument is simply ignored
