@@ -98,5 +98,6 @@
 // If false, skip rendering more costly stuff like the outline and cetz canvases,
 // which greatly impacts the visual result but is irrelevant for e.g. `typst query`.
 // Consider specifying `false` when programmatically looking through the documents.
+// TODO: actually impl and stub out whatever needed
 #let render = (_define("render").bool)()
 #let render = _default(render, true)

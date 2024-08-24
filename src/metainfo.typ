@@ -72,8 +72,6 @@
   _check(it)
   it = _normalize(it)
 
-  if cfg.render {
-    _render(it)
-  }
+  _render(it)
   _queryize(it)
 }

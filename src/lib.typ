@@ -95,11 +95,9 @@
     separator
   }
 
-  if cfg.render {
-    if outlined {
-      outline()
-      separator
-    }
+  if outlined {
+    outline()
+    separator
   }
 
   body
