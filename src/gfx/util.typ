@@ -1,7 +1,4 @@
 // Utilities for defining icons and other graphics.
-// Prefer the canvas from here over directly the one from cetz
-// since that will make queries faster if render=false is passed as --input.
-// Since it's re-exported from flow.gfx, just use it via flow.gfx.canvas.
 
 #import "@preview/cetz:0.2.2"
 #import "../palette.typ": *
@@ -13,26 +10,18 @@
   paint: paint,
 )
 
-// Note: `body` needs to be a function/lambda taking no parameters.
-// It is called only if `cfg.render` is true.
-#let canvas(body, length: 1em, ..args) = {
-  if not cfg.render {
-    return square(size: length, stroke: fg)
-  }
+#let canvas(body, length: 1em, ..args) = cetz.canvas(
+  ..args,
+  length: length,
+{
+  import draw: *
 
-  cetz.canvas(
-    ..args,
-    length: length,
-  {
-    import draw: *
+  set-style(
+    stroke: round-stroke(),
+  )
 
-    set-style(
-      stroke: round-stroke(),
-    )
-
-    (body)()
-  })
-}
+  body
+})
 
 #let icon(
   body,
@@ -57,7 +46,7 @@
 ) = {
   import draw: *
 
-  let cmds = () => group(
+  let cmds = group(
     ..if name != none {
       (name: name)
     } else {
@@ -101,7 +90,7 @@
       // so the user can just draw from 0 to 1 while the padding is outside
       set-origin((0.2, 0.2))
       scale(0.6)
-      (body)()
+      body
     },
   )
 
@@ -111,7 +100,7 @@
       canvas(..args, cmds)
     )
   } else {
-    (cmds)()
+    cmds
   }
 }
 
@@ -140,10 +129,8 @@
 
   ..args,
 ) = {
-  let cmds = () => {
+  let cmds = {
     import draw: *
-    // just rebinding so we can modify it in the lambda
-    let nodes = nodes
     for (name, cfg) in nodes {
       let cfg = if (
         type(cfg) == dictionary

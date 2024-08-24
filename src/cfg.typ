@@ -19,7 +19,6 @@
 
   (
     bool: () => {
-      if source == none { return none }
       let value = source == "true"
       check(
         name,

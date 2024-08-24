@@ -1,4 +1,3 @@
-#import "cfg.typ"
 #import "gfx/util.typ": *
 #import "gfx/render.typ" as _render
 #import "palette.typ": *
@@ -49,34 +48,25 @@
   shift: 0.5,
   padding: (x: 1em),
   body
-) = {
-  // body might still contain interesting content for the query system
-  if not cfg.render {
-    return body
-  }
+) = box(context canvas(length: 1em, {
+  import draw: *
+  let body = pad(right: shift * -1em, pad(..padding, body))
 
-  box(context canvas(length: 1em, () => {
-    import draw: *
-    let body = pad(right: shift * -1em, pad(..padding, body))
-
-    // idea is to draw 2 parallelopiped
-    // then move them slightly above and below
-    // so they don't affect layouting
-    // but are still displayed out of line
-    let size = measure(body)
-    let half-backdrop = box(canvas(length: 1em, () => {
-      parallelopiped(
-        (0, 0),
-        (size.width, size.height),
-        shift: shift,
-        fill: accent,
-        stroke: accent,
-      )
-    }))
-    content((0, 0), move(dx: shift * 1em, dy: -size.height / 2, half-backdrop))
-    content((), move(dy: size.height / 2, half-backdrop))
-    content((), text(fill: bg, body))
+  // idea is to draw 2 parallelopiped
+  // then move them slightly above and below
+  // so they don't affect layouting
+  // but are still displayed out of line
+  let size = measure(body)
+  let half-backdrop = box(canvas(length: 1em, {
+    parallelopiped(
+      (0, 0),
+      (size.width, size.height),
+      shift: shift,
+      fill: accent,
+      stroke: accent,
+    )
   }))
-
-  h(0.75em, weak: true)
-}
+  content((0, 0), move(dx: shift * 1em, dy: -size.height / 2, half-backdrop))
+  content((), move(dy: size.height / 2, half-backdrop))
+  content((), text(fill: bg, body))
+})) + h(0.75em, weak: true)
