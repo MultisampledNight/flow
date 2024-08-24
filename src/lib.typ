@@ -47,6 +47,11 @@
         No-render mode — intended for `typst query`, not viewing
       ]))
     },
+    // PERF: consistently shaves off 0.02 seconds of query time
+    // tested on i7 10th gen
+    ..if not cfg.render {
+      (width: auto, height: auto)
+    }
   )
   set text(fill: fg, font: "IBM Plex Sans", size: 14pt)
 
