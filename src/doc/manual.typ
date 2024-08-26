@@ -1,9 +1,9 @@
 #import "../lib.typ" as flow: *
 #show: template.with(
   title: "flow manual",
-  aliases: ("how to procastinate",),
+  aliases: "how to procastinate",
   author: "MultisampledNight",
-  cw: ("\"you\"",),
+  cw: "\"you\"",
 )
 
 #let normal = text.with(font: "IBM Plex Sans")

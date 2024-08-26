@@ -47,16 +47,16 @@
 
 // If any of the specified types match, the value is valid,
 // regardless of any other matching.
-// TODO: implement
 #let _any(..args) = (any: args.pos())
 
 // TODO: add formatting function and use it in the error report
 // TODO: add function that goes through value and converts it into a schema using the functions above
 
 #let _schema = _attrs(
-  aliases: _array(str),
-  cw: _array(str),
-  tags: _array(str),
+  aliases: _any(str, _array(str)),
+  author: _any(str, _array(str)),
+  cw: _any(str, _array(str)),
+  tags: _any(str, _array(str)),
   lang: str,
 )
 
@@ -69,20 +69,37 @@
 // This is more specific than just comparing `type`
 // since it also allows specifying the types of elements in collections.
 // Returns a dictionary with the keys `expected`, `found`
-// optionally `key` and `original`
+// and optionally `key`
 // if the typecheck fails,
 // otherwise returns none.
 #let _typecheck(value, expected) = {
   // to have the typecheck work with nested collections,
   // we just rely on recursion
-  // i despise the Go-ish error handling here but there are no usable alternatives here
+  // i despise the Go-ish error handling but there are no usable alternatives here
 
   let actual = type(value)
 
+  // handling direct type specifications
   if actual == expected {
     return none
   }
 
+  // handling _any
+  if type(expected) == dictionary and "any" in expected {
+    for expected in expected.any {
+      let err = _typecheck(value, expected)
+      if err == none {
+        return none
+      }
+    }
+
+    return (
+      expected: expected,
+      found: value,
+    )
+  }
+
+  // handling _array
   if actual == array {
     if type(expected) != dictionary or "array" not in expected {
       return (expected: expected, found: value)
@@ -94,7 +111,6 @@
         return (
           expected: expected.array.ty,
           found: ele,
-          original: err,
         )
       }
     }
@@ -104,6 +120,7 @@
       return (expected: expected, found: value)
     }
 
+    // handling _attrs
     if "attrs" in expected {
       for (key, value) in value {
         let expected = expected.attrs.at(key, default: none)
@@ -117,11 +134,11 @@
             expected: expected,
             found: value,
             key: key,
-            original: err,
           )
         }
       }
     } else if "dict" in expected {
+      // handling _dict
       for (key, value) in value {
         let err = _typecheck(value, expected.dict.value)
         if err != none {
@@ -129,7 +146,6 @@
             expected: expected.dict.value,
             found: value,
             key: key,
-            original: err,
           )
         }
       }
@@ -168,7 +184,7 @@
 // Puts some well-known metadata fields into an array if they stand alone.
 // Returns the modified metadata.
 #let _normalize(it) = {
-  let arrayize = ("aliases", "cw")
+  let arrayize = ("aliases", "author", "cw", "tags")
 
   for (name, data) in it {
     if type(data) != array and name in arrayize {
