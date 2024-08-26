@@ -66,7 +66,7 @@
         schema
           .attrs
           .pairs()
-          .map((key, value) =>
+          .map(((key, value)) =>
             _fmt-schema(key)
             + ":"
             + _fmt-schema(value)
