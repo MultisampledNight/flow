@@ -49,7 +49,48 @@
 // regardless of any other matching.
 #let _any(..args) = (any: args.pos())
 
-// TODO: add formatting function and use it in the error report
+#let _fmt-schema(schema) = {
+  let (prefix, parts) = if type(schema) == dictionary {
+    if "array" in schema {
+      ("array", (_fmt-schema(schema.array.ty),))
+    } else if "dict" in schema {
+      ("dictionary", (
+        _fmt-schema(schema.dict.key),
+        _fmt-schema(schema.dict.value),
+      ))
+    } else if "any" in schema {
+      ("any", schema.any.map(_fmt-schema))
+    } else if "attrs" in schema {
+      (
+        "dictionary",
+        schema
+          .attrs
+          .pairs()
+          .map((key, value) =>
+            _fmt-schema(key)
+            + ":"
+            + _fmt-schema(value)
+          ),
+      )
+    } else {
+      (repr(schema), ())
+    }
+  } else {
+    (repr(schema), ())
+  }
+
+  prefix
+
+  if parts.len() == 0 {
+    return
+  }
+
+  "<"
+  parts
+    .intersperse(", ")
+    .join()
+  ">"
+}
 // TODO: add function that goes through value and converts it into a schema using the functions above
 
 #let _schema = _attrs(
@@ -169,9 +210,11 @@
     "metadata passed to template failed typecheck"
     + if "key" in err {
       " at key `" + err.key + "`"
+    } else {
+      ""
     }
     + ". "
-    + "expected: `" + repr(err.expected) + "`, "
+    + "expected: `" + _fmt-schema(err.expected) + "`, "
     + "actual: `" + repr(type(err.found)) + "`"
   )
 }
