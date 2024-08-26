@@ -460,6 +460,41 @@ where:
 ```
 
 
+== Metadata
+
+/ Metadata: Data about data.
+
+Sometimes it might be useful to denote information
+_about_ the document you're writing
+which doesn't quite belong into the document itself.
+Quite often this is also information
+you might wish to programmatically search for.
+
+An example of this are aliases of what you're writing about.
+Sometimes they are just like the title,
+but you can have only one title,
+so they need to be put somewhere else.
+Metadata is _perfect_ for this.
+
+=== Checking
+
+Theoretically, metadata can be literally anything.
+Practically though a few commonly used
+metadata fields and their types
+crystallize out, and
+if one notices that afterwards
+it takes quite a while to get everything into order again.
+
+For this reason,
+the metadata you specify is checked against a schema.
+The schema is lax —
+if you specify fields it doesn't know of,
+it will allow them anyway.
+
+The schema currently is:
+
+#raw(block: true, info._fmt-schema(info._schema))
+
 = Wishlist
 
 - [x] Split into library and manual
