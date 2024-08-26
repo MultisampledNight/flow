@@ -68,6 +68,45 @@
   link(to-desc)[#icon() #it]
 }
 
+= Introduction
+
+Hi there!
+This document serves as a long-form manual for the use of flow.
+Flow is the template I use as basis
+for my own
+#fxfirst("Personal Knowledge Management")
+system.
+
+It has the batteries of
+countless Typst documents written and
+hacks done included.
+This can make it quite overwhelming,
+but don't worry!
+You don't need to know everything about it
+in order to start using it.
+
+This manual assumes you already know
+#link("https://typst.app")[Typst] a bit —
+if you don't, that's absolutely no problem!
+Just head on over to the excellent
+#link("https://typst.app/docs/tutorial/")[Typst tutorial],
+I can guarantee you it is worthy of your time.
+
+#hint[
+  While you can use flow mostly
+  without worrying about the internals,
+  chances are that this template
+  is actually overkill for your specific needs and desires!
+
+  Hence, consider using flow as inspiration to consider,
+  not as the ultimate goal to strive for.
+  Feel free to take what you think is useful.
+  Ideally, even introspect and improve on it.
+  
+  Learning is highly individual, and
+  so are PKMs.
+  Find a solution that fits *you*. :3
+]
 
 = How do I get started?
 
@@ -91,6 +130,7 @@
 + Start typing the actual note like any other typst document! uwu
 
 = Reference
+
 
 == Task
 
@@ -218,7 +258,7 @@ Hence, see these semantics merely as a suggestion.
     + [ ] Like here!
     + [ ] And here!
 
-- [ ]No space between checkbox and description needed!
+- [ ]No space between checkbox and description necessary!
 ```
 
 
@@ -239,27 +279,65 @@ Their checkboxes are just not rendered.
 
 == Callout
 
+Callouts compress important statements and
+highlight them according to their semantic content.
+
+Documents are usually not read linearly,
+these callouts will stand out and
+let the reader pay more attention.
+They can also serve as visual anchors
+for navigation in a document
+for already read parts.
+Hence, use them wisely:
+If everything is highlighted, nothing is highlighted.
+
+=== Question
+
+```example
 #question[
   Something that is still to be examined.
 ]
+```
 
+=== Note
+
+```example
 #note[
   Key takeaways from a section. \
   Should be easy to remember.
 ]
+```
 
+=== Hint
+
+```example
 #hint[
   How to do something more easily. \
-  Or something that can be used to remember this better.
+  Or something that can be used
+  to remember this better.
 ]
+```
 
+=== Caution
+
+```example
 #caution[
-  Tries to warn the reader of something important or dangerous.
+  Tries to warn the reader of
+  something important or dangerous.
 ]
+```
+
 
 == Effect
 
+Can highlight that some text is really important.
+
 === Invert
+
+```example
+What if I told you a story about
+visiting a very #invert[spooky] place?
+```
 
 For when you need to add #invert[extra importance] to some text.
 
@@ -275,6 +353,29 @@ otherwise it'll go out of page like this one.]
 #v(1.5em)
 
 Hence it is best fit for #invert[a few words.]
+
+=== Affect first
+
+Highlights the first character of each word in the given string.
+Useful for introducing specific terms and
+highlighting what their abbreviation is.
+
+```example
+#fxfirst("Personal Knowledge Management") systems
+facilitate surviving in an age of overload.
+
+When reading,
+#fxfirst(
+  "they felt quite woozy,",
+  fx: text.with(1.5em),
+)
+after having found out about the
+#fxfirst(
+  "numerous effects possible.",
+  fx: emph,
+)
+```
+
 
 == Diagram
 
@@ -294,12 +395,12 @@ They are useful as a second line for conveying concepts.
 They do not replace a text description though:
 Since Typst doesn't support PDF accessibility yet,
 it is highly recommended that they don't add any new information
-that isn't in the text already
+that isn't in the text already.
 
 Ultimately though your documents are your documents,
 so use them as you see fit.
 
-== Using them
+=== Using them
 
 For drawing, manipulating and connecting shapes,
 the `gfx` module is your friend,
@@ -357,6 +458,7 @@ where:
   length: 4em,
 )
 ```
+
 
 = Wishlist
 

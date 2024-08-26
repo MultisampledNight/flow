@@ -1,16 +1,12 @@
 // Feel free to import this file's contents via a glob!
 // See `doc/manual.typ` for an example of how usage in practise looks like!
 
-#import "callout.typ"
+#import "callout.typ": question, note, hint, caution
 #import "cfg.typ"
 #import "checkbox.typ"
-#import "gfx.typ"
+#import "gfx.typ" as gfx: invert, fxfirst
 #import "info.typ"
 #import "palette.typ": *
-
-// global re-exports
-#let (question, note, hint, caution) = dictionary(callout)
-#let invert = gfx.invert
 
 // global definitions
 #let separator = line(length: 100%, stroke: gamut.sample(25%)) + v(-0.5em)

@@ -70,3 +70,19 @@
   content((), move(dy: size.height / 2, half-backdrop))
   content((), text(fill: bg, body))
 })) + h(0.75em, weak: true)
+
+// Highlight the first grapheme cluster
+// (can approximately think of it as a character)
+// of each word
+// using the given function.
+#let fxfirst(it, fx: strong) = {
+  it.split()
+    .map(word => {
+      let clusters = word.clusters()
+      let first = fx(clusters.first())
+      let rest = clusters.slice(1).join()
+      [#first#rest]
+    })
+    .intersperse[ ]
+    .join()
+}
