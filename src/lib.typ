@@ -5,7 +5,7 @@
 #import "cfg.typ"
 #import "checkbox.typ"
 #import "gfx.typ"
-#import "metainfo.typ"
+#import "info.typ"
 #import "palette.typ": *
 
 // global re-exports
@@ -101,10 +101,9 @@
 
   text(2.5em, strong(title))
 
-  let info = args.named()
-  if info.len() > 0 {
+  if args.named().len() > 0 {
     v(-1.75em)
-    metainfo.process(info)
+    info.process(args.named())
     separator
   }
 

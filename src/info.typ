@@ -61,7 +61,7 @@
 }
 
 #let _queryize(it) = [
-  #metadata(it) <metainfo>
+  #metadata(it) <info>
 ]
 
 // Takes in a dictionary representing metadata,
