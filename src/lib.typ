@@ -53,7 +53,12 @@
       (width: auto, height: auto)
     }
   )
-  set text(fill: fg, font: "IBM Plex Sans", size: 14pt)
+  set text(
+    fill: fg,
+    font: "IBM Plex Sans",
+    size: 14pt,
+    lang: args.named().at("lang", default: "en"),
+  )
 
   set rect(stroke: fg)
   set line(stroke: fg)
