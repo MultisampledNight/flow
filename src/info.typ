@@ -47,7 +47,11 @@
 
 // If any of the specified types match, the value is valid,
 // regardless of any other matching.
+// TODO: implement
 #let _any(..args) = (any: args.pos())
+
+// TODO: add formatting function and use it in the error report
+// TODO: add function that goes through value and converts it into a schema using the functions above
 
 #let _schema = _attrs(
   aliases: _array(str),
@@ -64,75 +68,95 @@
 //
 // This is more specific than just comparing `type`
 // since it also allows specifying the types of elements in collections.
-// Returns true if the value matches, returns false if it is different.
+// Returns a dictionary with the keys `expected`, `found`
+// optionally `key` and `original`
+// if the typecheck fails,
+// otherwise returns none.
 #let _typecheck(value, expected) = {
   // to have the typecheck work with nested collections,
   // we just rely on recursion
+  // i despise the Go-ish error handling here but there are no usable alternatives here
 
   let actual = type(value)
 
   if actual == expected {
-    return true
+    return none
   }
 
   if actual == array {
     if type(expected) != dictionary or "array" not in expected {
-      return false
+      return (expected: expected, found: value)
     }
 
     for ele in value {
-      if not _typecheck(ele, expected.array.ty) {
-        return false
+      let err = _typecheck(ele, expected.array.ty)
+      if err != none {
+        return (
+          expected: expected.array.ty,
+          found: ele,
+          original: err,
+        )
       }
     }
-
-    return true
   } else if actual == dictionary {
     // was `expected` constructed using the functions above?
     if type(expected) != dictionary {
-      return false
+      return (expected: expected, found: value)
     }
 
     if "attrs" in expected {
       for (key, value) in value {
-        let expected-value = expected.attrs.at(key, default: none)
-        if expected-value == none {
+        let expected = expected.attrs.at(key, default: none)
+        if expected == none {
           continue
         }
 
-        if not _typecheck(value, expected-value) {
-          return false
+        let err = _typecheck(value, expected)
+        if err != none {
+          return (
+            expected: expected,
+            found: value,
+            key: key,
+            original: err,
+          )
         }
       }
-
-      return true
     } else if "dict" in expected {
       for (key, value) in value {
-        if (
-          not _typecheck(key, expected.dict.key)
-          or not _typecheck(value, expected.dict.value)
-        ) {
-          return false
+        let err = _typecheck(value, expected.dict.value)
+        if err != none {
+          return (
+            expected: expected.dict.value,
+            found: value,
+            key: key,
+            original: err,
+          )
         }
       }
-
-      return true
     }
+  } else {
+    return (
+      expected: expected,
+      found: value,
+    )
   }
-
-  false
 }
 
 // Panics if known fields do not contain their known types.
 #let _check-schema(it) = {
-  if _typecheck(it, _schema) {
+  let err = _typecheck(it, _schema)
+  if err == none {
     return
   }
 
   panic(
-    "metadata passed to template failed typecheck. " +
-    "expected schema: `" + repr(_schema) + "`, " +
-    "actual values: `" + repr(it) + "`"
+    "metadata passed to template failed typecheck"
+    + if "key" in err {
+      " at key `" + err.key + "`"
+    }
+    + ". "
+    + "expected: `" + repr(err.expected) + "`, "
+    + "actual: `" + repr(type(err.found)) + "`"
   )
 }
 
