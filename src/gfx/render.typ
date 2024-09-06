@@ -12,11 +12,11 @@
   invert: true,
   key: "empty",
   ..args,
-{
+() => {
   rect((-0.125, -0.125), (1.125, 1.125), radius: 0.25)
 })
 
-#let urgent = icon.with(key: "urgent", {
+#let urgent = icon.with(key: "urgent", () => {
   let offset = 0.2
 
   for (offset, y-scale) in (
@@ -34,7 +34,7 @@
   }
 })
 
-#let progress = icon.with(key: "progress", {
+#let progress = icon.with(key: "progress", () => {
   let bendness = (x: 0.25, y: 0.5)
   let offset = 0.25
 
@@ -48,21 +48,21 @@
   }
 })
 
-#let pause = icon.with(key: "pause", {
+#let pause = icon.with(key: "pause", () => {
   circle((0.5, 0.8), radius: 0.1)
   circle((0.5, 0.2), radius: 0.1)
 })
 
-#let block = icon.with(key: "block", {
+#let block = icon.with(key: "block", () => {
   line((0, 0.5), (1, 0.5))
 })
 
-#let complete = icon.with(key: "complete", {
+#let complete = icon.with(key: "complete", () => {
   line((0, 0), (1, 1))
   line((0, 1), (1, 0))
 })
 
-#let cancel = icon.with(key: "cancel", {
+#let cancel = icon.with(key: "cancel", () => {
   let slantedness = 0.25
 
   line(
@@ -71,7 +71,7 @@
   )
 })
 
-#let unknown = icon.with(key: "unknown", {
+#let unknown = icon.with(key: "unknown", () => {
   arc(
     (0.5, 0.5),
     start: 165deg,
@@ -90,11 +90,11 @@
   )
 })
 
-#let note = icon.with(key: "note", {
+#let note = icon.with(key: "note", () => {
   circle((0.5, 0.95), radius: 0.5pt)
   line((0.5, 0.65), (0.5, 0))
 })
 
-#let hint = icon.with(key: "hint", {
+#let hint = icon.with(key: "hint", () => {
   circle((0.5, 0.5), radius: 0.5, fill: none)
 })

@@ -44,6 +44,7 @@
   // Arguments to forward to `canvas` if `contentize` is true.
   ..args,
 ) = {
+  if not cfg.render { return }
   import draw: *
 
   let cmds = group(
@@ -90,7 +91,7 @@
       // so the user can just draw from 0 to 1 while the padding is outside
       set-origin((0.2, 0.2))
       scale(0.6)
-      body
+      body()
     },
   )
 
