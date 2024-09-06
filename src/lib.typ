@@ -14,12 +14,14 @@
 
 #let styling(body, ..args) = {
   if not cfg.render {
-    // PERF: consistently shaves off 0.02 seconds of query time
-    // tested on i7 10th gen
-    set page(width: auto, height: auto)
-    set text(size: 0pt)
+    return {
+      // PERF: consistently shaves off 0.02 seconds of query time
+      // tested on i7 10th gen
+      set page(width: auto, height: auto)
+      set text(size: 0pt)
 
-    return body
+      body
+    }
   }
   
   set page(
