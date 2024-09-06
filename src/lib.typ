@@ -12,48 +12,24 @@
 // global definitions
 #let separator = line(length: 100%, stroke: gamut.sample(25%)) + v(-0.5em)
 
-// The args sink is used as metadata.
-// It'll exposed both in a table in the document and via `typst query`.
-#let template(
-  body,
-  title: none,
-  outlined: true,
-  ..args,
-) = {
-  let title = if title != none {
-    title
-  } else if cfg.filename != none {
-    cfg.filename.trim(
-      ".typ",
-      at: end,
-      repeat: false,
-    )
-  } else {
-    [Untitled]
-  }
+#let styling(body, ..args) = {
+  if not cfg.render {
+    // PERF: consistently shaves off 0.02 seconds of query time
+    // tested on i7 10th gen
+    set page(width: auto, height: auto)
+    set text(size: 0pt)
 
-  set document(
-    title: title,
-    author: args.named().at("author", default: ()),
-  )
+    return body
+  }
+  
   set page(
     fill: bg,
     numbering: "1 / 1",
-    header: if not cfg.render {
-      align(center, strong(emph[
-        No-render mode — intended for `typst query`, not viewing
-      ]))
-    },
-    // PERF: consistently shaves off 0.02 seconds of query time
-    // tested on i7 10th gen
-    ..if not cfg.render {
-      (width: auto, height: auto)
-    }
   )
   set text(
     fill: fg,
     font: cfg.font.body,
-    size: if cfg.render { 14pt } else { 0pt },
+    size: 14pt,
     lang: args.named().at("lang", default: "en"),
   )
   show raw: set text(font: cfg.font.code)
@@ -100,6 +76,36 @@
     text(if cfg.dev { fg } else { luma(100%) }, it),
   )
 
+  body
+}
+
+// The args sink is used as metadata.
+// It'll exposed both in a table in the document and via `typst query`.
+#let template(
+  body,
+  title: none,
+  outlined: true,
+  ..args,
+) = {
+  let title = if title != none {
+    title
+  } else if cfg.filename != none {
+    cfg.filename.trim(
+      ".typ",
+      at: end,
+      repeat: false,
+    )
+  } else {
+    [Untitled]
+  }
+
+  set document(
+    title: title,
+    author: args.named().at("author", default: ()),
+  )
+
+  show: styling.with(..args.named())
+  show: terms.process.with(cfg: args.named().at("terms", default: none))
 
   text(2.5em, strong(title))
 
@@ -115,7 +121,6 @@
   }
 
   show: checkbox.process
-  show: terms.process.with(cfg: args.named().at("terms", default: none))
 
   body
 }

@@ -98,14 +98,10 @@
   cw: _any(str, _array(str)),
   tags: _any(str, _array(str)),
   terms: _any(
-    // shorthand for bold
+    // shorthand for bolding all listed terms
     _array(str),
-    // the long, explicit version
-    _attrs(
-      bold: _array(str),
-      accent: _dict(str, color),
-      link: _dict(str, str),
-    ),
+    // the explicit version which allows using any function for modification
+    _dict(str, function),
     // TODO: one day, implement auto which searches through all terms
   ),
   lang: str,
@@ -268,6 +264,7 @@
     gutter: 1em,
     ..it
     .pairs()
+    .filter(((name, _)) => name != "terms")
     .map(
       ((name, data)) => (dim(name), field(name, data))
     )

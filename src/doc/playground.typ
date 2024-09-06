@@ -1,6 +1,6 @@
 #import "../lib.typ" as flow: *
 #show: template.with(
-  terms: ("ich",),
+  terms: ("ich": text.with(blue), "ein": emph),
 )
 
 Miau!
