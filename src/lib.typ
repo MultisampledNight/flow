@@ -51,10 +51,12 @@
   )
   set text(
     fill: fg,
-    font: "IBM Plex Sans",
+    font: cfg.font.body,
     size: if cfg.render { 14pt } else { 0pt },
     lang: args.named().at("lang", default: "en"),
   )
+  show raw: set text(font: cfg.font.code)
+  show math.equation: set text(font: cfg.font.math)
 
   set rect(stroke: fg)
   set line(stroke: fg)
@@ -80,7 +82,6 @@
     if not cfg.dev { ret = underline(ret) }
     ret
   }
-  show raw: set text(font: "IBM Plex Mono")
   show raw.where(block: false): it => highlight(
     top-edge: 0.9em,
     bottom-edge: -0.25em,
