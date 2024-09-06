@@ -2,21 +2,17 @@
 
 typst note template and utils
 
-## how do i use
+## How do I use this?
 
-uuuuh best compile `src/doc/manual.typ` and look at the resulting pdf and compare it to the source file so you know what to do
-
-pass `--input dev=true` if you want some nicer colors
-
-yeah that's not ideal
-
-yeah i should make an external manual with proper examples sometime
-but not today
+Compile `src/doc/manual.typ` using [Typst] and look at the resulting PDF!
+Pass `--input dev=true` if you want some nicer colors!
 
 ## features
 
-- checkboxes just like with markdown syntax!
-- color palette management for absolutely no reason!
-- callouts for questions, notes, hints and warnings!
-- metadata!
+- Checkboxes just like with markdown syntax!
+- Color palette management for absolutely no reason!
+- Callouts for questions, notes, hints and warnings!
+- Metadata queryable via the `<info>` label!
+- Diagram helpers !
 
+[Typst]: https://typst.app
