@@ -52,7 +52,7 @@
   set text(
     fill: fg,
     font: "IBM Plex Sans",
-    size: 14pt,
+    size: if cfg.render { 14pt } else { 0pt },
     lang: args.named().at("lang", default: "en"),
   )
 
@@ -108,7 +108,7 @@
     separator
   }
 
-  if outlined {
+  if outlined and cfg.render {
     outline()
     separator
   }
