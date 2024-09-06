@@ -264,7 +264,6 @@
     gutter: 1em,
     ..it
     .pairs()
-    .filter(((name, _)) => name != "terms")
     .map(
       ((name, data)) => (dim(name), field(name, data))
     )
@@ -282,6 +281,10 @@
 // makes it easily processable via the query system (under the `<metainfo>` tag).
 #let process(it) = {
   _check(it)
+
+  // literally only included for typechecking, don't actually need it afterwards
+  let _ = it.remove("terms", default: none)
+
   it = _normalize(it)
 
   _render(it)
