@@ -80,6 +80,7 @@
     if not cfg.dev { ret = underline(ret) }
     ret
   }
+  show raw: set text(font: "IBM Plex Mono")
   show raw.where(block: false): it => highlight(
     top-edge: 0.9em,
     bottom-edge: -0.25em,
