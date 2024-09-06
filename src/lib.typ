@@ -20,6 +20,9 @@
       set page(width: auto, height: auto)
       set text(size: 0pt)
 
+      // purely to make references not crash when querying
+      set heading(numbering: "1.1")
+
       body
     }
   }
@@ -51,6 +54,7 @@
     ),
   )
 
+  show ref: text.with(fill: reference.same-file)
   show link: it => {
     let accent = if type(it.dest) == str {
       reference.external

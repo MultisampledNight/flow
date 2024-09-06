@@ -113,6 +113,173 @@ I can guarantee you it is worthy of your time.
 = Reference
 
 
+== Template
+
+The `#show: template` you usually put at the top of your file
+is already functional without any further configuration.
+However, sometimes one _does_ want further configuration.
+Hence, the following
+
+=== Arguments <arguments>
+
+All of these are named arguments.
+In effect, if you choose to use any of them,
+most likely you want to transform your `#show: template`
+into a
+#link("https://typst.app/docs/reference/foundations/function/#definitions-with")[`function.with`]
+call, for example:
+
+```typst
+#show: template.with(
+  title: "meow!",
+  terms: ("cat", "catnip"),
+)
+```
+
+==== `title`
+
+A string.
+If `boilerplate` is enabled,
+it is listed atop the file in bold.
+It is encoded into the resulting PDF
+as the document title you usually see
+in the window title of the PDF viewer.
+
+If it is not specified or `none` is passed,
+the filename passed via `--input filename=...`
+on the CLI
+has its extension trimmed and is used instead.
+Otherwise,
+if `--input filename=...` has not been passed,
+`"Untitled"` is used as a last-resort default.
+
+Given that it is usually the first thing the reader sees,
+it should try to very concisely relay what the document is about.
+
+==== `boilerplate`
+
+A boolean.
+If enabled, renders
+the title, metadata and table of contents
+as well as separator lines
+before the main body.
+
+On by default.
+
+Disabling it might be useful for diagrams or
+making your own templates ontop of flow's `template`.
+
+==== `terms`
+
+Either an array of strings or
+a dictionary from strings to functions, where
+each function takes exactly one positional argument.
+
+Which words to highlight specially in the document.
+Think of it as a short-hand for show rules, but
+for individual words,
+handling capitalization and
+word boundaries for you.
+
+The function is the content with the word given to
+and it is supposed to return what should be displayed in-place.
+If it's an array, all items become keys
+with the `strong` function
+as value.
+
+None are highlighted by default.
+It is not included in the metadata table.
+
+=== Kinds
+
+==== `template`
+
+The base template,
+usable for notes,
+short reports and
+the works.
+
+==== `slides`
+
+Splits the document into slides by
+using the headings.
+See the dedicated section about slides,
+@slides,
+for details.
+
+=== Metadata
+
+/ Metadata: Data about data.
+
+Sometimes it might be useful to denote information
+_about_ the document you're writing
+which doesn't quite belong into the document itself.
+Quite often this is also information
+you might wish to programmatically search for.
+
+An example of this are aliases of what you're writing about.
+Sometimes they are just like the title,
+but you can have only one title,
+so they need to be put somewhere else.
+Metadata is _perfect_ for this.
+
+You can specify metadata
+by passing any additional named arguments
+that are not named under @arguments
+to your chosen template (as long as it is from flow, that is).
+
+==== Checking
+
+Theoretically, metadata can be literally anything.
+Practically though a few commonly used
+metadata fields and their types
+crystallize out, and
+if one notices that afterwards
+it takes quite a while to get everything into order again.
+
+For this reason,
+the metadata you specify is checked against a schema.
+The schema is lax —
+if you specify fields it doesn't know of,
+it will allow them anyway.
+
+The schema currently is:
+
+#raw(block: true, info._fmt-schema(info._schema))
+
+==== Querying
+
+In order to actually get the metadata out of one document,
+you can use the `typst query` command in a script.
+Specifically, querying for the `<info>` label
+yields all metadata you've specified.
+
+For getting to the actual metadata,
+you probably want to pass `--one --field value`,
+which results in the JSON of what you've specified
+(plus some normalization).
+
+===== Accelerating
+
+If you've tried to `typst query` on a flow document
+without anything else,
+you've probably noticed that it is quite slow.
+That is mostly because Typst just compiles the whole document
+like it would when actually rendering it to a PDF
+and just queries for what you've specified afterwards.
+
+Hence, here are a few tips to speed things up significantly:
+
+- Pass `--input render=false`.
+  Flow will use this to avoid large imports,
+  not render diagrams,
+  layout everything in a "whatever" way as well as
+  do several smaller things.
+- Restrict what paths Typst should search fonts in.
+  For example, you could try running Typst under a fake root
+  to make sure it does not enumerate all system fonts
+  (which it would do otherwise).
+
 == Task
 
 / Task: Checkbox at the very beginning of a list item or enumeration item.
@@ -241,7 +408,6 @@ Hence, see these semantics merely as a suggestion.
 
 - [ ]No space between checkbox and description necessary!
 ```
-
 
 === Examples of non-tasks
 
@@ -440,38 +606,8 @@ where:
 )
 ```
 
+== Slides <slides>
 
-== Metadata
-
-/ Metadata: Data about data.
-
-Sometimes it might be useful to denote information
-_about_ the document you're writing
-which doesn't quite belong into the document itself.
-Quite often this is also information
-you might wish to programmatically search for.
-
-An example of this are aliases of what you're writing about.
-Sometimes they are just like the title,
-but you can have only one title,
-so they need to be put somewhere else.
-Metadata is _perfect_ for this.
-
-=== Checking
-
-Theoretically, metadata can be literally anything.
-Practically though a few commonly used
-metadata fields and their types
-crystallize out, and
-if one notices that afterwards
-it takes quite a while to get everything into order again.
-
-For this reason,
-the metadata you specify is checked against a schema.
-The schema is lax —
-if you specify fields it doesn't know of,
-it will allow them anyway.
-
-The schema currently is:
-
-#raw(block: true, info._fmt-schema(info._schema))
+#caution[
+  help actually implement
+]
