@@ -7,6 +7,7 @@
 #import "gfx.typ" as gfx: invert, fxfirst
 #import "info.typ"
 #import "palette.typ": *
+#import "terms.typ"
 
 // global definitions
 #let separator = line(length: 100%, stroke: gamut.sample(25%)) + v(-0.5em)
@@ -99,8 +100,6 @@
     text(if cfg.dev { fg } else { luma(100%) }, it),
   )
 
-  show: checkbox.process
-
 
   text(2.5em, strong(title))
 
@@ -114,6 +113,9 @@
     outline()
     separator
   }
+
+  show: checkbox.process
+  show: terms.process.with(cfg: args.named().at("terms", default: none))
 
   body
 }

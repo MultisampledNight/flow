@@ -25,7 +25,6 @@
   }
 }
 
-// <3
 // Ordered sequence of elements of type `ty`.
 #let _array(ty) = (array: (ty: ty))
 
@@ -98,6 +97,17 @@
   author: _any(str, _array(str)),
   cw: _any(str, _array(str)),
   tags: _any(str, _array(str)),
+  terms: _any(
+    // shorthand for bold
+    _array(str),
+    // the long, explicit version
+    _attrs(
+      bold: _array(str),
+      accent: _dict(str, color),
+      link: _dict(str, str),
+    ),
+    // TODO: one day, implement auto which searches through all terms
+  ),
   lang: str,
 )
 
