@@ -23,7 +23,7 @@
       body
     }
   }
-  
+
   set page(
     fill: bg,
     numbering: "1 / 1",
@@ -86,9 +86,12 @@
 #let template(
   body,
   title: none,
-  outlined: true,
+  boilerplate: true,
   ..args,
 ) = {
+  show: styling.with(..args)
+  show: terms.process.with(cfg: args.named().at("terms", default: none))
+
   let title = if title != none {
     title
   } else if cfg.filename != none {
@@ -98,7 +101,7 @@
       repeat: false,
     )
   } else {
-    [Untitled]
+    "Untitled"
   }
 
   set document(
@@ -106,18 +109,18 @@
     author: args.named().at("author", default: ()),
   )
 
-  show: styling.with(..args.named())
-  show: terms.process.with(cfg: args.named().at("terms", default: none))
+  let args = info.preprocess(args.named())
+  info.queryize(args)
 
-  text(2.5em, strong(title))
+  if boilerplate and cfg.render {
+    text(2.5em, strong(title))
 
-  if args.named().len() > 0 {
-    v(-1.75em)
-    info.process(args.named())
-    separator
-  }
+    if args.len() > 0 {
+      v(-1.75em)
+      info.render(args)
+      separator
+    }
 
-  if outlined and cfg.render {
     outline()
     separator
   }

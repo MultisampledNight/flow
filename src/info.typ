@@ -244,15 +244,28 @@
   it
 }
 
+#let preprocess(it) = {
+  _check(it)
+
+  // literally only included for typechecking, don't actually need it afterwards
+  let _ = it.remove("terms", default: none)
+
+  _normalize(it)
+}
+
+#let queryize(it) = [
+  #metadata(it) <info>
+]
+
 // Accepts a dictionary where
 // the key denotes the metadata field name and
 // the value its, well, actual data.
-#let _render(it) = {
+#let render(it) = {
   let field(name, data) = {
     if "cw" in lower(name) {
       data.map(gfx.invert).join()
     } else if type(data) == array {
-      data.intersperse[, ].join()
+      data.join[,]
     } else {
       [#data]
     }
@@ -271,22 +284,3 @@
   )
 }
 
-#let _queryize(it) = [
-  #metadata(it) <info>
-]
-
-// Takes in a dictionary representing metadata,
-// prepares and qolifies it,
-// renders it in a nice visual table and
-// makes it easily processable via the query system (under the `<metainfo>` tag).
-#let process(it) = {
-  _check(it)
-
-  // literally only included for typechecking, don't actually need it afterwards
-  let _ = it.remove("terms", default: none)
-
-  it = _normalize(it)
-
-  _render(it)
-  _queryize(it)
-}
