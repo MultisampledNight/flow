@@ -1,3 +1,5 @@
+#import "cfg.typ": render
+
 #let char-that-does-nothing = "\u{200B}"
 #let do-not-process(it) = {
   // this is a hack to make sure other show rules do not process the same `it`
@@ -41,7 +43,7 @@
 }
 
 #let process(body, cfg: none) = {
-  if cfg == none {
+  if cfg == none or not render {
     // no terms to highlight → nothing to do!
     return body
   }
