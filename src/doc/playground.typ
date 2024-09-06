@@ -1,16 +1,35 @@
 #import "../lib.typ" as flow: *
-#show: template.with(
-  terms: ("ich": text.with(blue), "ein": emph),
-)
+#import presentation: *
 
-Miau!
-Ich bin eine Katze und ich habe ein Verlangen nach
-Mikro USB Typ B
-Geräten.
+#show: slides
 
-```
-Ich kann auch in einem Codeblock weiterschreiben.
-In diesem sollte allerdings nichts,
-was ich schreibe,
-als Term highlighted werden.
-```
+Some kind of teaser I guess
+
+= My super cool presentation
+
+Woah this presentation is so cool
+
+= What did we do
+
+== Something
+
+#lorem(20)
+
+== Something else
+
+#lorem(20)
+
+
+= Also done
+
+== Completely unrelated sidetrack
+
+#lorem(20)
+
+== Oh no
+
+#lorem(20)
+
+= This is the last slide
+
+Thanks for reading

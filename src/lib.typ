@@ -7,6 +7,7 @@
 #import "gfx.typ" as gfx: invert, fxfirst
 #import "info.typ"
 #import "palette.typ": *
+#import "presentation.typ"
 #import "terms.typ"
 
 // global definitions
@@ -133,3 +134,12 @@
 
   body
 }
+
+#let slides(body, ..args) = {
+  show: presentation._prelude
+  show: template.with(boilerplate: false, ..args)
+  show: presentation._process
+
+  body
+}
+
