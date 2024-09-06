@@ -1,9 +1,25 @@
 #import "../lib.typ" as flow: *
+
+#let cb(marker, to-desc, it) = {
+  let icon = gfx.markers.at(marker).icon
+  link(to-desc)[#icon() #it]
+}
+
 #show: template.with(
   title: "flow manual",
   aliases: "how to procastinate",
   author: "MultisampledNight",
   cw: "\"you\"",
+  terms: (
+    "not started": cb.with(" ", <not-started>),
+    "urgent": cb.with("!", <urgent>),
+    "in progress": cb.with(">", <in-progress>),
+    "paused": cb.with(":", <paused>),
+    "completed": cb.with("x", <completed>),
+    "cancelled": cb.with("/", <cancelled>),
+    "blocked": cb.with("-", <blocked>),
+    "unknown": cb.with("?", <unknown>),
+  ),
 )
 
 #let normal = text.with(font: "IBM Plex Sans")
@@ -32,41 +48,6 @@
   )
 }
 
-#let name-to-info = (
-  "not started": (" ", <not-started>),
-  "urgent": ("!", <urgent>),
-  "in progress": (">", <in-progress>),
-  "paused": (":", <paused>),
-  "completed": ("x", <completed>),
-  "cancelled": ("/", <cancelled>),
-  "blocked": ("-", <blocked>),
-  "unknown": ("?", <unknown>),
-)
-// i am not sure if i like this or not
-#let fill-trigger = regex(
-  "\b(" +
-  name-to-info
-    .keys()
-    .map(name =>
-      "(" + name.at(0) +
-      "|" + upper(name.at(0)) +
-      ")" +
-      name.slice(1)
-    )
-    .intersperse("|")
-    .join() +
-  ")\b"
-)
-#let zwsp-hack(body) = body.text.at(0) + "\u{FEFF}" + body.text.slice(1)
-#show raw: it => {
-  show fill-trigger: zwsp-hack
-  it
-}
-#show fill-trigger: it => {
-  let (marker, to-desc) = name-to-info.at(lower(it.text))
-  let icon = gfx.markers.at(marker).icon
-  link(to-desc)[#icon() #it]
-}
 
 = Introduction
 
