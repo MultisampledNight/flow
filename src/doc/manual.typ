@@ -494,25 +494,3 @@ it will allow them anyway.
 The schema currently is:
 
 #raw(block: true, info._fmt-schema(info._schema))
-
-
-= Wishlist
-
-- [x] Split into library and manual
-- [x] Transition graph for possible checkbox transitions
-  - [x] Initial version
-  - [x] Color edges
-  - [x] Try alternative layouts
-- [x] `diagram` helpers that facilitate and index diagrams (like the one with the checkbox transitions)
-  - Probably just need to add a bit of sugar to what's already in this document
-  - Actually lol for the tags and the works I can just re-use the stack mechanism
-  - Modifiers like `styled` and `tag` can just open a new depth
-  - If there's no `reset-to`, it's not... reset to, lol
-- [/] Custom outline with
-  + right-aligned title
-  + page number
-  + section number
-- [ ] Conversion helper from Obsidian's markdown dialect
-  - The math part will be the most interesting
-- [ ] Doclinks (even clickable?)
-- [ ] Checkbox continuation and quick checking from `EmulateObsidian` function into typst
