@@ -6,11 +6,17 @@
   cats: link("https://http.cat"),
 )
 
+It happens!
+
 Some kind of teaser I guess
 
 = My super cool presentation
 
 Woah this presentation is so cool
+
+==
+
+#outline()
 
 = What did we do
 
@@ -22,6 +28,17 @@ Woah this presentation is so cool
 
 #lorem(20)
 
+=
+
+The previous slide should be empty
+
+==
+
+We've decided that this belongs on a new slide
+
+== Oh wow an actual new heading
+
+Now the counter should be still the same I hope
 
 = Also done
 
@@ -33,6 +50,6 @@ Woah this presentation is so cool
 
 #lorem(20)
 
-= This is the last slide
+= Thanks for listening
 
-Thanks for reading
+Any questions?

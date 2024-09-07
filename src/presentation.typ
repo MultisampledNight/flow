@@ -1,7 +1,18 @@
 #import "info.typ"
 #import "@preview/polylux:0.3.1": *
 
-#let slide(body) = polylux-slide(body)
+#let slide(body) = {  
+  // don't register headings that don't have any content
+  // this way one can use a bare `=` for an empty slide
+  // and a bare `==` for a new slide without heading
+  show heading.where(body: []): set heading(
+    numbering: none,
+    outlined: false,
+  )
+  set outline(depth: 1)
+
+  polylux-slide(body)
+}
 
 // Splits the array `seq` based on the function `check`.
 // `check` is called with each element in `seq` and
@@ -59,6 +70,12 @@
   body
 }
 
+#let _is-heading-with(it, check) = {
+  it.func() == heading and check(it.depth)
+}
+#let _is-toplevel-heading(it) = _is-heading-with(it, d => d == 1)
+#let _is-subheading(it) = _is-heading-with(it, d => d > 1)
+
 // Traverses the body and splits into slides by headings.
 // *The body needs to be un-styled for this,
 // i.e. call this after before you've applied anything to the content.
@@ -68,14 +85,14 @@
   // the toplevel headings get their own slides each
   let sections = _split-by(
     body.children,
-    it => it.func() == heading and it.fields().depth == 1,
+    _is-toplevel-heading,
     edge-action: "isolate"
   )
   // while every other heading is atop of its corresponding content
   let slides = sections
     .map(section => _split-by(
       section,
-      it => it.func() == heading and it.fields().depth != 1,
+      _is-subheading,
       edge-action: "right",
     ))
     .join()
@@ -84,31 +101,19 @@
   slides
 }
 
-#let _is-heading-with(it, check) = {
-  it.func() == heading and check(it.depth)
-}
-#let _is-toplevel-heading(it) = _is-heading-with(it, d => d == 1)
-#let _is-subheading(it) = _is-heading-with(it, d => d > 1)
-
-#let _center-section-headings(slides) = slides.map(
-  slide => if _is-toplevel-heading(slide) {
-    align(center + horizon, slide)
-  } else {
-    slide
-  }
-)
-
 #let _process-title(slides, args) = {
-  // title slide is from first toplevel heading to then-first subheading
+  // title slide is from first toplevel heading to then-next heading (of any kind)
   let title-start = slides.position(_is-toplevel-heading)
-  let title-end = slides.slice(title-start).position(slide =>
-    "children" in slide.fields() and
-    _is-subheading(slide.children.at(0))
-  ) - 1
+  let title-end = slides.slice(title-start + 1).position(slide =>
+    _is-toplevel-heading(slide) or (
+      "children" in slide.fields() and
+      slide.children.at(0).func() == heading
+    )
+  ) + title-start + 1
 
   let title = slides.slice(title-start, title-end).join()
   title = align(center + horizon, {
-    set heading(numbering: none)
+    set heading(numbering: none, outlined: false)
     show heading: set text(1.5em)
 
     title
@@ -116,7 +121,10 @@
     info.render(info.preprocess(args))
   })
 
-  slides.slice(0, title-start)
+  slides.slice(0, title-start).map(slide => {
+    set heading(numbering: none)
+    align(center + horizon, slide)
+  })
   (title,)
   slides.slice(title-end)
 }
@@ -125,6 +133,14 @@
   // finish slide is everything after last toplevel heading
   slides
 }
+
+#let _center-section-headings(slides) = slides.map(
+  slide => if _is-toplevel-heading(slide) {
+    align(center + horizon, slide)
+  } else {
+    slide
+  }
+)
 
 #let _process(body, args) = {
   let slides = _split-onto-slides(body)
