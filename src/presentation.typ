@@ -13,6 +13,12 @@
 
   polylux-slide(body)
 }
+#let prominent(body) = align(center + horizon, {
+  set heading(numbering: none, outlined: false)
+  show heading: set text(1.5em)
+
+  body
+})
 
 // Splits the array `seq` based on the function `check`.
 // `check` is called with each element in `seq` and
@@ -112,12 +118,8 @@
   ) + title-start + 1
 
   let title = slides.slice(title-start, title-end).join()
-  title = align(center + horizon, {
-    set heading(numbering: none, outlined: false)
-    show heading: set text(1.5em)
-
+  title = prominent({
     title
-
     info.render(info.preprocess(args))
   })
 
@@ -129,9 +131,19 @@
   slides.slice(title-end)
 }
 
-#let _process-finish(slides) = {
-  // finish slide is everything after last toplevel heading
-  slides
+#let _process-final(slides) = {
+  // final slide is everything after last toplevel heading
+  let final-start = (
+    slides.len() -
+    slides.rev().position(_is-toplevel-heading) -
+    1
+  )
+
+  let final = slides.slice(final-start).join()
+  final = prominent(final)
+
+  slides.slice(0, final-start)
+  (final,)
 }
 
 #let _center-section-headings(slides) = slides.map(
@@ -144,8 +156,10 @@
 
 #let _process(body, args) = {
   let slides = _split-onto-slides(body)
+
   slides = _process-title(slides, args)
-  slides = _process-finish(slides)
+  slides = _process-final(slides)
+
   slides = _center-section-headings(slides)
 
   slides.map(slide).join()
