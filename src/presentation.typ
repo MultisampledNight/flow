@@ -121,7 +121,7 @@
       edge-action: "right",
     ))
     .join()
-    .map(slide => slide.join())
+    .map(array.join)
 
   slides
 }
