@@ -144,7 +144,7 @@
     text-size: 26pt,
     ..args,
   )
-  show: presentation._process
+  show: it => presentation._process(it, args.named())
 
   body
 }

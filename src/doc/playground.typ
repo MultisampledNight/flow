@@ -1,7 +1,10 @@
 #import "../lib.typ" as flow: *
 #import presentation: *
 
-#show: slides
+#show: slides.with(
+  author: "MultisampledNight",
+  cats: link("https://http.cat"),
+)
 
 Some kind of teaser I guess
 
