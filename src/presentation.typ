@@ -1,4 +1,5 @@
 #import "info.typ"
+#import "palette.typ": *
 #import "@preview/polylux:0.3.1": *
 
 #let slide(body) = {  
@@ -64,14 +65,32 @@
   out
 }
 
+#let _progress-bar(now, total) = {
+  let ratio = (now - 1) / (total - 1)
+  move(
+    dy: 0.35em,
+    line(
+      length: ratio * 100%,
+      stroke: gamut.sample(35%),
+    ),
+  )
+}
+
 #let _prelude(body) = {
   set page(
     paper: "presentation-16-9",
-    footer: [
-      #logic.logical-slide.display()
-      of
-      #utils.last-slide-number
-    ],
+    footer: context {
+      let now = logic.logical-slide.get().first()
+      let total = logic.logical-slide.final().first()
+
+      grid(
+        columns: (1fr, auto),
+        align: (left, right),
+        gutter: 0.5em,
+        _progress-bar(now, total),
+        dim[#now of #total],
+      )
+    },
   )
   body
 }
