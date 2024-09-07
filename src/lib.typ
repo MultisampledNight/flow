@@ -28,6 +28,8 @@
     }
   }
 
+  let args = args.named()
+
   set page(
     fill: bg,
     numbering: "1 / 1",
@@ -35,8 +37,8 @@
   set text(
     fill: fg,
     font: cfg.font.body,
-    size: 14pt,
-    lang: args.named().at("lang", default: "en"),
+    size: args.at("text-size", default: 14pt),
+    lang: args.at("lang", default: "en"),
   )
   show raw: set text(font: cfg.font.code)
   show math.equation: set text(font: cfg.font.math)
@@ -137,7 +139,11 @@
 
 #let slides(body, ..args) = {
   show: presentation._prelude
-  show: template.with(boilerplate: false, ..args)
+  show: template.with(
+    boilerplate: false,
+    text-size: 26pt,
+    ..args,
+  )
   show: presentation._process
 
   body

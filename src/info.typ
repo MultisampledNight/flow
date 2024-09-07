@@ -249,6 +249,7 @@
 
   // literally only included for typechecking, don't actually need it afterwards
   let _ = it.remove("terms", default: none)
+  let _ = it.remove("text-size", default: none)
 
   _normalize(it)
 }
