@@ -42,6 +42,14 @@ We've decided that this belongs on a new slide
 
 Now the counter should be still the same I hope
 
+#line-by-line[
+  - I
+  - [x] Contain
+  - [/] A
+  - [?] Lot
+  - Of
+]
+
 = Also done
 
 == Completely unrelated sidetrack

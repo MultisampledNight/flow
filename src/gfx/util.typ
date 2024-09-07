@@ -8,6 +8,7 @@
   cap: "round",
   join: "round",
   paint: paint,
+  thickness: 0.1em,
 )
 
 #let canvas(body, length: 1em, ..args) = cetz.canvas(

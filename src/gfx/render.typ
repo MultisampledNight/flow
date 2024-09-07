@@ -86,7 +86,7 @@
   )
   circle(
     (0.5, 0.05),
-    radius: 0.5pt,
+    radius: 0.05em,
   )
 })
 

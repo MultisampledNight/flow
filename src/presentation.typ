@@ -88,7 +88,7 @@
         align: (left, right),
         gutter: 0.5em,
         _progress-bar(now, total),
-        dim[#now of #total],
+        dim[#now / #total],
       )
     },
   )
