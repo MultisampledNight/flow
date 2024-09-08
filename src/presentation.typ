@@ -181,13 +181,15 @@
   align(center + horizon, slide)
 })
 
-#let _process(body, args) = {
+#let _process(body, handout: false, args) = {
   let slides = _split-onto-slides(body)
 
   slides = _process-title(slides, args)
   slides = _process-final(slides)
 
   slides = _center-section-headings(slides)
+
+  enable-handout-mode(handout or not cfg.render)
 
   slides.map(slide).join()
 }

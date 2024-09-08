@@ -137,14 +137,14 @@
   body
 }
 
-#let slides(body, ..args) = {
+#let slides(body, handout: false, ..args) = {
   show: presentation._prelude
   show: template.with(
     boilerplate: false,
     text-size: 26pt,
     ..args,
   )
-  show: it => presentation._process(it, args.named())
+  show: it => presentation._process(it, handout: handout, args.named())
 
   body
 }
