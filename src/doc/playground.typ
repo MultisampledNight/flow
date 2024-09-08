@@ -30,11 +30,11 @@ Woah this presentation is so cool
 
 =
 
-The previous slide should be empty
+This was another slide skip
 
 ==
 
-We've decided that this belongs on a new slide
+We've decided that this belongs on a new slide, too
 
 == Oh wow an actual new heading
 

@@ -98,16 +98,23 @@
   body
 }
 
-#let _is-heading-with(it, check) = {
-  it.fields().at("children", default: (it,)).any(
-    it =>
-      (it.func() == heading and check(it.depth))
-      or (it.func() == outline and check(1))
-  )
+#let _also-check-children(it, check) = {
+  it.fields().at("children", default: (it,)).any(check)
 }
+
+#let _is-heading-with(it, check) = _also-check-children(
+  it,
+  it => (it.func() == heading and check(it.depth))
+    or (it.func() == outline and check(1)),
+)
 #let _is-heading(it) = _is-heading-with(it, _ => true)
 #let _is-toplevel-heading(it) = _is-heading-with(it, d => d == 1)
 #let _is-subheading(it) = _is-heading-with(it, d => d > 1)
+
+#let _used-slide-delimiter-shorthand(slide) = _also-check-children(
+  slide,
+  it => "body" in it.fields() and it.body == []
+)
 
 // Traverses the body and splits into slides by headings.
 // *The body needs to be un-styled for this,
@@ -162,13 +169,17 @@
   (final,)
 }
 
-#let _center-section-headings(slides) = slides.map(
-  slide => if _is-toplevel-heading(slide) {
-    align(center + horizon, slide)
-  } else {
-    slide
+#let _center-section-headings(slides) = slides.map(slide => {
+  // don't want to render something centered just because a slide delimiter was used
+  if (
+    _used-slide-delimiter-shorthand(slide)
+    or not _is-toplevel-heading(slide)
+  ) {
+    return slide
   }
-)
+
+  align(center + horizon, slide)
+})
 
 #let _process(body, args) = {
   let slides = _split-onto-slides(body)
