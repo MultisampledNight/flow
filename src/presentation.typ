@@ -2,7 +2,7 @@
 #import "palette.typ": *
 #import "@preview/polylux:0.3.1": *
 
-#let slide(body) = {  
+#let slide(body) = {
   // don't register headings that don't have any content
   // this way one can use a bare `=` for an empty slide
   // and a bare `==` for a new slide without heading
@@ -14,6 +14,7 @@
 
   polylux-slide(body)
 }
+
 #let prominent(body) = align(center + horizon, {
   set heading(numbering: none, outlined: false)
   show heading: set text(1.5em)
@@ -45,7 +46,7 @@
     let is-edge = check(ele)
     if is-edge {
       out.push(())
-      
+
       if edge-action == "discard" {
         continue
       }
@@ -182,4 +183,4 @@
   slides = _center-section-headings(slides)
 
   slides.map(slide).join()
-} 
+}
