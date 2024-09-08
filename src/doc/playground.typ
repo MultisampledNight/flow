@@ -16,8 +16,6 @@ Some kind of teaser I guess
 
 Woah this presentation is so cool
 
-==
-
 #outline()
 
 = What did we do

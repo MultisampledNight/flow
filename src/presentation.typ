@@ -10,7 +10,9 @@
     numbering: none,
     outlined: false,
   )
+  show outline: block.with(width: 60%)
   set outline(depth: 1)
+  set line(stroke: (thickness: 0.15em))
 
   polylux-slide(body)
 }
@@ -97,8 +99,13 @@
 }
 
 #let _is-heading-with(it, check) = {
-  it.func() == heading and check(it.depth)
+  it.fields().at("children", default: (it,)).any(
+    it =>
+      (it.func() == heading and check(it.depth))
+      or (it.func() == outline and check(1))
+  )
 }
+#let _is-heading(it) = _is-heading-with(it, _ => true)
 #let _is-toplevel-heading(it) = _is-heading-with(it, d => d == 1)
 #let _is-subheading(it) = _is-heading-with(it, d => d > 1)
 
@@ -108,23 +115,12 @@
 // This can be accomplished by putting it as the last show rule
 // after all set rules.*
 #let _split-onto-slides(body) = {
-  // the toplevel headings get their own slides each
-  let sections = _split-by(
+  _split-by(
     body.children,
-    _is-toplevel-heading,
-    edge-action: "isolate"
+    _is-heading,
+    edge-action: "right"
   )
-  // while every other heading is atop of its corresponding content
-  let slides = sections
-    .map(section => _split-by(
-      section,
-      _is-subheading,
-      edge-action: "right",
-    ))
-    .join()
-    .map(array.join)
-
-  slides
+  .map(array.join)
 }
 
 #let _process-title(slides, args) = {
