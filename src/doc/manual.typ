@@ -118,7 +118,11 @@ I can guarantee you it is worthy of your time.
 The `#show: note` you usually put at the top of your file
 is already functional without any further configuration.
 However, sometimes one _does_ want further configuration.
-Hence, the following
+
+Behind the scenes,
+`note` is actually a shorthand for `template.note`.
+There are other useful templates in `template`,
+but notably they all use `template.generic` at their core.
 
 === Arguments <arguments>
 
@@ -136,14 +140,17 @@ call, for example:
 )
 ```
 
+Since `template.generic` is the actual processor of these arguments,
+you can use them with any other template in the `template` module as well!
+
 ==== `title`
 
 A string.
-If `boilerplate` is enabled,
-it is listed atop the file in bold.
 It is encoded into the resulting PDF
 as the document title you usually see
 in the window title of the PDF viewer.
+A template might also display this somewhere,
+but this is not requird.
 
 If it is not specified or `none` is passed,
 the filename passed via `--input filename=...`
@@ -155,19 +162,6 @@ if `--input filename=...` has not been passed,
 
 Given that it is usually the first thing the reader sees,
 it should try to very concisely relay what the document is about.
-
-==== `boilerplate`
-
-A boolean.
-If enabled, renders
-the title, metadata and table of contents
-as well as separator lines
-before the main body.
-
-On by default.
-
-Disabling it might be useful for diagrams or
-making your own templates ontop of flow's `note`.
 
 ==== `keywords`
 
@@ -192,12 +186,35 @@ It is not included in the metadata table.
 
 === Kinds
 
+==== `generic`
+
+The core driver behind all templates.
+Feel free to use this as base for your own templates!
+Specifically, it sets up the following:
+
+- Basic styling according to the chosen theme
+- Processing of
+  - Checkboxes
+  - Keywords
+  - Metadata
+
+Note that the styling does include colors and
+a few layout hints, but
+does notably *not* set the font or font size.
+That's something each template does itself.
+
 ==== `note`
 
 Usable for notes,
 short reports,
 quick sketchups and
 the works.
+
+Sets up a nice boilerplate
+showing
+the document title,
+metadata and
+an outline.
 
 ==== `slides`
 
@@ -206,6 +223,10 @@ using the headings.
 See the dedicated section about slides,
 @slides,
 for details.
+
+Has a large, readable font size and
+a progress bar at the bottom of every slide,
+so viewers know much longer the presentation will og.
 
 === Metadata
 
