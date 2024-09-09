@@ -12,7 +12,7 @@
   "-": "block",
   "/": "cancel",
   "?": "unknown",
-  "i": "note",
+  "i": "remark",
   "o": "hint",
 )
 

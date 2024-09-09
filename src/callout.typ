@@ -29,8 +29,8 @@
   accent: status.unknown,
   marker: "?",
 )
-#let note = _callout.with(
-  accent: status.note,
+#let remark = _callout.with(
+  accent: status.remark,
   marker: "i",
 )
 #let hint = _callout.with(

@@ -5,7 +5,7 @@
   link(to-desc)[#icon() #it]
 }
 
-#show: template.with(
+#show: note.with(
   title: "flow manual",
   aliases: "how to procastinate",
   author: "MultisampledNight",
@@ -105,7 +105,7 @@ I can guarantee you it is worthy of your time.
 
   ```typ
   #import "@local/flow:0.1.0": *
-  #show: template
+  #show: note
   ```
 
 + Start typing the actual note like any other typst document! uwu
@@ -115,7 +115,7 @@ I can guarantee you it is worthy of your time.
 
 == Template
 
-The `#show: template` you usually put at the top of your file
+The `#show: note` you usually put at the top of your file
 is already functional without any further configuration.
 However, sometimes one _does_ want further configuration.
 Hence, the following
@@ -124,13 +124,13 @@ Hence, the following
 
 All of these are named arguments.
 In effect, if you choose to use any of them,
-most likely you want to transform your `#show: template`
+most likely you want to transform your `#show: note`
 into a
 #link("https://typst.app/docs/reference/foundations/function/#definitions-with")[`function.with`]
 call, for example:
 
 ```typst
-#show: template.with(
+#show: note.with(
   title: "meow!",
   terms: ("cat", "catnip"),
 )
@@ -167,7 +167,7 @@ before the main body.
 On by default.
 
 Disabling it might be useful for diagrams or
-making your own templates ontop of flow's `template`.
+making your own templates ontop of flow's `note`.
 
 ==== `terms`
 
@@ -192,11 +192,11 @@ It is not included in the metadata table.
 
 === Kinds
 
-==== `template`
+==== `note`
 
-The base template,
-usable for notes,
-short reports and
+Usable for notes,
+short reports,
+quick sketchups and
 the works.
 
 ==== `slides`
@@ -446,10 +446,10 @@ If everything is highlighted, nothing is highlighted.
 ]
 ```
 
-=== Note
+=== Remark
 
 ```example
-#note[
+#remark[
   Key takeaways from a section. \
   Should be easy to remember.
 ]

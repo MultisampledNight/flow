@@ -63,7 +63,7 @@
     wob: yellow,
   ),
 
-  note: (
+  remark: (
     duality: duality.green,
     bow: green,
     wob: green,

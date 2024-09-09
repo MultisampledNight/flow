@@ -90,7 +90,7 @@
   )
 })
 
-#let note = icon.with(key: "note", () => {
+#let remark = icon.with(key: "remark", () => {
   circle((0.5, 0.95), radius: 0.5pt)
   line((0.5, 0.65), (0.5, 0))
 })
