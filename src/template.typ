@@ -6,7 +6,7 @@
 #import "presentation.typ"
 #import "util.typ": *
 
-#let styling(body, ..args) = {
+#let _styling(body, ..args) = {
   if not cfg.render {
     return {
       // PERF: consistently shaves off 0.02 seconds of query time
@@ -29,11 +29,8 @@
   )
   set text(
     fill: fg,
-    font: "IBM Plex Sans",
-    size: args.at("text-size", default: 14pt),
     lang: args.at("lang", default: "en"),
   )
-  show raw: set text(font: "IBM Plex Mono")
 
   set rect(stroke: fg)
   set line(stroke: fg)
@@ -80,38 +77,50 @@
   body
 }
 
+#let _shared(args) = {
+  let args = info.preprocess(args.named())
+  let title = args.at("title", default: {
+    if cfg.filename != none {
+      cfg.filename.trim(
+        repeat: false,
+      )
+    } else {
+      "Untitled"
+    }
+  })
+
+  (args: args, title: title)
+}
+
 // The args sink is used as metadata.
 // It'll exposed both in a table in the document and via `typst query`.
-#let note(
-  body,
-  title: none,
-  boilerplate: true,
-  ..args,
-) = {
-  show: styling.with(..args)
-  show: keywords.process.with(cfg: args.named().at("keywords", default: none))
+// See the manual for details.
+#let generic(body, ..args) = {
+  let (args, title) = _shared(args)
 
-  let title = if title != none {
-    title
-  } else if cfg.filename != none {
-    cfg.filename.trim(
-      ".typ",
-      at: end,
-      repeat: false,
-    )
-  } else {
-    "Untitled"
-  }
+  show: _styling.with(..args)
+  show: keywords.process.with(cfg: args.at("keywords", default: none))
+  show: checkbox.process
 
   set document(
     title: title,
-    author: args.named().at("author", default: ()),
+    author: args.at("author", default: ()),
   )
 
-  let args = info.preprocess(args.named())
   info.queryize(args)
 
-  if boilerplate and cfg.render {
+  body
+}
+
+#let note(body, ..args) = {
+  set text(font: "IBM Plex Sans", size: 14pt)
+  show raw: set text(font: "IBM Plex Mono")
+
+  show: generic.with(..args)
+
+  if cfg.render {
+    let (args, title) = _shared(args)
+
     text(2.5em, strong(title))
 
     if args.len() > 0 {
@@ -124,18 +133,15 @@
     separator
   }
 
-  show: checkbox.process
-
   body
 }
 
 #let slides(body, handout: false, ..args) = {
+  set text(font: "IBM Plex Sans", size: 26pt)
+  show raw: set text(font: "IBM Plex Mono")
+
   show: presentation._prelude
-  show: note.with(
-    boilerplate: false,
-    text-size: 26pt,
-    ..args,
-  )
+  show: generic.with(..args)
   show: it => presentation._process(it, handout: handout, args.named())
 
   body

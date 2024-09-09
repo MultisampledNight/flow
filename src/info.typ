@@ -246,11 +246,6 @@
 
 #let preprocess(it) = {
   _check(it)
-
-  // literally only included for typechecking, don't actually need it afterwards
-  let _ = it.remove("keywords", default: none)
-  let _ = it.remove("text-size", default: none)
-
   _normalize(it)
 }
 
@@ -278,6 +273,7 @@
     gutter: 1em,
     ..it
     .pairs()
+    .filter(((name, _)) => name != "keywords")
     .map(
       ((name, data)) => (dim(name), field(name, data))
     )

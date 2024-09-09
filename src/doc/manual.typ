@@ -304,14 +304,14 @@ then put the desired checkbox right afterwards and pad it with spaces.
 That's it!
 
 ```example
-- [ ] Not started
-- [!] Urgent
-- [>] In progress
-- [:] Paused
-- [x] Completed
-- [/] Cancelled
-- [-] Blocked
-- [?] Unknown
+- [ ] We didn't even start this yet
+- [!] Needs to be done soon
+- [>] Doing that currently...
+- [:] Can already build on something
+- [x] Yay, finished this!
+- [/] Can't do this anymore
+- [-] Out of my control
+- [?] Should find out more about it
 ```
 
 === Fill semantics
