@@ -186,6 +186,15 @@ It is not included in the metadata table.
 
 === Kinds
 
+All of them are available under the `template` module and
+intended to be used via show rules.
+For example, for using the `latex-esque` template,
+you'd use something akin to this in your code:
+
+```typst
+#show: template.latex-esque
+```
+
 ==== `generic`
 
 The core driver behind all templates.
@@ -216,6 +225,14 @@ the document title,
 metadata and
 an outline.
 
+==== `latex-esque`
+
+Usable for faking something was made in LaTeX
+when it actually wasn't.
+Only does so superficially,
+functionally nothing is changed and
+the icons will still look modern-ish.
+
 ==== `slides`
 
 Splits the document into slides by
@@ -226,7 +243,7 @@ for details.
 
 Has a large, readable font size and
 a progress bar at the bottom of every slide,
-so viewers know much longer the presentation will og.
+so viewers know much longer the presentation will go.
 
 === Metadata
 
