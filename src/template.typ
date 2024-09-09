@@ -29,12 +29,11 @@
   )
   set text(
     fill: fg,
-    font: cfg.font.body,
+    font: "IBM Plex Sans",
     size: args.at("text-size", default: 14pt),
     lang: args.at("lang", default: "en"),
   )
-  show raw: set text(font: cfg.font.code)
-  show math.equation: set text(font: cfg.font.math)
+  show raw: set text(font: "IBM Plex Mono")
 
   set rect(stroke: fg)
   set line(stroke: fg)

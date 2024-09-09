@@ -99,20 +99,6 @@
 // If false, skip rendering more costly stuff like the outline and cetz canvases,
 // which greatly impacts the visual result but is irrelevant for e.g. `typst query`.
 // Consider specifying `false` when programmatically looking through the documents.
-// TODO: actually impl and stub out whatever needed
 #let render = (_define("render").bool)()
 #let render = _default(render, true)
 
-// Which font to use for what purpose.
-#let font = (
-  body: "IBM Plex Sans",
-  code: "IBM Plex Mono",
-  math: "New Computer Modern Math",
-)
-#for (purpose, default) in font {
-  let key = "font." + purpose
-  let user = (_define(key).string)()
-  let chosen = _default(user, default)
-
-  font.insert(purpose, chosen)
-}
