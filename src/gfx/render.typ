@@ -25,7 +25,7 @@
   ) {
     line(
       (0.5 + offset.x, 1 * y-scale + offset.y),
-      (0.5 + offset.x, 0.35 * y-scale + offset.y),
+      (0.5 + offset.x, 0.375 * y-scale + offset.y),
     )
     circle(
       (0.5 + offset.x, 0.05 * y-scale + offset.y),
@@ -92,7 +92,7 @@
   )
   line(
     (0.5, 0.5),
-    (0.5, 0.35),
+    (0.5, 0.375),
   )
   circle(
     (0.5, 0.05),
