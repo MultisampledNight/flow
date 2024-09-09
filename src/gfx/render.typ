@@ -58,8 +58,18 @@
 })
 
 #let complete = icon.with(key: "complete", () => {
-  line((0, 0), (1, 1))
-  line((0, 1), (1, 0))
+  set-origin((0.5, 0.5))
+  let bend = 0.075
+  for _ in range(4) {
+    line(
+      (0, 0),
+      (0, bend),
+      (0.5, 0.5),
+      (bend, 0),
+      close: true,
+    )
+    rotate(90deg)
+  }
 })
 
 #let cancel = icon.with(key: "cancel", () => {
