@@ -20,47 +20,47 @@
   "\b("
 
   keywords
-    .map(term => {
+    .map(word => {
       // make it irrelevant if the first character is uppercase or lowercase
       "("
-      term.at(0)
+      word.at(0)
       "|"
-      upper(term.at(0))
+      upper(word.at(0))
       ")"
 
-      term.slice(1)
+      word.slice(1)
     })
     .join("|")
 
   ")\b"
 })
 
-// Finds the appropriate operation for the given term and applies it.
-#let apply-one(it, terms) = {
-  let original = normalize(it.text)
-  let op = terms.at(original)
-  op(it)
+// Finds the appropriate operation for the given keyword and applies it.
+#let apply-one(selected, registered) = {
+  let original = normalize(selected.text)
+  let op = registered.at(original)
+  op(selected)
 }
 
 #let process(body, cfg: none) = {
   if cfg == none or not render {
-    // no terms to highlight → nothing to do!
+    // no words to highlight → nothing to do!
     return body
   }
 
   // see the schema in src/info.typ for possible types cfg can have
   if type(cfg) == array {
     let converted = (:)
-    for term in cfg {
-      converted.insert(term, strong)
+    for word in cfg {
+      converted.insert(word, strong)
     }
     cfg = converted
   }
 
   // normalize all keys so the lookup normalization can find something
-  for (term, op) in cfg {
-    let _ = cfg.remove(term)
-    cfg.insert(normalize(term), op)
+  for (word, op) in cfg {
+    let _ = cfg.remove(word)
+    cfg.insert(normalize(word), op)
   }
 
   // then actually run through

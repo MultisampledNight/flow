@@ -10,7 +10,7 @@
   aliases: "how to procastinate",
   author: "MultisampledNight",
   cw: "\"you\"",
-  terms: (
+  keywords: (
     "not started": cb.with(" ", <not-started>),
     "urgent": cb.with("!", <urgent>),
     "in progress": cb.with(">", <in-progress>),
@@ -132,7 +132,7 @@ call, for example:
 ```typst
 #show: note.with(
   title: "meow!",
-  terms: ("cat", "catnip"),
+  keywords: ("cat", "catnip"),
 )
 ```
 
@@ -169,7 +169,7 @@ On by default.
 Disabling it might be useful for diagrams or
 making your own templates ontop of flow's `note`.
 
-==== `terms`
+==== `keywords`
 
 Either an array of strings or
 a dictionary from strings to functions, where
@@ -491,13 +491,15 @@ For when you need to add #invert[extra importance] to some text.
 Note that #invert[it should always fit on one line though,
 otherwise it'll go out of page like this one.]
 
+#v(2.5em, weak: true)
+
 #invert[
   (Or if you really want to use a manual line break, \
   well, the one parallelopiped goes over the whole body. \
   Is that what you wanted?)
 ]
 
-#v(1.5em)
+#v(2.5em, weak: true)
 
 Hence it is best fit for #invert[a few words.]
 
@@ -531,7 +533,7 @@ after having found out about the
 / State: Frozen state of certain properties.
   Usually represented by a node.
 / Transition: Properties changing from one state to another.
-  Usually represented by an edge.U
+  Usually represented by an edge.
 / Canvas: Set of elements drawn into a confined `content`.
 
 Some minds like to build graphical representations

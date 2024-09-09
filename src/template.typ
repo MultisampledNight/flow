@@ -1,9 +1,9 @@
 #import "cfg.typ"
 #import "checkbox.typ"
 #import "info.typ"
+#import "keywords.typ"
 #import "palette.typ": *
 #import "presentation.typ"
-#import "terms.typ"
 #import "util.typ": *
 
 #let styling(body, ..args) = {
@@ -90,7 +90,7 @@
   ..args,
 ) = {
   show: styling.with(..args)
-  show: terms.process.with(cfg: args.named().at("terms", default: none))
+  show: keywords.process.with(cfg: args.named().at("keywords", default: none))
 
   let title = if title != none {
     title

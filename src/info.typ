@@ -97,12 +97,12 @@
   author: _any(str, _array(str)),
   cw: _any(str, _array(str)),
   tags: _any(str, _array(str)),
-  terms: _any(
-    // shorthand for bolding all listed terms
+  keywords: _any(
+    // shorthand for bolding all listed keywords
     _array(str),
     // the explicit version which allows using any function for modification
     _dict(str, function),
-    // TODO: one day, implement auto which searches through all terms
+    // TODO: one day, implement auto which searches through all keywords
   ),
   lang: str,
 )
@@ -248,7 +248,7 @@
   _check(it)
 
   // literally only included for typechecking, don't actually need it afterwards
-  let _ = it.remove("terms", default: none)
+  let _ = it.remove("keywords", default: none)
   let _ = it.remove("text-size", default: none)
 
   _normalize(it)

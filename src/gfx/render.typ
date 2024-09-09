@@ -29,7 +29,7 @@
     )
     circle(
       (0.5 + offset.x, 0.05 * y-scale + offset.y),
-      radius: 0.5pt,
+      radius: 0.05,
     )
   }
 })
@@ -86,7 +86,7 @@
   )
   circle(
     (0.5, 0.05),
-    radius: 0.05em,
+    radius: 0.05,
   )
 })
 

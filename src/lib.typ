@@ -6,9 +6,9 @@
 #import "checkbox.typ"
 #import "gfx.typ" as gfx: invert, fxfirst
 #import "info.typ"
+#import "keywords.typ"
 #import "palette.typ": *
 #import "presentation.typ"
 #import "util.typ": *
 #import "template.typ" as template: note
-#import "terms.typ"
 
