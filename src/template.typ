@@ -82,6 +82,7 @@
   let title = args.at("title", default: {
     if cfg.filename != none {
       cfg.filename.trim(
+        ".typ",
         repeat: false,
       )
     } else {
