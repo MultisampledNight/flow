@@ -9,6 +9,8 @@
 #import "keywords.typ"
 #import "palette.typ": *
 #import "presentation.typ"
+#import "track.typ"
+#import "tyck.typ"
 #import "util.typ": *
 #import "template.typ" as template: note
 

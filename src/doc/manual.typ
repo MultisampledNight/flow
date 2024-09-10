@@ -283,7 +283,10 @@ it will allow them anyway.
 
 The schema currently is:
 
-#raw(block: true, info._fmt-schema(info._schema))
+#raw(block: true, tyck.fmt(info._schema))
+
+It's checked via the `tyck` module,
+which you can also use to construct your own schemas and validating them.
 
 ==== Querying
 
