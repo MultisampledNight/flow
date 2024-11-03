@@ -199,15 +199,13 @@
     let part = queue.pop()
     depth.last().queue = queue
 
-    let maybe-arrowhead = if (
-      queue.len() == 0
-      and frame.at("arrow", default: true)
-    ) {
+    let arrow = frame.cfg.at("arrow", default: true)
+    let maybe-arrowhead = if queue.len() == 0 and arrow {
       // oh that means we want to draw an arrowhead
       // though if this is a modifier, that information needs to be propagated instead
 
       if _is-modifier(part) {
-        part.arrow = true
+        part.cfg.arrow = true
       }
 
       (mark: (end: arrow-mark))
