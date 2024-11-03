@@ -65,7 +65,7 @@
 // Create a new branch. After all coordinates in this branch have been processed,
 // return to the node before it.
 // At the end of a branch, an arrow mark is always drawn.
-#let br(..args) = _modifier(args.pos(), (branch: true, last-is-arrow: true))
+#let br(arrow: true, ..args) = _modifier(args.pos(), (branch: true, arrow: arrow))
 
 // Label the edges created in this call.
 // The label is:
@@ -147,7 +147,7 @@
   // each stack frame is a dictionary with fields:
   // - `queue` for the coords/branches to next run through
   // - `cfg` for modifier options (see above functions calling _modifier)
-  // - (optional) `last-is-arrow` if to draw an arrowhead at the end of this frame
+  // - (optional) `arrow` if to draw an arrowhead at the end of this frame
   let depth = ((queue: args.pos().rev(), cfg: (:)),)
   let last = from
 
@@ -201,13 +201,13 @@
 
     let maybe-arrowhead = if (
       queue.len() == 0
-      and frame.at("last-is-arrow", default: true)
+      and frame.at("arrow", default: true)
     ) {
       // oh that means we want to draw an arrowhead
       // though if this is a modifier, that information needs to be propagated instead
 
       if _is-modifier(part) {
-        part.last-is-arrow = true
+        part.arrow = true
       }
 
       (mark: (end: arrow-mark))
