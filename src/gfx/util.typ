@@ -151,7 +151,10 @@
 
       content(
         cfg.pos,
-        pad(0.5em, display),
+        display,
+        padding: 0.5em,
+        frame: "rect",
+        stroke: none,
         name: name,
       )
 
