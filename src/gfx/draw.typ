@@ -133,7 +133,7 @@
 // Typing a closing `)` of a `br` call pops the last position from the stack and
 // continues from there.
 // This can nest arbitrarily often.
-#let trans(from, ..args, arrow-mark: (symbol: ">")) = {
+#let trans(from, ..args, default-mark: (symbol: ">")) = {
   // ...one day, when typst has proper types, this will be hopefully much cleaner
   if args.pos().len() == 0 {
     panic("need at least one target state to transition to")
@@ -200,15 +200,24 @@
     depth.last().queue = queue
 
     let arrow = frame.cfg.at("arrow", default: true)
-    let maybe-arrowhead = if queue.len() == 0 and arrow {
+    let maybe-arrowhead = if (
+      queue.len() == 0
+      and arrow != false
+    ) {
       // oh that means we want to draw an arrowhead
       // though if this is a modifier, that information needs to be propagated instead
 
-      if _is-modifier(part) {
-        part.cfg.arrow = true
+      if (
+        _is-modifier(part)
+        and "arrow" not in part.cfg
+      ) {
+        part.cfg.arrow = arrow
       }
 
-      (mark: (end: arrow-mark))
+      if arrow == true {
+        arrow = default-mark
+      }
+      (mark: (end: arrow))
     }
 
     if _is-modifier(part) {
