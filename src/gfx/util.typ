@@ -115,6 +115,9 @@
   // - (optional) `accent`: what color outgoing edges should have
   //   - Defaults to the foreground color of the current theme
   //   - Also determines the color of the `name` if `display` is not used
+  // - (optional) `frame`: what to use as hitbox for incoming and outgoing edges
+  //   - Defaults to "rect"
+  //   - Can be one of none, "rect" or "circle"
   //
   // If the value doesn't contain the `pos` key,
   // it is assumed to be directly the position as coordinate or cetz position.
@@ -153,7 +156,7 @@
         cfg.pos,
         display,
         padding: 0.5em,
-        frame: "rect",
+        frame: cfg.at("frame", default: "rect"),
         stroke: none,
         name: name,
       )

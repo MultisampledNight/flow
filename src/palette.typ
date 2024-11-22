@@ -88,7 +88,7 @@
   ),
   same-file: (
     duality: duality.green,
-    bow: green,
-    wob: green,
+    bow: purple.darken(10%),
+    wob: purple,
   ),
 ))
