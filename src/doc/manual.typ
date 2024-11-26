@@ -695,3 +695,24 @@ Here's an overview over them all:
     ))
     .join()
 ))
+
+They can also be put into a cetz canvas
+by setting `contentize: false` on the icon
+and setting the position of the lower left corner
+via `at`:
+
+```example
+#import gfx.draw: *
+#gfx.canvas({
+  let (empty, unknown) = (" ", "?")
+    .map(short =>
+      gfx.markers.at(short).icon)
+    .map(icon =>
+      icon.with(contentize: false))
+
+  line((0, 0), (5, 0), stroke: duality.green)
+  empty(at: (0.75, 2), accent: duality.blue)
+  unknown(at: (2, 2))
+  empty(at: (3.25, 2))
+})
+```
