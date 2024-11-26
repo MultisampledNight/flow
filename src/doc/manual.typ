@@ -660,5 +660,38 @@ where:
 == Slides <slides>
 
 #caution[
-  help actually implement
+  help write docs about the cursedness
 ]
+
+== Icons
+
+For labeling things concisely and rememberable.
+They are all accessible via `gfx.markers`, which is a dictionary
+with the single-character identifier as value and this dictionary as key:
+
+- `accent` is the color the marker is typically used with.
+- `icon` is a function that renders to a `content` if needed.
+- `long` is the long-form name.
+
+For actually displaying it, just calling `icon` usually suffices.
+It already uses the accent of the marker.
+It can be customized using keyword arguments
+such as `invert`, `radius`, `accent` and the works,
+see `src/gfx/util.typ` where they're all commented.
+
+Here's an overview over them all:
+
+#align(center, table(
+  columns: 4,
+  align: (right, left, left, left),
+  [Icon], [Short], [Long], [Accent],
+  ..gfx.markers
+    .pairs()
+    .map(((short, (accent, icon, long))) => (
+      icon(),
+      raw(short),
+      long,
+      [#accent],
+    ))
+    .join()
+))
