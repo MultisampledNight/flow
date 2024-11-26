@@ -101,10 +101,55 @@
 })
 
 #let remark = icon.with(key: "remark", () => {
-  circle((0.5, 0.95), radius: 0.5pt)
-  line((0.5, 0.65), (0.5, 0))
+  circle((0.5, 0.95), radius: 0.125, stroke: none)
+  line((0.5, 0.6), (0.5, 0))
 })
 
 #let hint = icon.with(key: "hint", () => {
   circle((0.5, 0.5), radius: 0.5, fill: none)
 })
+
+#let axiom = icon.with(key: "axiom", () => {
+  let left = (0, 0)
+  let top = (0.5, 1)
+  let right = (1, 0)
+  let slide = 35%
+
+  line(left, top, right, fill: none)
+  line((left, slide, top), (right, slide, top))
+})
+
+#let define = icon.with(key: "define", () => {
+  line((0.15, 0), (rel: (0, 1)), (rel: (0.2, 0)), fill: none)
+  arc((), start: 90deg, stop: -90deg, radius: 0.5, fill: none)
+  line((0.15, 0), (0.35, 0))
+})
+
+#let theorem = icon.with(key: "theorem", () => {
+  line((0.15, 1), (0.85, 1))
+  line((0.5, 1), (rel: (0, -1)))
+})
+
+#let propose = icon.with(key: "propose", () => {
+  line(
+    (0.25, 0),
+    (rel: (0, 1)),
+    (rel: (0.25, 0)),
+    fill: none,
+  )
+  arc((), start: 90deg, stop: -90deg, radius: 0.25, fill: none)
+  line((0.25, 0.5), (rel: (0.25, 0)))
+})
+
+#let lemma = icon.with(key: "lemma", () => {
+  line((0.3, 1), (rel: (0, -0.8)))
+  arc((), start: -180deg, stop: 0deg, radius: 0.2, fill: none)
+})
+
+#let corollary = icon.with(key: "corollary", () => {
+  for height in (0, 1) {
+    line((0.8, height), (rel: (-0.2, 0)))
+  }
+  arc((), start: 90deg, stop: 270deg, radius: 0.5, fill: none)
+})
+

@@ -1,7 +1,7 @@
 // Feel free to import this file's contents via a glob!
 // See `doc/manual.typ` for an example of how usage in practise looks like!
 
-#import "callout.typ": question, remark, hint, caution
+#import "callout.typ": *
 #import "cfg.typ"
 #import "checkbox.typ"
 #import "gfx.typ" as gfx: invert, fxfirst

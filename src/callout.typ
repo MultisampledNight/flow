@@ -1,7 +1,14 @@
 #import "gfx.typ"
 #import "palette.typ": *
 
-#let _callout(body, accent: fg, marker: none) = {
+#let callout(body, accent: none, marker: none) = {
+  let accent = if accent != none {
+    accent
+  } else if marker != none {
+    gfx.markers.at(marker).accent
+  } else {
+    fg
+  }
   let body = if marker == none {
     body
   } else {
@@ -25,19 +32,14 @@
   )
 }
 
-#let question = _callout.with(
-  accent: status.unknown,
-  marker: "?",
-)
-#let remark = _callout.with(
-  accent: status.remark,
-  marker: "i",
-)
-#let hint = _callout.with(
-  accent: status.hint,
-  marker: "o",
-)
-#let caution = _callout.with(
-  accent: status.urgent,
-  marker: "!",
-)
+#let question = callout.with(marker: "?")
+#let remark = callout.with(marker: "i")
+#let hint = callout.with(marker: "o")
+#let caution = callout.with(marker: "!")
+
+#let define = callout.with(marker: "d")
+#let axiom = callout.with(marker: "a")
+#let theorem = callout.with(marker: "t")
+#let lemma = callout.with(marker: "l")
+#let propose = callout.with(marker: "p")
+#let corollary = callout.with(marker: "c")

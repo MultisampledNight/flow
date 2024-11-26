@@ -143,6 +143,7 @@
   let title = slides.slice(title-start, title-end).join()
   title = prominent({
     title
+    let _ = args.remove("lang", default: none)
     info.render(info.preprocess(args))
   })
 

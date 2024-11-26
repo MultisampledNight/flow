@@ -52,8 +52,8 @@
   ),
   block: (
     duality: duality.blue,
-    bow: blue,
-    wob: blue,
+    bow: teal,
+    wob: teal,
   ),
   complete: fg,
   cancel: gamut.sample(40%),
@@ -72,7 +72,37 @@
     duality: duality.violet,
     bow: purple,
     wob: purple,
-  )
+  ),
+  axiom: (
+    duality: duality.yellow,
+    bow: yellow,
+    wob: yellow,
+  ),
+  define: (
+    duality: duality.blue,
+    bow: eastern,
+    wob: aqua,
+  ),
+  theorem: (
+    duality: duality.orange,
+    bow: orange,
+    wob: orange,
+  ),
+  propose: (
+    duality: duality.violet,
+    bow: purple,
+    wob: purple,
+  ),
+  lemma: (
+    duality: duality.pink,
+    bow: fuchsia,
+    wob: fuchsia,
+  ),
+  corollary: (
+    duality: duality.green,
+    bow: lime,
+    wob: lime,
+  ),
 ))
 
 #let reference = _key-on-theme((

@@ -479,42 +479,50 @@ for already read parts.
 Hence, use them wisely:
 If everything is highlighted, nothing is highlighted.
 
-=== Question
+=== General
 
 ```example
 #question[
-  Something that is still to be examined.
+  Still to be examined. \
+  Very useful for involving the reader.
 ]
-```
-
-=== Remark
-
-```example
 #remark[
   Key takeaways from a section. \
   Should be easy to remember.
 ]
-```
-
-=== Hint
-
-```example
 #hint[
   How to do something more easily. \
   Or something that can be used
   to remember this better.
 ]
-```
-
-=== Caution
-
-```example
 #caution[
   Tries to warn the reader of
   something important or dangerous.
 ]
 ```
 
+=== Maths
+
+```example
+#axiom[
+  Taken as granted.
+]
+#define[
+  Newly set here using existing ideas.
+]
+#theorem[
+  Can be proven.
+]
+#propose[
+  Less important theorem.
+]
+#lemma[
+  Part of a larger proof.
+]
+#corollary[
+  Follows from something.
+]
+```
 
 == Effect
 

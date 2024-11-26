@@ -14,6 +14,12 @@
   "?": "unknown",
   "i": "remark",
   "o": "hint",
+  "a": "axiom",
+  "d": "define",
+  "t": "theorem",
+  "l": "lemma",
+  "p": "propose",
+  "c": "corollary",
 )
 
 
