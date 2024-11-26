@@ -14,7 +14,7 @@
   } else {
     let icon = gfx.markers.at(marker).icon
     grid(
-      columns: (1.5em, auto),
+      columns: (1.5em, 1fr),
       gutter: 0.5em,
       align: (right + horizon, left),
       icon(invert: false),
