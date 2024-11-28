@@ -13,6 +13,6 @@ Pass `--input dev=true` if you want some nicer colors!
 - Color palette management for absolutely no reason!
 - Callouts for questions, notes, hints and warnings!
 - Metadata queryable via the `<info>` label!
-- Diagram helpers !
+- Diagram helpers!
 
 [Typst]: https://typst.app

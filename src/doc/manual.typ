@@ -150,7 +150,7 @@ It is encoded into the resulting PDF
 as the document title you usually see
 in the window title of the PDF viewer.
 A template might also display this somewhere,
-but this is not requird.
+but this is not required.
 
 If it is not specified or `none` is passed,
 the filename passed via `--input filename=...`
