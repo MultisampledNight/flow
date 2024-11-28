@@ -83,6 +83,8 @@
       data.map(gfx.invert).join()
     } else if type(data) == array {
       data.join[,]
+    } else if type(data) == dictionary {
+      grid.cell(render(data), stroke: (left: gamut.sample(20%)))
     } else {
       [#data]
     }
@@ -91,7 +93,7 @@
   grid(
     columns: 2,
     align: (right, left),
-    gutter: 1em,
+    inset: 0.5em,
     ..it
     .pairs()
     .filter(((name, _)) => name != "keywords")
