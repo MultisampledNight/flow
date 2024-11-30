@@ -67,6 +67,23 @@
 // At the end of a branch, an arrow mark is always drawn.
 #let br(arrow: true, ..args) = _modifier(args.pos(), (branch: true, arrow: arrow))
 
+// Branches out to each given argument.
+#let all(..args) = {
+  let parts = args.pos()
+  let br = br.with(..args.named())
+
+  if parts.len() == 0 {
+    panic("can't draw to all over nothing")
+  } else if parts.len() == 1 {
+    br(parts.at(0))
+  } else {
+    br(
+      all(..parts.slice(0, -1)),
+      parts.last(),
+    )
+  }
+}
+
 // Label the edges created in this call.
 // The label is:
 //
