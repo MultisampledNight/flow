@@ -78,7 +78,7 @@
     br(parts.at(0), ..args.named())
   } else {
     br(
-      all(..parts.slice(0, -1)),
+      all(..parts.slice(0, -1), ..args.named()),
       parts.last(),
       ..args.named(),
     )
