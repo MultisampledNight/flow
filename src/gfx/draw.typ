@@ -75,11 +75,12 @@
   if parts.len() == 0 {
     panic("can't draw to all over nothing")
   } else if parts.len() == 1 {
-    br(parts.at(0))
+    br(parts.at(0), ..args.named())
   } else {
     br(
       all(..parts.slice(0, -1)),
       parts.last(),
+      ..args.named(),
     )
   }
 }
