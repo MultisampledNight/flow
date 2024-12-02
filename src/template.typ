@@ -46,6 +46,8 @@
     ),
   )
 
+  set math.mat(delim: "[")
+
   show "->": sym.arrow
   show "=>": sym.arrow.double
   show ref: text.with(fill: reference.same-file)
