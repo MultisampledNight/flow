@@ -1,4 +1,5 @@
 #import "info.typ"
+#import "gfx.typ"
 #import "palette.typ": *
 #import "@preview/polylux:0.3.1": *
 
@@ -68,29 +69,77 @@
   out
 }
 
-#let _progress-bar(now, total) = {
-  let ratio = (now - 1) / (total - 1)
-  move(
-    dy: 0.35em,
-    line(
-      length: ratio * 100%,
-      stroke: gamut.sample(35%),
-    ),
+#let _ratio(this, full) = {
+  (this - 1) / (full - 1)
+}
+
+#let _progress-bar(progress, sections) = {
+  let accent = (
+    bar: gamut.sample(20%),
+    legend: gamut.sample(40%),
+    extreme: gamut.sample(60%),
   )
+
+  let bar = layout(size => gfx.canvas({
+    let physical(ratio) = size.width * ratio
+    import gfx.draw: *
+    line(
+      (0, 0),
+      (physical(progress), 0),
+      stroke: 0.2em + accent.bar,
+    )
+
+    let empty(at) = (at: at, name: none)
+    let sections = (empty(0.0),) + sections + (empty(1.0),)
+
+    for (i, (at, name)) in sections.enumerate() {
+      let extreme = at in (0.0, 1.0)
+      let sign = calc.rem(i, 2) * 2 - 1
+
+      line(
+        (physical(at), sign * 0.125),
+        (rel: (0, -sign * 0.25)),
+        stroke: if extreme { accent.extreme } else { accent.legend },
+      )
+
+      content(
+        (),
+        text(0.5em, accent.legend, name),
+        padding: 0.2,
+        anchor: if sign == 1 { "north" } else { "south" },
+      )
+    }
+  }))
+  move(dy: -0.35em, bar)
 }
 
 #let _prelude(body) = {
   set page(
     paper: "presentation-16-9",
     footer: context {
-      let now = logic.logical-slide.get().first()
-      let total = logic.logical-slide.final().first()
+      let is-title = (
+        here().page() ==
+        query(heading.where(level: 1)).first().location().page()
+      )
+      if is-title { return }
+
+      let nums = logic.logical-slide
+      let now = nums.get().first()
+      let total = nums.final().first()
+
+      let progress = _ratio(now, total)
+      let sections = query(heading.where(level: 1, outlined: true))
+        .filter(entry => entry.body.text not in ("Contents", "Inhaltsverzeichnis"))
+        .map(it => (
+          at: _ratio(nums.at(it.location()).first(), total),
+          name: it.body,
+        ))
 
       grid(
         columns: (1fr, auto),
-        align: (left, right),
-        gutter: 0.5em,
-        _progress-bar(now, total),
+        align: (left + horizon, right),
+        gutter: 1em,
+        _progress-bar(progress, sections),
         dim[#now / #total],
       )
     },
