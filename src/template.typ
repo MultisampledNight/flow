@@ -65,16 +65,12 @@
     top-edge: 0.9em,
     bottom-edge: -0.25em,
     fill: luma(0%),
-    radius: 0.25em,
-    stroke: 4pt + luma(0%),
-    extent: 0em,
     text(if cfg.dev { fg } else { luma(100%) }, it),
   )
   show raw.where(block: true): it => block(
     fill: luma(0%),
-    radius: 0.5em,
-    inset: 0.5em,
     width: 100%,
+    inset: 0.75em,
     text(if cfg.dev { fg } else { luma(100%) }, it),
   )
 
