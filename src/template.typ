@@ -97,9 +97,9 @@
   (args: args, title: title)
 }
 
-// The args sink is used as metadata.
-// It'll exposed both in a table in the document and via `typst query`.
-// See the manual for details.
+/// The args sink is used as metadata.
+/// It'll exposed both in a table in the document and via `typst query`.
+/// See the manual for details.
 #let generic(body, ..args) = {
   let (args, title) = _shared(args)
 
@@ -117,11 +117,26 @@
   body
 }
 
-#let note(body, ..args) = {
+/// Compromise between generic and note.
+/// Does not display any content but uses nice, legible fonts.
+#let modern(body, ..args) = {
   set text(font: "IBM Plex Sans", size: 14pt)
-  show raw: set text(font: "IBM Plex Mono")
+  show raw: set text(font: "JetBrainsMonoNL NF", weight: "light")
 
   show: generic.with(..args)
+
+  body
+}
+
+#let gfx(body, ..args) = {
+  show: modern.with(..args)
+  set page(width: auto, height: auto)
+
+  body
+}
+
+#let note(body, ..args) = {
+  show: modern.with(..args)
 
   if cfg.render {
     let (args, title) = _shared(args)
@@ -192,13 +207,11 @@
 }
 
 #let slides(body, handout: false, ..args) = {
-  set text(font: "IBM Plex Sans", size: 26pt)
-  show raw: set text(font: "IBM Plex Mono")
+  set text(size: 26pt)
 
   show: presentation._prelude
-  show: generic.with(..args)
+  show: modern.with(..args)
   show: it => presentation._process(it, handout: handout, args.named())
 
   body
 }
-

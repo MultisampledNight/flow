@@ -65,7 +65,7 @@
 // If false, assume the final document will be printed
 // and try to be as useful as possible on real paper.
 #let dev = (_define("dev").bool)()
-#let dev = _default(dev, false)
+#let dev = _default(dev, "x-preview" in sys.inputs)
 
 // What colors to display the document in.
 // - bow: Black on white
