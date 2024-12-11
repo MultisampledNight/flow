@@ -47,17 +47,21 @@
   }
 
   let suffix = if it in special-to-plural {
-    special-to-plural.at(it)
+    "("
+    it.slice(1)
+    "|"
+    special-to-plural.at(it).slice(1)
+    ")"
   } else if it.ends-with("y") {
-    it.slice(0, -1)
+    it.slice(1, -1)
     "(y|ies)"
   } else {
-    it
+    it.slice(1)
     "s?"
   }
 
   prefix
-  suffix.slice(1)
+  suffix
 }
 
 // Constructs a regex that matches any entry in the `keywords` array,
