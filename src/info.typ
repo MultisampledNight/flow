@@ -83,7 +83,7 @@
     if "cw" in lower(name) {
       data.map(gfx.invert).join()
     } else if type(data) == array {
-      data.join[,]
+      data.join[, ]
     } else if type(data) == dictionary {
       grid.cell(render(data), stroke: (left: gamut.sample(20%)))
     } else {

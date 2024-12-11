@@ -47,6 +47,7 @@
   )
 
   set math.mat(delim: "[")
+  set math.vec(delim: "[")
 
   show "->": sym.arrow
   show "=>": sym.arrow.double
