@@ -110,6 +110,7 @@ I can guarantee you it is worthy of your time.
 
 + Start typing the actual note like any other typst document! uwu
 
+
 = Reference
 
 
@@ -665,7 +666,7 @@ where:
 
 == Icons
 
-For labeling things concisely and rememberable.
+For labeling things concisely and memorably.
 They are all accessible via `gfx.markers`, which is a dictionary
 with the single-character identifier as value and this dictionary as key:
 
