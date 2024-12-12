@@ -10,7 +10,7 @@
 #show: note.with(
   title: "Multi's workflow",
   author: "MultisampledNight",
-  keywords: (accent + steps + bold).to-dict(),
+  keywords: (accent + bold).to-dict() + steps,
 )
 
 This is tuned to my needs.
