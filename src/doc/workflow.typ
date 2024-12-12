@@ -2,14 +2,9 @@
 #let accent = ("root", "vertex", "yield", "edge").zip(
   duality.values().slice(2)
 )
-#let steps = ("initialize", "gather", "extract", "condense", "refine")
-#let steps = steps.enumerate().map(
-  ((i, step)) => (
-    step,
-    gradient
-      .linear(duality.orange, duality.yellow, duality.green)
-      .sample((i / (steps.len() - 1)) * 100%),
-  )
+#let steps = gradient-map(
+  ("initialize", "gather", "extract", "condense", "refine"),
+  (duality.orange, duality.yellow, duality.green),
 )
 #let bold = ("source", "target").map(name => (name, strong))
 #show: note.with(
