@@ -12,14 +12,15 @@
 // these below need to be kept in sync
 // they are forward/backward for looking up in text vs. looking up their effect
 
-#let special-to-plural = (
+#let norm-to-alt = (
   vertex: "vertices",
+  condense: "condensing",
 )
-#let special-to-singular = special-to-plural.pairs().map(array.rev).to-dict()
+#let alt-to-norm = norm-to-alt.pairs().map(array.rev).to-dict()
 
 #let normalize(it) = {
   let it = lower(it)
-  let lookup = special-to-singular.at(it, default: none)
+  let lookup = alt-to-norm.at(it, default: none)
   if lookup != none {
     return lookup
   }
@@ -31,7 +32,8 @@
     suffix.slice(0, -3)
     "y"
   } else {
-    suffix.trim("s", at: end, repeat: false)
+    let trim = str.trim.with(at: end, repeat: false)
+    trim(trim(suffix, "s"), "ing")
   }
 }
 
@@ -46,18 +48,18 @@
     ")"
   }
 
-  let suffix = if it in special-to-plural {
+  let suffix = if it in norm-to-alt {
     "("
     it.slice(1)
     "|"
-    special-to-plural.at(it).slice(1)
+    norm-to-alt.at(it).slice(1)
     ")"
   } else if it.ends-with("y") {
     it.slice(1, -1)
     "(y|ies)"
   } else {
     it.slice(1)
-    "s?"
+    "(s|ing)?"
   }
 
   prefix

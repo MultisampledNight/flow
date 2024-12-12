@@ -1,9 +1,21 @@
 #import "../lib.typ" as flow: *
+#let accent = ("root", "vertex", "yield", "edge").zip(
+  duality.values().slice(2)
+)
+#let steps = ("initialize", "gather", "extract", "condense", "refine")
+#let steps = steps.enumerate().map(
+  ((i, step)) => (
+    step,
+    gradient
+      .linear(duality.orange, duality.yellow, duality.green)
+      .sample((i / (steps.len() - 1)) * 100%),
+  )
+)
+#let bold = ("source", "target").map(name => (name, strong))
 #show: note.with(
   title: "Multi's workflow",
   author: "MultisampledNight",
-  keywords: ("root", "vertex", "yield", "edge")
-    .zip(duality.values().slice(2)).to-dict(),
+  keywords: (accent + steps + bold).to-dict(),
 )
 
 This is tuned to my needs.
@@ -22,18 +34,24 @@ Its components have the following meanings:
   A codification of information.
   - Examples: Note, reference, manual, webpage, video, verbal communication
 
+  / Root:
+    A vertex without incoming edges.
+    Where information originally stems from.
+
+  / Yield:
+    A vertex without incoming edges.
+    Where information originally stems from.
+
+  / Source:
+    Another vertex that has an incoming edge to a given vertex.
+
+  / Target:
+    Another vertex to which an outgoing edge of a given vertex leads to.
+
 / Edge:
   A vertex influencing another vertex directly and significantly.
   - Generally the vertices that one is viewing while modifying a vertex.
   - There's a lot of subjective leeway here on what is "influence".
-
-/ Root:
-  A vertex without incoming edges.
-  Where information originally stems from.
-
-/ Yield:
-  A vertex without incoming edges.
-  Where information originally stems from.
 
 This allows gamification:
 Given a set of roots,
@@ -47,10 +65,34 @@ or a new yield can be created with the current yield as basis.
 
 = Application
 
+The general high-level algorithm I use this with is the following:
+
++ *Initialize* via a spark that piques interest in a topic.
+  - Sometimes it's a cool talk on https://media.ccc.de.
+  - Sometimes it's a friend telling a story.
+  - Sometimes it's having to look into a complicated problem.
++ *Gather* external resources to use as roots.
++ *Extract* relevant information out of the roots into new vertices.
++ *Condense* existing vertices into new vertices.
+  - Note that _all_ vertices can be used as sources.
++ *Refine* until a satisfying yield is reached.
+  - By condensing ever further.
+  - Possibly also gathering and extracting new roots if needed.
+
+In an ideal world,
+one would would have infinitely much time for every step.
+Realistically though,
+one will need to weigh off time investments.
+
+For example,
+if it's known one has a presentation of a paper at some point,
+then the presentation and paper should both be yields, ideally.
+Things never go clean though
+— so it's okay if it doesn't work out.
+
 The theoretical model is nice and all,
 but most of the time I actually don't have it in my mind.
 Instead, at the bottom of a note
 is usually a section `References` or `Resources`
 where I put all links, talks and notes this is an effect of into
 without thinking too much of them as roots.
-
