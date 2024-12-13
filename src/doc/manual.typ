@@ -202,10 +202,10 @@ you'd use something akin to this in your code:
 ==== `generic`
 
 The core driver behind all templates.
-Feel free to use this as base for your own templates!
 Specifically, it sets up the following:
 
 - Basic styling according to the chosen theme
+- Page numbering
 - Processing of
   - Checkboxes
   - Keywords
@@ -214,9 +214,29 @@ Specifically, it sets up the following:
 Note that the styling does include colors and
 a few layout hints, but
 does notably *not* set the font or font size.
-That's something each template does itself.
+
+#hint[
+Feel free to use this as base for your own templates!
+Chances are you want to forward passed arguments
+that aren't handled directly by your template to the `generic` driver,
+so something to the following show rule:
+
+```typc
+show: generic.with(..args)
+```
+
+The same idea works for all other templates listed here, too.
+]
+
+==== `modern`
+
+- Extends: `generic`
+
+`generic` but with nice, modern font choices.
 
 ==== `note`
+
+- Extends: `modern`
 
 Usable for notes,
 short reports,
@@ -231,6 +251,8 @@ an outline.
 
 ==== `latex-esque`
 
+- Extends: `generic`
+
 Usable for faking something was made in LaTeX
 when it actually wasn't.
 Only does so superficially,
@@ -238,6 +260,8 @@ functionally nothing is changed and
 the icons will still look modern-ish.
 
 ==== `slides`
+
+- Extends: `generic`
 
 Splits the document into slides by
 using the headings.
@@ -248,6 +272,20 @@ for details.
 Has a large, readable font size and
 a progress bar at the bottom of every slide,
 so viewers know much longer the presentation will go.
+
+#hint[
+The core idea of what `slides` is doing,
+namely re-traversing the entire content tree
+and rendering it entirely differently,
+is very interesting to me
+for displaying information easier to other audiences.
+
+I'm considering at the moment to abstract this into a `transform` driver
+or the works.
+Then one could also create a mindmap template
+collecting all proofs, theorems and the works in a document...
+but this is all future music.
+]
 
 === Metadata
 
