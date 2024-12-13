@@ -34,7 +34,10 @@
 
   set rect(stroke: fg)
   set line(stroke: fg)
-  set table(stroke: fg)
+  set table(stroke: (x, y) => {
+    if x > 0 { (left: gamut.sample(30%)) }
+    if y > 0 { (top: gamut.sample(30%)) }
+  })
 
   set heading(numbering: "1.1")
 
@@ -74,6 +77,7 @@
     inset: 0.75em,
     text(if cfg.dev { fg } else { luma(100%) }, it),
   )
+  show table: align.with(center)
 
   body
 }

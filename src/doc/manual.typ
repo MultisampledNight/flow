@@ -408,7 +408,9 @@ Hence, see these semantics merely as a suggestion.
   columns: 5,
   align: left,
   inset: 0.5em,
-  [_Name_],         [_Fill_], [$p in ...$], [_Assigned to?_], [_Actionable by you?_],
+  table.header(
+    [Name], [Fill], [$p in ...$], [Assigned to?], [Actionable by you?],
+  ),
   ..(
     ([Not started], " ",      [${ 0 }$],    [Nobody yet],   [Yes]),
     ([Urgent],      "!",      [$[ 0, 1 )$], [You],          [Yes]),
@@ -723,10 +725,10 @@ see `src/gfx/util.typ` where they're all commented.
 
 Here's an overview over them all:
 
-#align(center, table(
+#table(
   columns: 4,
   align: (right, left, left, left),
-  [Icon], [Short], [Long], [Accent],
+  table.header([Icon], [Short], [Long], [Accent]),
   ..gfx.markers
     .pairs()
     .map(((short, (accent, icon, long))) => (
@@ -736,7 +738,7 @@ Here's an overview over them all:
       [#accent],
     ))
     .join()
-))
+)
 
 They can also be put into a cetz canvas
 by setting `contentize: false` on the icon
