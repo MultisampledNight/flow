@@ -14,7 +14,7 @@
 }
 
 /// Returns the given amount of samples on the unit range [0%, 100%].
-/// The returned samples are an array of floats,
+/// The returned samples are an array of percentages,
 /// beginning with 0 and ending with 1 (if there is more than one item).
 /// All samples are equally spaced.
 #let quantify-unit-range(samples) = {
@@ -31,3 +31,9 @@
   let targets = gradient.linear(..targets).samples(..pos)
   items.zip(targets).to-dict()
 }
+
+
+/// Swaps keys and values of the given dictionary.
+/// Both keys and values need to be keys.
+#let swap-kv(it) = it.pairs().map(array.rev).to-dict()
+

@@ -1,4 +1,5 @@
 #import "cfg.typ": render
+#import "util.typ": swap-kv
 
 #let char-that-does-nothing = "\u{200B}"
 #let do-not-process(it) = {
@@ -8,80 +9,92 @@
   char-that-does-nothing
   it.text.slice(1)
 }
+/// Regex alternates.
+#let any(..vars) = {
+  "("
+  vars.pos().join("|")
+  ")"
+}
 
 // these below need to be kept in sync
 // they are forward/backward for looking up in text vs. looking up their effect
 
-#let norm-to-alt = (
-  vertex: "vertices",
-  condense: "condensing",
+/// Maps from canonical suffix to other possible suffices.
+#let suffices = (
+  "e": "ing",
+  "x": "ices",
+  "y": "ies",
+  "": any("ing", "ize", "s"),
 )
-#let alt-to-norm = norm-to-alt.pairs().map(array.rev).to-dict()
+// FIXME: can't handle same alternates for different canonical suffices
+// would actually need to be a... multimap?
+#let suffices-rev = swap-kv(suffices)
 
+/// Returns an array of possibile normalized forms of `it`.
 #let normalize(it) = {
   let it = lower(it)
-  let lookup = alt-to-norm.at(it, default: none)
-  if lookup != none {
-    return lookup
-  }
 
-  it.at(0)
+  // do we need to canonicalize the suffix?
+  let choices = suffices-rev
+    .keys()
+    .filter(alternates => it.ends-with(regex(alternates)))
+    .map(alternates => {
+      let canonical = suffices-rev.at(alternates)
+      it.trim(regex(alternates), at: end, repeat: false)
+      canonical
+    })
 
-  let suffix = it.slice(1)
-  if suffix.ends-with("ies") {
-    suffix.slice(0, -3)
-    "y"
+  if choices == () {
+    (it,)
   } else {
-    let trim = str.trim.with(at: end, repeat: false)
-    trim(trim(suffix, "s"), "ing")
+    choices
   }
 }
 
 #let expand(it) = {
   let it = lower(it)
   // make it irrelevant if the first character is uppercase or lowercase
-  let prefix = {
-    "("
-    it.at(0)
-    "|"
-    upper(it.at(0))
-    ")"
-  }
+  let prefix = any(it.at(0), upper(it.at(0)))
+  let rest = it.slice(1)
 
-  let suffix = if it in norm-to-alt {
-    "("
-    it.slice(1)
-    "|"
-    norm-to-alt.at(it).slice(1)
-    ")"
-  } else if it.ends-with("y") {
-    it.slice(1, -1)
-    "(y|ies)"
+  // are there other possible suffices we need to account for?
+  let suffix = suffices
+    .keys()
+    .find(canonical => it.ends-with(canonical))
+  let rest = if suffix == none {
+    rest
   } else {
-    it.slice(1)
-    "(s|ing)?"
+    let alternates = suffices.at(suffix)
+
+    rest.trim(suffix, at: end, repeat: false)
+    any(suffix, alternates)
   }
 
-  prefix
-  suffix
+  prefix + rest
 }
 
 // Constructs a regex that matches any entry in the `keywords` array,
-// even if their first characters are capitalized.
+// even if they are e.g. pluralized or conjugated.
 #let construct-picker(keywords) = regex({
-  "\b("
-
-  keywords
-    .map(expand)
-    .join("|")
-
-  ")\b"
+  "\b"
+  any(..keywords.map(expand))
+  "\b"
 })
 
 // Finds the appropriate operation for the given keyword and applies it.
 #let apply-one(selected, registered) = {
   let original = normalize(selected.text)
+    .filter(possibility => possibility in registered)
+    .at(0, default: none)
+  if original == none {
+    panic({
+      "could not match keyword in text to original: "
+      "matched: `" + selected.text + "`, "
+      "registered: [" + registered.keys().join(", ") + "]"
+    })
+  }
   let effect = registered.at(original)
+
   let op = if type(effect) == function {
     effect
   } else if type(effect) == color {
@@ -111,7 +124,7 @@
   // normalize all keys so the lookup normalization can find something
   for (word, op) in cfg {
     let _ = cfg.remove(word)
-    cfg.insert(normalize(word), op)
+    cfg.insert(normalize(word).first(), op)
   }
 
   // then actually run through
