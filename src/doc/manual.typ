@@ -730,7 +730,7 @@ Here's an overview over them all:
   ..gfx.markers
     .pairs()
     .map(((short, (accent, icon, long))) => (
-      icon(),
+      icon(invert: false),
       raw(short),
       long,
       [#accent],
