@@ -412,14 +412,14 @@ Hence, see these semantics merely as a suggestion.
     [Name], [Fill], [$p in ...$], [Assigned to?], [Actionable by you?],
   ),
   ..(
-    ([Not started], " ",      [${ 0 }$],    [Nobody yet],   [Yes]),
-    ([Urgent],      "!",      [$[ 0, 1 )$], [You],          [Yes]),
-    ([In progress], ">",      [$[ 0, 1 )$], [You],          [Yes]),
-    ([Paused],      ":",      [$( 0, 1 )$], [You],          [Yes]),
-    ([Completed],   "x",      [${ 1 }$],    [Nobody],       [No]),
-    ([Cancelled],   "/",      [$[ 0, 1 )$], [Nobody],       [No]),
-    ([Blocked],     "-",      [$[ 0, 1 )$], [Not you],      [No]),
-    ([Unknown],     "?",      [$[ 0, 1 ]$], [Maybe you],    [Maybe]),
+    ([Not started], " ", [${ 0    }$], [Nobody yet], [Yes]),
+    ([Urgent],      "!", [$[ 0, 1 )$], [You],        [Yes]),
+    ([In progress], ">", [$[ 0, 1 )$], [You],        [Yes]),
+    ([Paused],      ":", [$( 0, 1 )$], [You],        [Yes]),
+    ([Completed],   "x", [${    1 }$], [Nobody],     [No]),
+    ([Cancelled],   "/", [$[ 0, 1 )$], [Nobody],     [No]),
+    ([Blocked],     "-", [$[ 0, 1 )$], [Not you],    [No]),
+    ([Unknown],     "?", [$[ 0, 1 ]$], [Maybe you],  [Maybe]),
   )
   .map(((name, fill, ..args)) => (
     name,

@@ -3,10 +3,13 @@
 
 /// Full-width dimmed line.
 /// Useful for a conceptual or logical split.
-#let separator = line(
-  length: 100%,
-  stroke: gamut.sample(25%),
-) + v(-0.5em)
+#let separator = box(
+  height: 0.1em,
+  align(horizon + center, line(
+    length: 100%,
+    stroke: gamut.sample(25%),
+  )),
+)
 
 /// Displays the given content highlighted and only when compiled in dev mode.
 #let todo(it) = if cfg.dev {

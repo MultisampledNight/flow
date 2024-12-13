@@ -150,8 +150,13 @@
       separator
     }
 
-    outline()
-    separator
+    // Are there any headings? If so, no need to render an outline.
+    context {
+      if query(heading).len() > 0 {
+        outline()
+        separator
+      }
+    }
   }
 
   body
