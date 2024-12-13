@@ -167,13 +167,16 @@ it should try to very concisely relay what the document is about.
 ==== `keywords`
 
 Either an array of strings or
-a dictionary from strings to functions, where
+a dictionary from strings to functions/colors/labels, where
 each function takes exactly one positional argument.
 
 Which words to highlight specially in the document.
 Think of it as a short-hand for show rules, but
 for individual words,
-handling capitalization and
+handling
+capitalization,
+plurals,
+verbification and
 word boundaries for you.
 
 The function is the content with the word given to
