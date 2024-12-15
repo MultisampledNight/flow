@@ -31,8 +31,11 @@
 /// Useful for feeding into `keywords`.
 #let gradient-map(items, targets) = {
   let pos = quantify-unit-range(items.len())
-  let targets = gradient.linear(..targets).samples(..pos)
-  items.zip(targets).to-dict()
+  if type(targets) != gradient {
+    targets = gradient.linear(..targets, space: oklch)
+  }
+  let values = targets.samples(..pos)
+  items.zip(values).to-dict()
 }
 
 

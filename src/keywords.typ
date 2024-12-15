@@ -21,9 +21,16 @@
 
 /// Maps from canonical suffix to other possible suffices.
 #let suffices = (
+  // define → defining
   "e": "ing",
-  "x": "ices",
+  // vertex → vertics
+  // latex → latexes
+  "ex": "(ices|exes)",
+  // party → parties
   "y": "ies",
+  // build → building
+  // concept → conceptize
+  // table → tables
   "": any("ing", "ize", "s"),
 )
 // FIXME: can't handle same alternates for different canonical suffices
