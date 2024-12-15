@@ -22,7 +22,8 @@
 /// Maps from canonical suffix to other possible suffices.
 #let suffices = (
   // define → defining
-  "e": "ing",
+  // architecture → architectures
+  "e": "(es|ing)",
   // vertex → vertics
   // latex → latexes
   "ex": "(ices|exes)",
