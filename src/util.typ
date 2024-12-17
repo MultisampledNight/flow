@@ -21,6 +21,9 @@
 /// beginning with 0 and ending with 1 (if there is more than one item).
 /// All samples are equally spaced.
 #let quantify-unit-range(samples) = {
+  if samples <= 1 {
+    return (0%,) * samples
+  }
   range(samples)
     .map(i => i / (samples - 1))
     .map(x => x * 100%)

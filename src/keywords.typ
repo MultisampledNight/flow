@@ -20,13 +20,23 @@
 // they are forward/backward for looking up in text vs. looking up their effect
 
 /// Maps from canonical suffix to other possible suffices.
+/// Must be ordered from most specific to least specific
+/// since the first match is always taken.
 #let suffices = (
+  // dependency → dependent
+  "ncy": "nt",
+  // dependence → dependent
+  "nce": "nt",
+  // suffix → suffices
+  "ix": "ices",
+  // vertex → vertices
+  // latex → latexes
+  "ex": "(ices|exes)",
+  // accuracy → accurate
+  "cy": "te",
   // define → defining
   // architecture → architectures
   "e": "(es|ing)",
-  // vertex → vertics
-  // latex → latexes
-  "ex": "(ices|exes)",
   // party → parties
   "y": "ies",
   // build → building
@@ -62,7 +72,12 @@
 #let expand(it) = {
   let it = lower(it)
   // make it irrelevant if the first character is uppercase or lowercase
-  let prefix = any(it.at(0), upper(it.at(0)))
+  // but only if the first character is obvious
+  let prefix = if it.at(0) == "(" {
+    it.at(0)
+  } else {
+    any(it.at(0), upper(it.at(0)))
+  }
   let rest = it.slice(1)
 
   // are there other possible suffices we need to account for?
@@ -91,17 +106,23 @@
 
 // Finds the appropriate operation for the given keyword and applies it.
 #let apply-one(selected, registered) = {
-  let original = normalize(selected.text)
-    .filter(possibility => possibility in registered)
+  let lookup = normalize(selected.text)
+    .map(
+      possibility => registered
+        .pairs()
+        // user may insert regex, too, need to account for that
+        .find(((name, _)) => regex(name) in possibility)
+    )
     .at(0, default: none)
-  if original == none {
+
+  if lookup == none {
     panic({
       "could not match keyword in text to original: "
       "matched: `" + selected.text + "`, "
       "registered: [" + registered.keys().join(", ") + "]"
     })
   }
-  let effect = registered.at(original)
+  let (name, effect) = lookup
 
   let op = if type(effect) == function {
     effect

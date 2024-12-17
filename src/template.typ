@@ -49,6 +49,7 @@
     ),
   )
 
+  set math.equation(numbering: "(1)")
   set math.mat(delim: "[")
   set math.vec(delim: "[")
 
