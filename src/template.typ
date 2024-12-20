@@ -154,6 +154,7 @@
     // Are there any headings? If so, no need to render an outline.
     context {
       if query(heading).len() > 0 {
+        v(-0.75em)
         outline()
         separator
       }

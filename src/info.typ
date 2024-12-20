@@ -94,10 +94,10 @@
   grid(
     columns: 2,
     align: (right, left),
-    inset: 0.5em,
+    gutter: 1em,
     ..it
     .pairs()
-    .filter(((name, _)) => name != "keywords")
+    .filter(((name, _)) => name not in ("keywords", "title"))
     .map(
       ((name, data)) => (dim(name), field(name, data))
     )

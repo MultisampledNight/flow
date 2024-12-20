@@ -46,3 +46,9 @@
 /// Both keys and values need to be keys.
 #let swap-kv(it) = it.pairs().map(array.rev).to-dict()
 
+/// Returns all combination possibilities of the two arrays.
+#let cartesian-product(a, b) = {
+  a
+    .map(x => b.map(y => (x, y)))
+    .join()
+}

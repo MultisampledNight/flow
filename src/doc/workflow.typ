@@ -6,7 +6,7 @@
   ("initialize", "gather", "extract", "condense", "refine"),
   (duality.orange, duality.yellow, duality.green),
 )
-#let bold = ("source", "target").map(name => (name, strong))
+#let bold = ("source", "target", "incoming", "outgoing").map(name => (name, strong))
 #show: note.with(
   title: "Multi's workflow",
   author: "MultisampledNight",
@@ -34,14 +34,16 @@ Its components have the following meanings:
     Where information originally stems from.
 
   / Yield:
-    A vertex without incoming edges.
-    Where information originally stems from.
+    A vertex without outgoing edges.
+    Final product that can be given to others and
+    presented to a wider audience without worries.
 
   / Source:
-    Another vertex that has an incoming edge to a given vertex.
+    A vertex $a$ which has an outgoing edge
+    which is also an incoming edge of a given vertex $b$.
 
   / Target:
-    Another vertex to which an outgoing edge of a given vertex leads to.
+    The given vertex $b$ in the definition of source.
 
 / Edge:
   A vertex influencing another vertex directly and significantly.

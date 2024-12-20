@@ -1,5 +1,5 @@
 #import "cfg.typ": render
-#import "util.typ": swap-kv
+#import "util.typ": swap-kv, cartesian-product
 
 #let char-that-does-nothing = "\u{200B}"
 #let do-not-process(it) = {
@@ -62,11 +62,7 @@
       canonical
     })
 
-  if choices == () {
-    (it,)
-  } else {
-    choices
-  }
+  (it,) + choices
 }
 
 #let expand(it) = {
@@ -106,24 +102,28 @@
 
 // Finds the appropriate operation for the given keyword and applies it.
 #let apply-one(selected, registered) = {
-  let lookup = normalize(selected.text)
-    .map(
-      possibility => registered
-        .pairs()
-        // user may insert regex, too, need to account for that
-        .find(((name, _)) => regex(name) in possibility)
-    )
-    .at(0, default: none)
+  // need to find the first normalization possibility
+  // that matches one of the registered keywords (might be regexes)
+  // yeah that's O(n m). could be made to O(n log(m)) with a prefix tree?
+
+  let lookup = cartesian-product(
+    normalize(selected.text),
+    registered.pairs(),
+  ).find(
+    ((possibility, (kw, _op))) => regex(kw) in possibility
+  )
 
   if lookup == none {
     panic({
       "could not match keyword in text to original: "
       "matched: `" + selected.text + "`, "
-      "registered: [" + registered.keys().join(", ") + "]"
+      "registered: [" + registered.keys().join(", ") + "], "
+      "normalized: [" + normalize(selected.text).join(", ") + "]"
     })
   }
-  let (name, effect) = lookup
+  let (_matched, (name, effect)) = lookup
 
+  // find a function to throw on the name
   let op = if type(effect) == function {
     effect
   } else if type(effect) == color {
