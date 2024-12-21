@@ -28,6 +28,8 @@
   "ncy": "(nt|ncies)",
   // dependence → dependent
   "nce": "nt",
+  // consent → consensually
+  "nt": "nsually",
   // responsible → responsibility
   "le": "ility",
   // suffix → suffices
