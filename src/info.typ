@@ -81,7 +81,12 @@
 #let render(it) = {
   let field(name, data) = {
     if "cw" in lower(name) {
-      data.map(gfx.invert).join()
+      par(
+        leading: 1.25em,
+        data
+          .map(gfx.invert)
+          .join(h(-0.5em)),
+      )
     } else if type(data) == array {
       data.join[, ]
     } else if type(data) == dictionary {

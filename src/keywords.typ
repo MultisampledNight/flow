@@ -24,9 +24,12 @@
 /// since the first match is always taken.
 #let suffices = (
   // dependency → dependent
-  "ncy": "nt",
+  // frequency → frequencies
+  "ncy": "(nt|ncies)",
   // dependence → dependent
   "nce": "nt",
+  // responsible → responsibility
+  "le": "ility",
   // suffix → suffices
   "ix": "ices",
   // vertex → vertices
@@ -42,7 +45,8 @@
   // build → building
   // concept → conceptize
   // table → tables
-  "": any("ing", "ize", "s"),
+  // guilt → guilty
+  "": any("ing", "ize", "s", "y"),
 )
 // FIXME: can't handle same alternates for different canonical suffices
 // would actually need to be a... multimap?
