@@ -85,7 +85,10 @@
     } else if type(data) == array {
       data.join[, ]
     } else if type(data) == dictionary {
-      grid.cell(render(data), stroke: (left: gamut.sample(20%)))
+      grid.cell(
+        render(data),
+        stroke: (left: gamut.sample(20%)),
+      )
     } else {
       [#data]
     }
@@ -94,7 +97,14 @@
   grid(
     columns: 2,
     align: (right, left),
-    gutter: 1em,
+    inset: (x, y) => {
+      if x == 0 {
+        (right: 0.5em)
+      } else {
+        (left: 0.5em)
+      }
+    },
+    row-gutter: 1em,
     ..it
     .pairs()
     .filter(((name, _)) => name not in ("keywords", "title"))
