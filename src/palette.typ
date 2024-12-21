@@ -14,9 +14,9 @@
   fg: rgb("#B6B3B4"),
   bg: rgb("#212224"),
 
-  pink: rgb("#FA86CE"),
-  violet: rgb("#AAA9FF"),
   blue: rgb("#00C7F7"),
+  violet: rgb("#AAA9FF"),
+  pink: rgb("#FA86CE"),
 
   orange: rgb("#FF9365"),
   yellow: rgb("#C7B700"),
