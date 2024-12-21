@@ -41,7 +41,8 @@
   "cy": "te",
   // define → defining
   // architecture → architectures
-  "e": "(es|ing)",
+  // revoke → revokable
+  "e": "(es|ing|able)",
   // party → parties
   "y": "ies",
   // build → building
