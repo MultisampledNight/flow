@@ -29,7 +29,8 @@
   // dependence → dependent
   "nce": "nt",
   // consent → consensually
-  "nt": "nsually",
+  // consent → consenting
+  "nt": "(nsually|nting)",
   // responsible → responsibility
   "le": "ility",
   // suffix → suffices
