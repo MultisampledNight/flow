@@ -44,7 +44,8 @@
   // revoke → revokable
   "e": "(es|ing|able)",
   // party → parties
-  "y": "ies",
+  // voluntary → voluntariness
+  "y": "(ies|iness)",
   // build → building
   // concept → conceptize
   // table → tables
