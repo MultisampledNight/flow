@@ -43,7 +43,8 @@
   // define → defining
   // architecture → architectures
   // revoke → revokable
-  "e": "(es|ing|able)",
+  // revoke → revokal
+  "e": "(es|ing|able|al)",
   // party → parties
   // voluntary → voluntariness
   "y": "(ies|iness)",
