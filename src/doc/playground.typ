@@ -1,7 +1,8 @@
 #import "../lib.typ" as flow: *
-#show: note
+#show: template.gfx
 
-- #track.event(
-  summary: "exist",
-  start: datetime(year: 2024, month: 9, day: 10),
-)
+#invert[-]
+#invert[y]
+this is text y
+
+#invert[enictr,e. tinersctienctirsgecting]

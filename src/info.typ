@@ -82,10 +82,10 @@
   let field(name, data) = {
     if "cw" in lower(name) {
       par(
-        leading: 1.25em,
+        leading: 1.5em,
         data
           .map(gfx.invert)
-          .join(h(-0.5em)),
+          .join(h(0.5em)),
       )
     } else if type(data) == array {
       data.join[, ]

@@ -51,31 +51,36 @@
 // Very useful for making a few words extra clear.
 #let invert(
   accent: fg,
-  shift: 0.5,
+  shift: 1em,
   padding: (x: 1em),
+  height: 1.4em,
   body
-) = box(context canvas(length: 1em, {
-  import draw: *
-  let body = pad(right: shift * -1em, pad(..padding, body))
+) = context box({
+  let body = pad(..padding, body)
 
-  // idea is to draw 2 parallelopiped
-  // then move them slightly above and below
-  // so they don't affect layouting
-  // but are still displayed out of line
+  // idea is to draw 1 parallelopiped
+  // but `place` it so it gets a zero-size box
+  // while the text is still drawn normally
+  // (just with the bg fill)
   let size = measure(body)
   let half-backdrop = box(canvas(length: 1em, {
+    import draw: *
     parallelopiped(
       (0, 0),
-      (size.width, size.height),
+      (size.width - 0.5em, height),
       shift: shift,
       fill: accent,
       stroke: accent,
     )
   }))
-  content((0, 0), move(dx: shift * 1em, dy: -size.height / 2, half-backdrop))
-  content((), move(dy: size.height / 2, half-backdrop))
-  content((), text(fill: bg, body))
-})) + h(0.75em, weak: true)
+
+  place(
+    dx: -shift / 4,
+    dy: (size.height - height) / 2,
+    half-backdrop,
+  )
+  text(fill: bg, body)
+})
 
 // Highlight the first grapheme cluster
 // (can approximately think of it as a character)
