@@ -1,4 +1,4 @@
-#import "../lib.typ" as flow: *
+#import "../src/lib.typ" as flow: *
 
 #let cb(marker, to-desc, it) = {
   let icon = gfx.markers.at(marker).icon

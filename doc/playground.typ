@@ -1,4 +1,4 @@
-#import "../lib.typ" as flow: *
+#import "../src/lib.typ" as flow: *
 #show: template.gfx
 
 #invert[-]
