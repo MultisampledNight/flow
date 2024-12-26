@@ -8,3 +8,8 @@ description = "Random note template and utilities for Multi's PKM system."
 categories = ["components", "report", "book"]
 authors = ["MultisampledNight"]
 repository = "https://github.com/MultisampledNight/flow"
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail/page-1.png"
