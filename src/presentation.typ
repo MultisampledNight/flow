@@ -140,7 +140,7 @@
         align: (left + horizon, right),
         gutter: 1em,
         _progress-bar(progress, sections),
-        dim[#now / #total],
+        fade[#now / #total],
       )
     },
   )

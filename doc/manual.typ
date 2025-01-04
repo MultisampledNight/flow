@@ -26,7 +26,7 @@
 
 #show raw.where(lang: "example"): it => {
   let code = it.text
-  let label(body) = emph(dim(normal(body + v(-0.5em))))
+  let label(body) = emph(fade(normal(body + v(-0.5em))))
   grid(
     columns: (1fr, 1fr),
     align: (top + left, left),

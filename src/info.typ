@@ -114,7 +114,7 @@
     .pairs()
     .filter(((name, _)) => name not in ("keywords", "title"))
     .map(
-      ((name, data)) => (dim(name), field(name, data))
+      ((name, data)) => (fade(name), field(name, data))
     )
     .join()
   )

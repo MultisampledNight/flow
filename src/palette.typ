@@ -31,7 +31,11 @@
 #let fg = (duality: duality.fg, bow: print.fg, wob: print.bg).at(cfg.theme)
 #let bg = (duality: duality.bg, bow: print.bg, wob: print.fg).at(cfg.theme)
 #let gamut = gradient.linear(bg, fg, space: oklch)
-#let dim(body) = text(fill: gamut.sample(60%), body)
+
+/// Set the text to the given brightness.
+/// 0% is merging with the background,
+/// 100% is fully visible just like the foreground color.
+#let fade(body, value: 60%) = text(fill: gamut.sample(value), body)
 
 #let status = _key-on-theme((
   empty: gamut.sample(75%),
