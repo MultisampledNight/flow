@@ -40,6 +40,8 @@
   "ex": "(ices|exes)",
   // accuracy → accurate
   "cy": "te",
+  // basis → bases
+  "is": "es",
   // define → defining
   // architecture → architectures
   // revoke → revokable
@@ -52,13 +54,14 @@
   // concept → conceptize
   // table → tables
   // guilt → guilty
-  "": any("ing", "ize", "s", "y"),
+  // dimension → dimensional
+  "": any("ing", "ize", "s", "y", "al"),
 )
 // FIXME: can't handle same alternates for different canonical suffices
 // would actually need to be a... multimap?
 #let suffices-rev = swap-kv(suffices)
 
-/// Returns an array of possibile normalized forms of `it`.
+/// Returns an array of possible normalized forms of `it`.
 #let normalize(it) = {
   let it = lower(it)
 
