@@ -1,5 +1,10 @@
+#import "util/linalg.typ" as linalg: scr
+
 #import "cfg.typ"
 #import "palette.typ": *
+
+/// Vertical dots.
+#let vvv = $dots.v$
 
 /// Full-width dimmed line.
 /// Useful for a conceptual or logical split.

@@ -10,16 +10,6 @@
   aliases: "how to procastinate",
   author: "MultisampledNight",
   cw: "\"you\"",
-  keywords: (
-    "not started": cb.with(" ", <not-started>),
-    "urgent": cb.with("!", <urgent>),
-    "in progress": cb.with(">", <in-progress>),
-    "paused": cb.with(":", <paused>),
-    "completed": cb.with("x", <completed>),
-    "cancelled": cb.with("/", <cancelled>),
-    "blocked": cb.with("-", <blocked>),
-    "unknown": cb.with("?", <unknown>),
-  ),
 )
 
 #let normal = text.with(font: "IBM Plex Sans")
@@ -760,3 +750,14 @@ via `at`:
   empty(at: (3.25, 2))
 })
 ```
+
+== Utils
+
+There's a few utilities defined for typing e.g. linear algebra.
+You can import them into your document
+via e.g. `#import linalg: *`
+(if you've glob-imported flow).
+
+Since those mostly very short,
+listing them here would be quite inefficient:
+Consider checking out e.g. `src/util/linalg.typ` in flow's source code instead.
