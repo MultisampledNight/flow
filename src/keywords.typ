@@ -30,7 +30,8 @@
   "nce": "nt",
   // consent → consensually
   // consent → consenting
-  "nt": "(nsually|nting)",
+  // coefficient → coefficients
+  "nt": "(nsually|nting|nts)",
   // responsible → responsibility
   "le": "ility",
   // suffix → suffices
@@ -46,7 +47,8 @@
   // architecture → architectures
   // revoke → revokable
   // revoke → revokal
-  "e": "(es|ing|able|al)",
+  // transpose → transposition
+  "e": "(es|ing|able|al|ition)",
   // party → parties
   // voluntary → voluntariness
   "y": "(ies|iness)",
