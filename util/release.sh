@@ -16,13 +16,13 @@ copy-to-index() {
 	pushd $repo
 		mkdir -p $target
 		rsync -r \
-			--include thumbnail/page-1.png \
+			--include $repo/thumbnail/page-1.png \
 			--exclude-from $repo/.gitignore \
 			--exclude '.git*' \
-			--exclude thumbnail/generate \
-			--exclude MAINTAIN.md \
-			--exclude util \
-			--exclude doc \
+			--exclude $repo/thumbnail/generate \
+			--exclude $repo/MAINTAIN.md \
+			--exclude $repo/util \
+			--exclude $repo/doc \
 			$repo/ $target/
 	popd
 }
