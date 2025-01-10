@@ -53,7 +53,7 @@ jobs:
         id: cache-jetbrainsmononl-lf
         uses: actions/cache@v4
         with:
-          path: cache-jetbrainsmono
+          path: jetbrains-mono
           key: cache-jetbrainsmono-3.3.0
       - name: Download JetBrainsMono if uncached
         if: steps.cache-jetbrainsmono.outputs.cache-hit != 'true'
