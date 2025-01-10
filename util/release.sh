@@ -15,14 +15,14 @@ clone-index() {
 copy-to-index() {
 	pushd $repo
 		mkdir -p $target
-		rsync -r \
-			--include $repo/thumbnail/page-1.png \
+		rsync -vv -r \
+			--include thumbnail/page-1.png \
 			--exclude-from $repo/.gitignore \
 			--exclude '.git*' \
-			--exclude $repo/thumbnail/generate \
-			--exclude $repo/MAINTAIN.md \
-			--exclude $repo/util \
-			--exclude $repo/doc \
+			--exclude /thumbnail/generate \
+			--exclude /MAINTAIN.md \
+			--exclude /util \
+			--exclude /doc \
 			$repo/ $target/
 	popd
 }
