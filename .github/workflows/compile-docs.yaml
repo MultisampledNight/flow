@@ -50,7 +50,7 @@ jobs:
           mv TrueType ibm-plex
 
       - name: Cache JetBrainsMono
-        id: cache-jetbrainsmononl-lf
+        id: cache-jetbrainsmono
         uses: actions/cache@v4
         with:
           path: jetbrains-mono
