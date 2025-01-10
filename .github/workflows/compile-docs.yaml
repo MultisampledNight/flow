@@ -66,7 +66,7 @@ jobs:
         run: |
           mkdir -p target/doc
           for doc in doc/*; do
-            ./typst compile "$doc" target/doc \
+            ./typst compile $doc "target/doc/$(basename $doc .typ).pdf" \
               --font-path jetbrains-mono \
               --font-path ibm-plex/IBM-Plex-Mono \
               --font-path ibm-plex/IBM-Plex-Sans
