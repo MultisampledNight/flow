@@ -3,41 +3,54 @@
 set -eux
 source `dirname $0`/common
 
-# cleanup potentially previous runs on the same release
-git tag --delete $version || true
-git push origin :$version || true
+clone-index() {
+	gh auth status
+	if [[ ! -d packages ]]; then
+		gh repo fork $index --clone
+	fi
 
-git commit --allow-empty --message "release: $version"
-git tag $version
-git push
-git push --tags
+	target="`pwd`/packages/packages/preview/$name/$version"
+}
 
-gh auth status
-if [[ ! -d packages ]]; then
-	gh repo fork $index --clone
-fi
+copy-to-index() {
+	pushd $repo
+		mkdir -p $target
+		rsync -r \
+			--include thumbnail/page-1.png \
+			--exclude-from $repo/.gitignore \
+			--exclude '.git*' \
+			--exclude thumbnail/generate \
+			--exclude MAINTAIN.md \
+			--exclude util \
+			--exclude doc \
+			$repo/ $target/
+	popd
+}
 
-target="`pwd`/packages/packages/preview/$name/$version"
+push-to-repo() {
+	# cleanup potentially previous runs on the same release
+	git tag --delete $version || true
+	git push origin :$version || true
 
-pushd $repo
-	mkdir -p $target
-	rsync -r \
-		--exclude-from $repo/.gitignore \
-		--exclude '.git*' \
-		--exclude thumbnail/generate \
-		--exclude MAINTAIN.md \
-		--exclude util \
-		--exclude doc \
-		--include thumbnail/page-1.png \
-		$repo/ $target/
-popd
+	git commit --allow-empty --message "release: $version"
+	git tag $version
+	git push
+	git push --tags
+}
 
-pushd $target
-	git switch --create "$name-$version"
+push-to-index() {
+	pushd $target
+		git switch -C "$name-$version"
 
-	git add .
-	git commit --message "$name:$version"
-	git push -u origin @
+		git add .
+		git commit --message "$name:$version"
+		git push -f -u origin @
 
-	git switch main
-popd
+		git switch main
+	popd
+}
+
+clone-index
+copy-to-index
+push-to-repo
+push-to-index
