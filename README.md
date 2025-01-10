@@ -84,3 +84,8 @@ or just download
 [the last run compiled by CI](https://github.com/MultisampledNight/flow/actions/workflows/compile-docs.yaml)!
 
 [Typst]: https://typst.app
+
+# License
+
+Only the template under `template` is under MIT-0,
+everything else is under MIT.

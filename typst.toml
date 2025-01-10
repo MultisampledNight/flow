@@ -6,7 +6,7 @@ name = "flow"
 entrypoint = "src/lib.typ"
 exclude = ["doc/*", "thumbnail/generate", "install.sh"]
 
-license = "MIT"
+license = "MIT AND MIT-0"
 authors = ["MultisampledNight <@MultisampledNight>"]
 repository = "https://github.com/MultisampledNight/flow"
 

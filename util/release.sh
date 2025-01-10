@@ -21,7 +21,7 @@ pushd $repo
 		--exclude-from $repo/.gitignore \
 		--exclude '.git*' \
 		--exclude util \
-		--exclude thumbnail/generate \
+		--exclude doc \
 		$repo/ $target/
 popd
 
