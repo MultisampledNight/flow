@@ -5,12 +5,12 @@ A bundle of template and a few more utils, written in and for [Typst].
 ## Quick start
 
 ```typst
-#import "@preview/flow:0.1.2"
+#import "@preview/flow:0.1.3": *
 #show: note.with(
-  title: "What is this note about?",
+  title: "Super cool title!",
 )
 
-Body text here!
+The actual body text!
 ```
 
 Or just `typst init @preview/flow` which does the same!
