@@ -3,6 +3,10 @@
 set -eux
 source `dirname $0`/common
 
+# cleanup potentially previous runs on the same release
+git tag --delete $version || true
+git push origin :$version || true
+
 git commit --allow-empty --message "release: $version"
 git tag $version
 git push
