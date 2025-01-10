@@ -68,6 +68,7 @@ jobs:
           for doc in doc/*; do
             ./typst compile $doc "target/doc/$(basename $doc .typ).pdf" \
               --root . \
+              --input theme=duality \
               --font-path jetbrains-mono \
               --font-path ibm-plex/IBM-Plex-Mono \
               --font-path ibm-plex/IBM-Plex-Sans
