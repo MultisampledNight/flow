@@ -9,6 +9,7 @@ version=`tq --file $repo/typst.toml package.version`
 
 git commit --allow-empty --message "release: $version"
 git tag $version
+git push
 git push --tags
 
 gh auth status

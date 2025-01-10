@@ -4,14 +4,14 @@ entrypoint = "src/lib.typ"
 exclude = ["doc/*", "thumbnail/generate", "install.sh"]
 
 license = "MIT"
-authors = ["@MultisampledNight"]
+authors = ["MultisampledNight <@MultisampledNight>"]
 repository = "https://github.com/MultisampledNight/flow"
 
 description = "A few templates and too many scattered utils."
 categories = ["components", "report"]
 keywords = ["pkm", "notes", "checklist"]
 
-version = "0.1.0"
+version = "0.1.1"
 compiler = "0.12.0"
 
 

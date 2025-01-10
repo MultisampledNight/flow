@@ -79,7 +79,7 @@ I can guarantee you it is worthy of your time.
 + Use the the following boilerplate in your note:
 
   ```typ
-  #import "@preview/flow:0.1.0": *
+  #import "@preview/flow:0.1.1": *
   #show: note.with(
     title: "Super cool note title!",
   )
