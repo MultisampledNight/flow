@@ -1,11 +1,7 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i bash -p bash gh tomlq rsync
 set -eux
-
-index="https://github.com/typst/packages"
-repo=`git rev-parse --show-toplevel`
-name=`basename $repo`
-version=`tq --file $repo/typst.toml package.version`
+source `dirname $0`/common
 
 git commit --allow-empty --message "release: $version"
 git tag $version
