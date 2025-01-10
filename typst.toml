@@ -1,4 +1,7 @@
 [package]
+version = "0.1.1"
+compiler = "0.12.0"
+
 name = "flow"
 entrypoint = "src/lib.typ"
 exclude = ["doc/*", "thumbnail/generate", "install.sh"]
@@ -10,10 +13,6 @@ repository = "https://github.com/MultisampledNight/flow"
 description = "A few templates and too many scattered utils."
 categories = ["components", "report"]
 keywords = ["pkm", "notes", "checklist"]
-
-version = "0.1.1"
-compiler = "0.12.0"
-
 
 [template]
 path = "template"
