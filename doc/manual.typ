@@ -1,4 +1,4 @@
-#import "../src/lib.typ" as flow: *
+#import "/src/lib.typ" as flow: *
 
 #show: note.with(
   title: "flow manual",
@@ -7,6 +7,7 @@
   cw: "\"you\"",
 )
 
+#let version = toml("/typst.toml").package.version
 #let normal = text.with(font: "IBM Plex Sans")
 
 #show raw.where(lang: "example"): it => {
@@ -78,12 +79,16 @@ I can guarantee you it is worthy of your time.
 
 + Use the the following boilerplate in your note:
 
-  ```typ
-  #import "@preview/flow:0.1.1": *
-  #show: note.with(
-    title: "Super cool note title!",
+  #raw(
+    block: true,
+    lang: "typ",
+    {
+      "#import \"@preview/flow:" + version + "\": *\n"
+      "#show: note.with(\n"
+      "  title: \"Super cool note title!\",\n"
+      ")"
+    }
   )
-  ```
 
 + Start typing the actual note like any other typst document! uwu
 

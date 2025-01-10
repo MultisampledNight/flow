@@ -1,4 +1,4 @@
-#import "../src/lib.typ" as flow: *
+#import "/src/lib.typ" as flow: *
 #let accent = ("root", "vertex", "yield", "edge").zip(
   duality.values().slice(2)
 )

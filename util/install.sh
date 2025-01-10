@@ -3,7 +3,7 @@
 set -eu
 source `dirname $0`/common
 
-target=~/.local/share/typst/packages/${1:-local}/flow/0.1.1
+target=~/.local/share/typst/packages/${1:-local}/flow/$version
 
 mkdir -p `dirname $target`
 rm -rf $target
