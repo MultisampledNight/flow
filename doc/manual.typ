@@ -81,21 +81,13 @@ I can guarantee you it is worthy of your time.
 
 = How do I get started?
 
-+ Clone this repository into `{data-dir}/typst/packages/local/flow/0.1.0`
-
-  - where `{data-dir}` is
-
-    - on Linux: `$XDG_DATA_HOME` if set, otherwise `$HOME/.local/share`
-    - on macOS: `sh $HOME/Library/Application Support`
-    - on Windows: `%APPDATA%`
-
-    (taken from https://github.com/typst/packages?tab=readme-ov-file#local-packages)
-
 + Use the the following boilerplate in your note:
 
   ```typ
-  #import "@local/flow:0.1.0": *
-  #show: note
+  #import "@preview/flow:0.1.0": *
+  #show: note.with(
+    title: "Super cool note title!",
+  )
   ```
 
 + Start typing the actual note like any other typst document! uwu
