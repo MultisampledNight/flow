@@ -24,8 +24,11 @@ pushd $repo
 	rsync -r \
 		--exclude-from $repo/.gitignore \
 		--exclude '.git*' \
+		--exclude thumbnail/generate \
+		--exclude MAINTAIN.md \
 		--exclude util \
 		--exclude doc \
+		--include thumbnail/page-1.png \
 		$repo/ $target/
 popd
 
