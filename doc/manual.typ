@@ -758,6 +758,6 @@ You can import them into your document
 via e.g. `#import linalg: *`
 (if you've glob-imported flow).
 
-Since those mostly very short,
+Since those are mostly very short,
 listing them here would be quite inefficient:
 Consider checking out e.g. `src/util/linalg.typ` in flow's source code instead.
