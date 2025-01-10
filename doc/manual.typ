@@ -1,10 +1,5 @@
 #import "../src/lib.typ" as flow: *
 
-#let cb(marker, to-desc, it) = {
-  let icon = gfx.markers.at(marker).icon
-  link(to-desc)[#icon() #it]
-}
-
 #show: note.with(
   title: "flow manual",
   aliases: "how to procastinate",
