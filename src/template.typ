@@ -174,6 +174,7 @@
 
   show: generic.with(..args)
 
+  set par(justify: true)
   set outline(
     title: [Table of contents],
     fill: repeat[.],

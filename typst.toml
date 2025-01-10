@@ -5,7 +5,7 @@ entrypoint = "src/lib.typ"
 
 license = "MIT"
 description = "Random note template and utilities for Multi's PKM system."
-categories = ["components", "report", "book"]
+categories = ["components", "report"]
 authors = ["MultisampledNight"]
 repository = "https://github.com/MultisampledNight/flow"
 
