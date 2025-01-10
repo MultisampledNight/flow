@@ -1,13 +1,19 @@
 [package]
 name = "flow"
-version = "0.1.0"
 entrypoint = "src/lib.typ"
+exclude = ["doc/*", "thumbnail/generate", "install.sh"]
 
 license = "MIT"
-description = "Random note template and utilities for Multi's PKM system."
-categories = ["components", "report"]
-authors = ["MultisampledNight"]
+authors = ["@MultisampledNight"]
 repository = "https://github.com/MultisampledNight/flow"
+
+description = "A few templates and too many scattered utils."
+categories = ["components", "report"]
+keywords = ["pkm", "notes", "checklist"]
+
+version = "0.1.0"
+compiler = "0.12.0"
+
 
 [template]
 path = "template"
