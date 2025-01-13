@@ -21,7 +21,7 @@ copy-to-index() {
 			--exclude '.git*' \
 			--exclude /thumbnail/generate \
 			--exclude /MAINTAIN.md \
-			--exclude /util \
+			--exclude /maintain \
 			--exclude /doc \
 			$repo/ $target/
 	popd

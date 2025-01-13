@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eux
+mkdir -p ./target
+for source in "$@"; do
+	typst c "$source" "./target/`basename "$source" .typ`.pdf"
+done
