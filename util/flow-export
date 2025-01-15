@@ -1,6 +1,29 @@
-#!/usr/bin/env sh
-set -eux
-mkdir -p ./target
+#!/usr/bin/env zsh
+set -xeuo pipefail
+
+target="./target"
+mkdir -p "$target"
+
 for source in "$@"; do
-	typst c "$source" "./target/`basename "$source" .typ`.pdf"
+	args=(
+		--input theme=duality
+		--input "filename=`basename "$source"`"
+		--root .
+	)
+	debug-argv $args
+	info_args=(
+		--input render=false
+		--one
+		--field value
+		$args
+	)
+
+	mkdir -p ./target
+	title=`typst query \
+		"$source" '<info>' \
+		$info_args 2>/dev/null \
+		| jq -r .title`
+	typst compile \
+		"$source" "$target/$title.pdf" \
+		$args 2>/dev/null
 done
