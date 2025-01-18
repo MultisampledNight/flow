@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 set -xeuo pipefail
 
+notes="$HOME/notes"
 target="./target"
 mkdir -p "$target"
 
@@ -8,9 +9,8 @@ for source in "$@"; do
 	args=(
 		--input theme=duality
 		--input "filename=`basename "$source"`"
-		--root .
+		--root "$notes"
 	)
-	debug-argv $args
 	info_args=(
 		--input render=false
 		--one
