@@ -1,4 +1,4 @@
-#import "gfx.typ"
+#import "gfx/mod.typ" as gfx
 
 // Returns `default` in place of missing values when slicing out-of-bounds towards the positive end.
 #let _graceful-slice(it, start, end, default: []) = {

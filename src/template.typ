@@ -4,7 +4,7 @@
 #import "keywords.typ"
 #import "palette.typ": *
 #import "presentation.typ"
-#import "util.typ": *
+#import "util/mod.typ": *
 
 #let _styling(body, ..args) = {
   if not cfg.render {

@@ -1,5 +1,5 @@
 #import "info.typ"
-#import "gfx.typ"
+#import "gfx/mod.typ" as gfx
 #import "palette.typ": *
 #import "@preview/polylux:0.3.1": *
 

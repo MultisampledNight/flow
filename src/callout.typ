@@ -1,4 +1,4 @@
-#import "gfx.typ"
+#import "gfx/mod.typ" as gfx
 #import "palette.typ": *
 
 #let callout(body, accent: none, marker: none) = {

@@ -3,7 +3,7 @@
 // other than being a cool sideproject and
 // forcing myself to use strings instead of contents for e.g. content warnings.
 
-#import "gfx.typ"
+#import "gfx/mod.typ" as gfx
 #import "palette.typ": *
 #import "tyck.typ"
 

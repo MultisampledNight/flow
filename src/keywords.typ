@@ -1,5 +1,5 @@
 #import "cfg.typ": render
-#import "util.typ": swap-kv, cartesian-product
+#import "util/mod.typ": swap-kv, cartesian-product
 
 #let char-that-does-nothing = "\u{200B}"
 #let do-not-process(it) = {

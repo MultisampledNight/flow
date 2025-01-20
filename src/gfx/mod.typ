@@ -1,6 +1,6 @@
-#import "gfx/util.typ": *
-#import "gfx/render.typ" as _render
-#import "palette.typ": *
+#import "util.typ": *
+#import "render.typ" as _render
+#import "../palette.typ": *
 
 // make the icons easily accessible so that one can just key to 
 #let markers = (

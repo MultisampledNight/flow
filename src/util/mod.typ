@@ -1,8 +1,8 @@
-#import "./util/preset.typ"
+#import "preset/mod.typ" as preset
 #import preset.linalg: scr
 
-#import "cfg.typ"
-#import "palette.typ": *
+#import "../cfg.typ"
+#import "../palette.typ": *
 
 /// Vertical dots.
 #let vvv = $dots.v$
