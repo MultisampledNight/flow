@@ -1,4 +1,5 @@
-#import "./util/linalg.typ" as linalg: scr
+#import "./util/preset.typ"
+#import preset.linalg: scr
 
 #import "cfg.typ"
 #import "palette.typ": *

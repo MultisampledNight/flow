@@ -743,13 +743,15 @@ via `at`:
 })
 ```
 
-== Utils
+== Presets
 
-There's a few utilities defined for typing e.g. linear algebra.
+There's a few utilities defined for typing
+e.g. linear algebra or mathematical operations.
 You can import them into your document
-via e.g. `#import linalg: *`
+via e.g. `#import preset.linalg: *`
 (if you've glob-imported flow).
 
 Since those are mostly very short,
 listing them here would be quite inefficient:
-Consider checking out e.g. `src/util/linalg.typ` in flow's source code instead.
+Consider checking out e.g. `src/util/preset/linalg.typ`
+in flow's source code instead.
