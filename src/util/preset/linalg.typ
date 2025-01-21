@@ -1,6 +1,13 @@
 // Utils for typing linear algebra.
 
+#let ovl = math.overline
+/// Inversion.
 #let inv(it) = $it^(-1)$
+// Transposition.
+#let trp(it) = $it^T$
+
+/// Alternate calligraphic handstyle.
+/// Not supported by all math fonts.
 #let scr(it) = text(
   features: ("ss01",),
   box($cal(it)$)
@@ -16,6 +23,7 @@
 #let rank = math.op("rank")
 
 #let linco(base) = $sum_(i = 1)^k lambda_i base_i$
+#let ipr(..args) = $lr(angle.l #args.pos().join[,] angle.r)$
 
 #let matop(entry, rows: $m$, cols: $n$) = {
   $[entry]_(1 <= y <= rows, 1 <= x <= cols)$
@@ -73,6 +81,27 @@
   Ainv, Binv, Cinv, Dinv, Einv, Pinv, Qinv, Rinv, Sinv, Tinv, Vinv, Winv, Xinv, Yinv, Zinv,
   ainv, binv, cinv, dinv, einv, pinv, qinv, rinv, sinv, tinv, vinv, winv, xinv, yinv, zinv,
 ) = shorthand(inv)
+// Transposed.
+#let (
+  AT, BT, CT, DT, ET, PT, QT, RT, ST, TTr, VT, WT, XT, YT, ZT,
+  aT, bT, cT, dT, eT, pT, qT, rT, sT, tT, vT, wT, xT, yT, zT,
+) = shorthand(trp)
+
+// Vector boldfaced.
+#let (
+  Avb, Bvb, Cvb, Dvb, Evb, Pvb, Qvb, Rvb, Svb, Tvb, Vvb, Wvb, Xvb, Yvb, Zvb,
+  avb, bvb, cvb, dvb, evb, pvb, qvb, rvb, svb, tvb, vvb, wvb, xvb, yvb, zvb,
+) = shorthand(ch => math.bold(math.arrow(ch)))
+// Vector tildized.
+#let (
+  Ava, Bva, Cva, Dva, Eva, Pva, Qva, Rva, Sva, Tva, Vva, Wva, Xva, Yva, Zva,
+  ava, bva, cva, dva, eva, pva, qva, rva, sva, tva, vva, wva, xva, yva, zva,
+) = shorthand(ch => math.tilde(math.arrow(ch)))
+// Vector transposed.
+#let (
+  AvT, BvT, CvT, DvT, EvT, PvT, QvT, RvT, SvT, TvT, VvT, WvT, XvT, YvT, ZvT,
+  avT, bvT, cvT, dvT, evT, pvT, qvT, rvT, svT, tvT, vvT, wvT, xvT, yvT, zvT,
+) = shorthand(ch => trp(math.arrow(ch)))
 
 // Short definition of a matrix' entries.
 #let sdef(entry) = $[entry_(y, x)]$
