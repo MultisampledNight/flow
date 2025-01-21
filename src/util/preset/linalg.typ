@@ -5,6 +5,8 @@
 #let inv(it) = $it^(-1)$
 // Transposition.
 #let trp(it) = $it^T$
+// Conjugate transposition.
+#let ctrp(it) = $it^H$
 
 /// Alternate calligraphic handstyle.
 /// Not supported by all math fonts.
@@ -86,6 +88,11 @@
   AT, BT, CT, DT, ET, PT, QT, RT, ST, TTr, VT, WT, XT, YT, ZT,
   aT, bT, cT, dT, eT, pT, qT, rT, sT, tT, vT, wT, xT, yT, zT,
 ) = shorthand(trp)
+// Conjugate transposed.
+#let (
+  AH, BH, CH, DH, EH, PH, QH, RH, SH, TH, VH, WH, XH, YH, ZH,
+  aH, bH, cH, dH, eH, pH, qH, rH, sH, tH, vH, wH, xH, yH, zH,
+) = shorthand(ctrp)
 
 // Vector boldfaced.
 #let (
@@ -102,6 +109,11 @@
   AvT, BvT, CvT, DvT, EvT, PvT, QvT, RvT, SvT, TvT, VvT, WvT, XvT, YvT, ZvT,
   avT, bvT, cvT, dvT, evT, pvT, qvT, rvT, svT, tvT, vvT, wvT, xvT, yvT, zvT,
 ) = shorthand(ch => trp(math.arrow(ch)))
+// Vector conjugate transposed.
+#let (
+  AvH, BvH, CvH, DvH, EvH, PvH, QvH, RvH, SvH, TvH, VvH, WvH, XvH, YvH, ZvH,
+  avH, bvH, cvH, dvH, evH, pvH, qvH, rvH, svH, tvH, vvH, wvH, xvH, yvH, zvH,
+) = shorthand(ch => ctrp(math.arrow(ch)))
 
 // Short definition of a matrix' entries.
 #let sdef(entry) = $[entry_(y, x)]$
