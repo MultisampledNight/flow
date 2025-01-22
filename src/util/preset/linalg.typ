@@ -4,9 +4,9 @@
 /// Inversion.
 #let inv(it) = $it^(-1)$
 // Transposition.
-#let trp(it) = $it^T$
+#let trp(it) = $it^upright(T)$
 // Conjugate transposition.
-#let ctrp(it) = $it^H$
+#let ctrp(it) = $it^upright(H)$
 
 /// Alternate calligraphic handstyle.
 /// Not supported by all math fonts.
