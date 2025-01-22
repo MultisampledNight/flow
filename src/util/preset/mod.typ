@@ -4,3 +4,4 @@
 #import "calculus.typ"
 #import "linalg.typ"
 #import "ops.typ"
+#import "quantum.typ"
