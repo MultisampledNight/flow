@@ -32,6 +32,8 @@
   // consent → consenting
   // coefficient → coefficients
   "nt": "(nsually|nting|nts)",
+  // orthogonal → orthogonality
+  "al": "ality",
   // responsible → responsibility
   "le": "ility",
   // suffix → suffices
