@@ -3,7 +3,6 @@
 #import "info.typ"
 #import "keywords.typ"
 #import "palette.typ": *
-#import "presentation.typ"
 #import "util/mod.typ": *
 
 #let _styling(body, ..args) = {
@@ -216,16 +215,6 @@
 
     outline()
   }
-
-  body
-}
-
-#let slides(body, handout: false, ..args) = {
-  set text(size: 26pt)
-
-  show: presentation._prelude
-  show: modern.with(..args)
-  show: it => presentation._process(it, handout: handout, args.named())
 
   body
 }

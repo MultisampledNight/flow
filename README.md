@@ -21,9 +21,6 @@ Or just `typst init @preview/flow` which does the same!
 
 - Just typing a note and need a few defaults?
   `#show: note`, that's it!
-- Sketching up a presentation?
-  `#show: template.slides`,
-  use the headings to control slides!
 - Need to pass something through as LaTeX
   under significant time pressure?
   `#show: template.latex-esque`

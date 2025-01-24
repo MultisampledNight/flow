@@ -241,34 +241,6 @@ Only does so superficially,
 functionally nothing is changed and
 the icons will still look modern-ish.
 
-==== `slides`
-
-- Extends: `generic`
-
-Splits the document into slides by
-using the headings.
-See the dedicated section about slides,
-@slides,
-for details.
-
-Has a large, readable font size and
-a progress bar at the bottom of every slide,
-so viewers know much longer the presentation will go.
-
-#hint[
-The core idea of what `slides` is doing,
-namely re-traversing the entire content tree
-and rendering it entirely differently,
-is very interesting to me
-for displaying information easier to other audiences.
-
-I'm considering at the moment to abstract this into a `transform` driver
-or the works.
-Then one could also create a mindmap template
-collecting all proofs, theorems and the works in a document...
-but this is all future music.
-]
-
 === Metadata
 
 / Metadata: Data about data.
@@ -682,12 +654,6 @@ where:
   length: 4em,
 )
 ```
-
-== Slides <slides>
-
-#caution[
-  help write docs about the cursedness
-]
 
 == Icons
 

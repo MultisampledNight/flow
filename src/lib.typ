@@ -8,7 +8,6 @@
 #import "info.typ"
 #import "keywords.typ"
 #import "palette.typ": *
-#import "presentation.typ"
 #import "tyck.typ"
 #import "util/mod.typ": *
 #import "template.typ" as template: note

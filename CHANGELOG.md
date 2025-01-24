@@ -12,6 +12,14 @@ only covers significant **user-facing** changes.
   to the globally-available `preset` module
   - E.g. if you've used `#import linalg: *` before,
     use `#import preset.linalg: *` instead
+- Remove `slides` template and `presentation` module
+  - It was
+    - never properly documented
+    - an utter hack causing more headaches than it saved in writing time
+    - dependent on polylux
+      - which was never updated to resolve the compiler's warnings
+        about the new `context` mechanism
+      - and needlessly spamming my logs hence
 
 ### Additions
 
