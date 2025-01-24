@@ -69,17 +69,18 @@
     if not cfg.dev { ret = underline(ret) }
     ret
   }
-  show raw.where(block: false): it => highlight(
+  set raw(theme: "halcyon.tmTheme")
+  show raw.where(block: false): it => box(
     top-edge: 0.9em,
     bottom-edge: -0.25em,
     fill: luma(0%),
-    text(if cfg.dev { fg } else { luma(100%) }, it),
+    it,
   )
   show raw.where(block: true): it => block(
     fill: luma(0%),
     width: 100%,
     inset: 0.75em,
-    text(if cfg.dev { fg } else { luma(100%) }, it),
+    it,
   )
   show table: align.with(center)
 
@@ -126,7 +127,10 @@
 /// Does not display any content but uses nice, legible fonts.
 #let modern(body, ..args) = {
   set text(font: "IBM Plex Sans", size: 14pt)
-  show raw: set text(font: "JetBrainsMonoNL NF", weight: "light")
+  show raw: set text(
+    font: "JetBrainsMonoNL NF",
+    weight: "light",
+  )
 
   set par(linebreaks: "optimized")
   show: generic.with(..args)
