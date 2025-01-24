@@ -1,4 +1,4 @@
-#import "@preview/flow:0.1.3": *
+#import "@preview/flow:0.2.0": *
 #show: note.with(
   title: "Super cool title!",
 )

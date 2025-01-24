@@ -5,7 +5,7 @@ A bundle of template and a few more utils, written in and for [Typst].
 ## Quick start
 
 ```typst
-#import "@preview/flow:0.1.3": *
+#import "@preview/flow:0.2.0": *
 #show: note.with(
   title: "Super cool title!",
 )
