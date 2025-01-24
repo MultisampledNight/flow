@@ -69,19 +69,27 @@
     if not cfg.dev { ret = underline(ret) }
     ret
   }
-  set raw(theme: "halcyon.tmTheme")
+
+  let cb = (
+    fill: halcyon.bg,
+    radius: 0.25em,
+  )
+
+  set raw(theme: "/asset/halcyon.tmTheme")
+  show raw: text.with(fill: halcyon.fg)
   show raw.where(block: false): it => box(
-    top-edge: 0.9em,
-    bottom-edge: -0.25em,
-    fill: luma(0%),
+    outset: (y: 0.3em),
+    inset: (x: 0.25em),
     it,
+    ..cb,
   )
   show raw.where(block: true): it => block(
-    fill: luma(0%),
-    width: 100%,
     inset: 0.75em,
+    width: 100%,
     it,
+    ..cb,
   )
+
   show table: align.with(center)
 
   body

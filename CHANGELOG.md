@@ -23,6 +23,8 @@ only covers significant **user-facing** changes.
 
 ### Additions
 
+- Use [Halcyon](https://github.com/bchiang7/Halcyon)
+  as new default theme for codeblocks
 - Fill `preset.linalg` with more utilities
   - (Conjugate) transposition via `trp`/`ctrp`
   - Inner product via `ipr`

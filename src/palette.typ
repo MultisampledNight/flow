@@ -22,6 +22,10 @@
   yellow: rgb("#C7B700"),
   green: rgb("#11D396"),
 )
+#let halcyon = (
+  fg: rgb("#a2aabc"),
+  bg: rgb("#1d2433"),
+)
 
 #let print = (
   fg: luma(0%),

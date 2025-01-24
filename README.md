@@ -84,5 +84,6 @@ or just download
 
 # License
 
-Only the template under `template` is under MIT-0,
-everything else is under MIT.
+The template under `template` is under MIT-0,
+everything else here is under MIT.
+See [LICENSE.md](./LICENSE.md) for details.
