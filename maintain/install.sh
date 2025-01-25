@@ -3,8 +3,8 @@
 set -eu
 source `dirname $0`/common
 
-target=~/.local/share/typst/packages/${1:-local}/flow/$version
+target="$HOME/.local/share/typst/packages/${1:-local}/flow/$version"
 
-mkdir -p `dirname $target`
-rm -rf $target
-ln -sf $repo $target
+mkdir -p `dirname "$target"`
+rm -rf "$target"
+cp -r "$repo" "$target"
