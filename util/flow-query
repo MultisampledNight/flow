@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 # Queries the given note files, or *all* notes if none given.
 # Prints JSON.
+#
+# TODO: optimize this by writing my own Typst world so flow can be cached?
 set -euo pipefail
 here=`dirname $0`
 source "$here/common"
