@@ -1,14 +1,11 @@
 #!/usr/bin/env zsh
+# Queries the given note files, or *all* notes if none given.
+# Prints JSON.
 set -euo pipefail
-source `dirname $0`/common
+here=`dirname $0`
+source "$here/common"
 
-cmd=(
-	typst query
-	--input render=false
-	--one
-	--field value
-	--root "$notes"
-)
+cmd=("$here/flow" info)
 
 if [[ ${#@} > 0 ]]; then
 	for note in "$@"; do
@@ -16,6 +13,5 @@ if [[ ${#@} > 0 ]]; then
 	done
 else
 	fd -0 --exclude zero/template '\.typ$' "$notes" \
-		| sed 's/\x00/\x00<info>\x00/g' \
-		| xargs -0 -n 2 $cmd
+		| xargs -P `nproc` -0 -n 1 $cmd
 fi

@@ -1,20 +1,15 @@
 #!/usr/bin/env zsh
 set -xeuo pipefail
-source `dirname $0`/common
+here=`dirname $0`
+source "$here/common"
 
 mkdir -p "$target"
-query="`dirname $0`/flow-query"
+query="$here/flow-query"
 
 for source in "$@"; do
-	args=(
-		--input theme=duality
-		--input "filename=`basename "$source"`"
-		--root "$notes"
-	)
+	title=`"$here/flow-query" "$source" 2>/dev/null | jq -r .title`
 
-	mkdir -p ./target
-	title=`$query "$source" 2>/dev/null | jq -r .title`
-	typst compile \
+	"$here/flow" compile \
 		"$source" "$target/$title.pdf" \
-		$args 2>/dev/null
+		2>/dev/null
 done
