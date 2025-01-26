@@ -44,7 +44,8 @@
   // accuracy → accurate
   "cy": "te",
   // basis → bases
-  "is": "es",
+  // basis → based
+  "is": "e(s|d)",
   // define → defining
   // architecture → architectures
   // revoke → revokable
