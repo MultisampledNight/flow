@@ -25,6 +25,7 @@
 
 #let linco(..args) = $sum_(i = 1)^k #args.pos().join()$
 #let ipr(..args) = $lr(angle.l #args.pos().join[,] angle.r)$
+#let mpr(..args) = $lr([ #args.pos().join[,] ])$
 
 #let matop(entry, rows: $m$, cols: $n$) = {
   $[entry]_(1 <= y <= rows, 1 <= x <= cols)$
