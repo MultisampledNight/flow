@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+source `dirname $0`/common
+
+cmd=(
+	typst query
+	--input render=false
+	--one
+	--field value
+	--root "$notes"
+)
+
+if [[ ${#@} > 0 ]]; then
+	for note in "$@"; do
+		$cmd "$note" '<info>'
+	done
+else
+	fd .typ -0 --exclude zero/template "$notes" \
+		| sed 's/\x00/\x00<info>\x00/g' \
+		| xargs -0 -n 2 $cmd
+fi
