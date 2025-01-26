@@ -15,7 +15,7 @@ if [[ ${#@} > 0 ]]; then
 		$cmd "$note" '<info>'
 	done
 else
-	fd .typ -0 --exclude zero/template "$notes" \
+	fd -0 --exclude zero/template '\.typ$' "$notes" \
 		| sed 's/\x00/\x00<info>\x00/g' \
 		| xargs -0 -n 2 $cmd
 fi
