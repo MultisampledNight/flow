@@ -6,6 +6,8 @@
 
 /// Vertical dots.
 #let vvv = $dots.v$
+/// Horizontal dots, centered.
+#let ccc = $dots.c$
 
 /// Full-width dimmed line.
 /// Useful for a conceptual or logical split.
