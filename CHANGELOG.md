@@ -11,6 +11,7 @@ only covers significant **user-facing** changes.
 - Utils
   - Linear algebra
     - Expand `linco` to accept any number of arguments
+    - Add text operator `size`
 
 ## 0.2.0
 
