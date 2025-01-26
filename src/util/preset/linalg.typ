@@ -24,7 +24,7 @@
 #let span = math.op("span")
 #let rank = math.op("rank")
 
-#let linco(base) = $sum_(i = 1)^k lambda_i base_i$
+#let linco(..args) = $sum_(i = 1)^k #args.pos().map(x => $#x _i$).join()$
 #let ipr(..args) = $lr(angle.l #args.pos().join[,] angle.r)$
 
 #let matop(entry, rows: $m$, cols: $n$) = {
