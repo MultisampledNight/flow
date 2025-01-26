@@ -15,5 +15,6 @@ if [[ ${#@} > 0 ]]; then
 	done
 else
 	fd -0 --exclude zero/template '\.typ$' "$notes" \
-		| xargs -P `nproc` -0 -n 1 $cmd
+		| xargs -P `nproc` -0 -n 1 $cmd \
+		2>/dev/null
 fi
