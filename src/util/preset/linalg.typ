@@ -78,6 +78,11 @@
   Ac, Bc, Cc, Dc, Ec, Pc, Qc, Rc, Sc, Tc, Vc, Wc, Xc, Yc, Zc,
   ac, bc, cc, dc, ec, pc, qc, rc, sc, tc, vc, wc, xc, yc, zc,
 ) = shorthand(ovl)
+// Norm.
+#let (
+  An, Bn, Cn, Dn, En, Pn, Qn, Rn, Sn, Tn, Vn, Wn, Xn, Yn, Zn,
+  an, bn, cn, dn, en, pn, qn, rn, sn, tn, vn, wn, xn, yn, zn,
+) = shorthand(math.norm)
 // Vectors.
 #let (
   Av, Bv, Cv, Dv, Ev, Pv, Qv, Rv, Sv, Tv, Vv, Wv, Xv, Yv, Zv,
@@ -104,31 +109,45 @@
   aH, bH, cH, dH, eH, pH, qH, rH, sH, tH, vH, wH, xH, yH, zH,
 ) = shorthand(ctrp)
 
+#let vec-shorthand(op, ..args) = shorthand(
+  ch => op(math.arrow(ch)),
+  ..args,
+)
 // Vector absolute value.
 #let (
   Ava, Bva, Cva, Dva, Eva, Pva, Qva, Rva, Sva, Tva, Vva, Wva, Xva, Yva, Zva,
   ava, bva, cva, dva, eva, pva, qva, rva, sva, tva, vva, wva, xva, yva, zva,
-) = shorthand(math.abs)
+) = vec-shorthand(math.abs)
 // Vector boldfaced.
 #let (
   Avb, Bvb, Cvb, Dvb, Evb, Pvb, Qvb, Rvb, Svb, Tvb, Vvb, Wvb, Xvb, Yvb, Zvb,
   avb, bvb, cvb, dvb, evb, pvb, qvb, rvb, svb, tvb, vvb, wvb, xvb, yvb, zvb,
-) = shorthand(ch => math.bold(math.arrow(ch)))
+) = vec-shorthand(math.bold)
+// Vector conjugate.
+#let (
+  Avc, Bvc, Cvc, Dvc, Evc, Pvc, Qvc, Rvc, Svc, Tvc, Vvc, Wvc, Xvc, Yvc, Zvc,
+  avc, bvc, cvc, dvc, evc, pvc, qvc, rvc, svc, tvc, vvc, wvc, xvc, yvc, zvc,
+) = vec-shorthand(ovl)
+// Vector norm.
+#let (
+  Avn, Bvn, Cvn, Dvn, Evn, Pvn, Qvn, Rvn, Svn, Tvn, Vvn, Wvn, Xvn, Yvn, Zvn,
+  avn, bvn, cvn, dvn, evn, pvn, qvn, rvn, svn, tvn, vvn, wvn, xvn, yvn, zvn,
+) = vec-shorthand(math.norm)
 // Vector tildized.
 #let (
   Avt, Bvt, Cvt, Dvt, Evt, Pvt, Qvt, Rvt, Svt, Tvt, Vvt, Wvt, Xvt, Yvt, Zvt,
   avt, bvt, cvt, dvt, evt, pvt, qvt, rvt, svt, tvt, vvt, wvt, xvt, yvt, zvt,
-) = shorthand(ch => math.tilde(math.arrow(ch)))
+) = vec-shorthand(math.tilde)
 // Vector transposed.
 #let (
   AvT, BvT, CvT, DvT, EvT, PvT, QvT, RvT, SvT, TvT, VvT, WvT, XvT, YvT, ZvT,
   avT, bvT, cvT, dvT, evT, pvT, qvT, rvT, svT, tvT, vvT, wvT, xvT, yvT, zvT,
-) = shorthand(ch => trp(math.arrow(ch)))
+) = vec-shorthand(trp)
 // Vector conjugate transposed.
 #let (
   AvH, BvH, CvH, DvH, EvH, PvH, QvH, RvH, SvH, TvH, VvH, WvH, XvH, YvH, ZvH,
   avH, bvH, cvH, dvH, evH, pvH, qvH, rvH, svH, tvH, vvH, wvH, xvH, yvH, zvH,
-) = shorthand(ch => ctrp(math.arrow(ch)))
+) = vec-shorthand(ctrp)
 
 // Short definition of a matrix' entries.
 #let sdef(entry) = $[entry_(y, x)]$
