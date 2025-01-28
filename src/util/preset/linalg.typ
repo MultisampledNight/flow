@@ -63,6 +63,11 @@
 /// Maps each common character in equations to the given op.
 #let shorthand(op, space: charset) = space.clusters().map(op)
 
+// Absolute value.
+#let (
+  Aa, Ba, Ca, Da, Ea, Pa, Qa, Ra, Sa, Ta, Va, Wa, Xa, Ya, Za,
+  aa, ba, ca, da, ea, pa, qa, ra, sa, ta, va, wa, xa, ya, za,
+) = shorthand(math.abs)
 // Boldface.
 #let (
   Ab, Bb, Cb, Db, Eb, Pb, Qb, Rb, Sb, Tb, Vb, Wb, Xb, Yb, Zb,
@@ -99,6 +104,11 @@
   aH, bH, cH, dH, eH, pH, qH, rH, sH, tH, vH, wH, xH, yH, zH,
 ) = shorthand(ctrp)
 
+// Vector absolute value.
+#let (
+  Ava, Bva, Cva, Dva, Eva, Pva, Qva, Rva, Sva, Tva, Vva, Wva, Xva, Yva, Zva,
+  ava, bva, cva, dva, eva, pva, qva, rva, sva, tva, vva, wva, xva, yva, zva,
+) = shorthand(math.abs)
 // Vector boldfaced.
 #let (
   Avb, Bvb, Cvb, Dvb, Evb, Pvb, Qvb, Rvb, Svb, Tvb, Vvb, Wvb, Xvb, Yvb, Zvb,
@@ -106,8 +116,8 @@
 ) = shorthand(ch => math.bold(math.arrow(ch)))
 // Vector tildized.
 #let (
-  Ava, Bva, Cva, Dva, Eva, Pva, Qva, Rva, Sva, Tva, Vva, Wva, Xva, Yva, Zva,
-  ava, bva, cva, dva, eva, pva, qva, rva, sva, tva, vva, wva, xva, yva, zva,
+  Avt, Bvt, Cvt, Dvt, Evt, Pvt, Qvt, Rvt, Svt, Tvt, Vvt, Wvt, Xvt, Yvt, Zvt,
+  avt, bvt, cvt, dvt, evt, pvt, qvt, rvt, svt, tvt, vvt, wvt, xvt, yvt, zvt,
 ) = shorthand(ch => math.tilde(math.arrow(ch)))
 // Vector transposed.
 #let (
