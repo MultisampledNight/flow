@@ -11,7 +11,7 @@ cmd=("$here/flow" info)
 
 if [[ ${#@} -gt 0 ]]; then
 	for note in "$@"; do
-		$cmd "$note" '<info>'
+		$cmd "$note"
 	done
 else
 	fd -0 --exclude zero/template '\.typ$' "$notes" \
