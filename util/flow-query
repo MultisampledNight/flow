@@ -9,7 +9,7 @@ source "$here/common"
 
 cmd=("$here/flow" info)
 
-if [[ ${#@} > 0 ]]; then
+if [[ ${#@} -gt 0 ]]; then
 	for note in "$@"; do
 		$cmd "$note" '<info>'
 	done

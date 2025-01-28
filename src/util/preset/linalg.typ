@@ -68,6 +68,11 @@
   Ab, Bb, Cb, Db, Eb, Pb, Qb, Rb, Sb, Tb, Vb, Wb, Xb, Yb, Zb,
   ab, bbo, cb, db, eb, pb, qb, rb, sb, tb, vb, wb, xb, yb, zb,
 ) = shorthand(math.bold)
+// Conjugate.
+#let (
+  Ac, Bc, Cc, Dc, Ec, Pc, Qc, Rc, Sc, Tc, Vc, Wc, Xc, Yc, Zc,
+  ac, bc, cc, dc, ec, pc, qc, rc, sc, tc, vc, wc, xc, yc, zc,
+) = shorthand(ovl)
 // Vectors.
 #let (
   Av, Bv, Cv, Dv, Ev, Pv, Qv, Rv, Sv, Tv, Vv, Wv, Xv, Yv, Zv,
