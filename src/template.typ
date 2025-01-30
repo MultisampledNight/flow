@@ -86,6 +86,10 @@
   show raw.where(block: true): it => block(
     inset: 0.75em,
     width: 100%,
+    stroke: 0.025em + gradient.linear(
+      halcyon.bg,
+      halcyon.fg,
+    ).sample(40%),
     it,
     ..cb,
   )
