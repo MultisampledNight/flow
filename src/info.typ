@@ -35,7 +35,7 @@
     author: _any(str, _array(str)),
     cw: _any(str, _array(str)),
     tags: _any(str, _array(str)),
-    translation: _dict(str, str),
+    translation: _dict(str, _any(str, _array(str))),
     keywords: _any(
       // shorthand for bolding all listed keywords
       _array(str),
