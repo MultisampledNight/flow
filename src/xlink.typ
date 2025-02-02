@@ -17,7 +17,7 @@
 }
 
 #let process(body, ..args) = {
-  show regex("\[..+\]"): it => {
+  show regex("\[..+?\]"): it => {
     let it = it.text.slice(1, -1)
     xlink(it)
   }
