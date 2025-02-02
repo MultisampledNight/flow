@@ -23,7 +23,9 @@
 
 #let null = $arrow(0)$
 
-#let (span, rank, size, Re, Im) = ("span", "rank", "size", "Re", "Im").map(math.op)
+#let (span, rank, corank, size, Re, Im) = (
+  "span", "rank", "corank", "size", "Re", "Im",
+).map(math.op)
 
 #let linco(..args) = $sum_(i = 1)^k #args.pos().join()$
 #let ipr(..args) = $lr(angle.l #args.pos().join[,] angle.r)$
