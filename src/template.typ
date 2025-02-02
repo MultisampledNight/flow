@@ -4,6 +4,7 @@
 #import "keywords.typ"
 #import "palette.typ": *
 #import "util/mod.typ": *
+#import "xlink.typ"
 
 #let _styling(body, ..args) = {
   if not cfg.render {
@@ -124,6 +125,7 @@
   show: _styling.with(..args)
   show: keywords.process.with(cfg: args.at("keywords", default: none))
   show: checkbox.process
+  show: xlink.process
 
   set document(
     title: title,
