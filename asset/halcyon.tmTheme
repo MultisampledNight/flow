@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
+<!--
+This was originally written by Brittany Chiang.
+MultisampledNight removed a few parts
+which are not necessary in Typst.
+-->
 <dict>
   <key>author</key>
   <string>Brittany Chiang</string>
@@ -43,40 +48,6 @@
         <string>#6679a4</string>
         <key>lineHighlight</key>
         <string>#2f3b54</string>
-        <key>popupCss</key>
-        <string>
-        html, body {
-          background-color: #1d2433;
-          font-size: 12px;
-          color: #a2aabc;
-          padding: 0;
-        }
-        body {
-          padding: 5px;
-        }
-        div {
-          padding-bottom: -3px;
-        }
-        b, strong {
-          font-weight: normal;
-        }
-        a {
-          color: rgba(92, 207, 230, .7);
-          line-height: 16px;
-        }
-        .type {
-          color: #ef6b73;
-        }
-        .name {
-          color: #ffd580;
-        }
-        .param {
-          color: #FFD580;
-        }
-        .current {
-          text-decoration: underline;
-        }
-        </string>
         <key>selection</key>
         <string>#2f3b54</string>
         <key>selectionBorder</key>
@@ -738,113 +709,6 @@
       <dict>
         <key>foreground</key>
         <string>#ffae57</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>AceJump Label - Blue</string>
-      <key>scope</key>
-      <string>acejump.label.blue</string>
-      <key>settings</key>
-      <dict>
-        <key>background</key>
-        <string>#5ccfe6</string>
-        <key>foreground</key>
-        <string>#d7dce2</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>AceJump Label - Green</string>
-      <key>scope</key>
-      <string>acejump.label.green</string>
-      <key>settings</key>
-      <dict>
-        <key>background</key>
-        <string>#bae67e</string>
-        <key>foreground</key>
-        <string>#d7dce2</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>AceJump Label - Orange</string>
-      <key>scope</key>
-      <string>acejump.label.orange</string>
-      <key>settings</key>
-      <dict>
-        <key>background</key>
-        <string>#FFAE57</string>
-        <key>foreground</key>
-        <string>#d7dce2</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>AceJump Label - Purple</string>
-      <key>scope</key>
-      <string>acejump.label.purple</string>
-      <key>settings</key>
-      <dict>
-        <key>background</key>
-        <string>#ef6b73</string>
-        <key>foreground</key>
-        <string>#d7dce2</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>SublimeLinter Warning</string>
-      <key>scope</key>
-      <string>sublimelinter.mark.warning</string>
-      <key>settings</key>
-      <dict>
-        <key>foreground</key>
-        <string>#5ccfe6</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>SublimeLinter Gutter Mark</string>
-      <key>scope</key>
-      <string>sublimelinter.gutter-mark</string>
-      <key>settings</key>
-      <dict>
-        <key>foreground</key>
-        <string>#d7dce2</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>SublimeLinter Error</string>
-      <key>scope</key>
-      <string>sublimelinter.mark.error</string>
-      <key>settings</key>
-      <dict>
-        <key>foreground</key>
-        <string>#ef6b73</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>GitGutter Ignored</string>
-      <key>scope</key>
-      <string>markup.ignored.git_gutter</string>
-      <key>settings</key>
-      <dict>
-        <key>foreground</key>
-        <string>#8695b7</string>
-      </dict>
-    </dict>
-    <dict>
-      <key>name</key>
-      <string>GitGutter Untracked</string>
-      <key>scope</key>
-      <string>markup.untracked.git_gutter</string>
-      <key>settings</key>
-      <dict>
-        <key>foreground</key>
-        <string>#8695b7</string>
       </dict>
     </dict>
     <dict>
