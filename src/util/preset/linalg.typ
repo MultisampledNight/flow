@@ -16,7 +16,7 @@
   features: ("ss01",),
   box($cal(it)$)
 )
-#let dmat(it) = $display(mat(it))$
+#let dmat(..args) = $display(#math.mat(..args))$
 
 #let kernel = $scr(N)$
 #let image = $scr(R)$
