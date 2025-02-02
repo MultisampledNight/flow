@@ -17,6 +17,7 @@
   box($cal(it)$)
 )
 #let dmat(..args) = $display(#math.mat(..args))$
+#let damat(..args) = dmat(..args, augment: -1)
 
 #let kernel = $scr(N)$
 #let image = $scr(R)$
