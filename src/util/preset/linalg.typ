@@ -161,8 +161,12 @@
 // Short definition of a matrix' entries that is in a complex field.
 #let sdefc(entry) = $sdef(entry) in CC^(n times m)$
 
+/// Column vector.
 #let col(name, n: $n$) = $vec(name_1, dots.v, name_#n)$
+/// Row vector.
 #let row(name, n: $n$) = $dmat(name_1, ..., name_#n)$
+/// Set of indexable values.
+#let sn(var, n: $n$) = ${ var_1, ..., var_#n }$
 
 #let vecdef(name, over: $KK$, dim: $n$) = {
   $[name_i]_(i = 1)^dim
