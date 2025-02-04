@@ -63,55 +63,55 @@
 #let vecset2 = $KK^m$
 
 // Over what characters shorthands are defined.
-#let charset = "abcdepqrstvwxyz"
+#let charset = "abcdemnpqrstvwxyz"
 #let charset = upper(charset) + charset
 /// Maps each common character in equations to the given op.
 #let shorthand(op, space: charset) = space.clusters().map(op)
 
 // Absolute value.
 #let (
-  Aa, Ba, Ca, Da, Ea, Pa, Qa, Ra, Sa, Ta, Va, Wa, Xa, Ya, Za,
-  aa, ba, ca, da, ea, pa, qa, ra, sa, ta, va, wa, xa, ya, za,
+  Aa, Ba, Ca, Da, Ea, Ma, Na, Pa, Qa, Ra, Sa, Ta, Va, Wa, Xa, Ya, Za,
+  aa, ba, ca, da, ea, ma, na, pa, qa, ra, sa, ta, va, wa, xa, ya, za,
 ) = shorthand(math.abs)
 // Boldface.
 #let (
-  Ab, Bb, Cb, Db, Eb, Pb, Qb, Rb, Sb, Tb, Vb, Wb, Xb, Yb, Zb,
-  ab, bbo, cb, db, eb, pb, qb, rb, sb, tb, vb, wb, xb, yb, zb,
+  Ab, Bb, Cb, Db, Eb, Mb, Nb, Pb, Qb, Rb, Sb, Tb, Vb, Wb, Xb, Yb, Zb,
+  ab, bbo, cb, db, eb, mb, nb, pb, qb, rb, sb, tb, vb, wb, xb, yb, zb,
 ) = shorthand(math.bold)
 // Conjugate.
 #let (
-  Ac, Bc, Cc, Dc, Ec, Pc, Qc, Rc, Sc, Tc, Vc, Wc, Xc, Yc, Zc,
-  ac, bc, cc, dc, ec, pc, qc, rc, sc, tc, vc, wc, xc, yc, zc,
+  Ac, Bc, Cc, Dc, Ec, Mc, Nc, Pc, Qc, Rc, Sc, Tc, Vc, Wc, Xc, Yc, Zc,
+  ac, bc, cc, dc, ec, mc, nc, pc, qc, rc, sc, tc, vc, wc, xc, yc, zc,
 ) = shorthand(ovl)
 // Norm.
 #let (
-  An, Bn, Cn, Dn, En, Pn, Qn, Rn, Sn, Tn, Vn, Wn, Xn, Yn, Zn,
-  an, bn, cn, dn, en, pn, qn, rn, sn, tn, vn, wn, xn, yn, zn,
+  An, Bn, Cn, Dn, En, Mn, Nn, Pn, Qn, Rn, Sn, Tn, Vn, Wn, Xn, Yn, Zn,
+  an, bn, cn, dn, en, mn, nn, pn, qn, rn, sn, tn, vn, wn, xn, yn, zn,
 ) = shorthand(math.norm)
 // Vectors.
 #let (
-  Av, Bv, Cv, Dv, Ev, Pv, Qv, Rv, Sv, Tv, Vv, Wv, Xv, Yv, Zv,
-  av, bv, cv, dv, ev, pv, qv, rv, sv, tv, vv, wv, xv, yv, zv,
+  Av, Bv, Cv, Dv, Ev, Mv, Nv, Pv, Qv, Rv, Sv, Tv, Vv, Wv, Xv, Yv, Zv,
+  av, bv, cv, dv, ev, mv, nv, pv, qv, rv, sv, tv, vv, wv, xv, yv, zv,
 ) = shorthand(math.arrow)
 // Tildized.
 #let (
-  At, Bt, Ct, Dt, Et, Pt, Qt, Rt, St, Tt, Vt, Wt, Xt, Yt, Zt,
-  at, bt, ct, dt, et, pt, qt, rt, st, tt, vt, wt, xt, yt, zt,
+  At, Bt, Ct, Dt, Et, Mt, Nt, Pt, Qt, Rt, St, Tt, Vt, Wt, Xt, Yt, Zt,
+  at, bt, ct, dt, et, mt, nt, pt, qt, rt, st, tt, vt, wt, xt, yt, zt,
 ) = shorthand(math.tilde)
 // Inverted.
 #let (
-  Ainv, Binv, Cinv, Dinv, Einv, Pinv, Qinv, Rinv, Sinv, Tinv, Vinv, Winv, Xinv, Yinv, Zinv,
-  ainv, binv, cinv, dinv, einv, pinv, qinv, rinv, sinv, tinv, vinv, winv, xinv, yinv, zinv,
+  Ainv, Binv, Cinv, Dinv, Einv, Minv, Ninv, Pinv, Qinv, Rinv, Sinv, Tinv, Vinv, Winv, Xinv, Yinv, Zinv,
+  ainv, binv, cinv, dinv, einv, minv, ninv, pinv, qinv, rinv, sinv, tinv, vinv, winv, xinv, yinv, zinv,
 ) = shorthand(inv)
 // Transposed.
 #let (
-  AT, BT, CT, DT, ET, PT, QT, RT, ST, TTr, VT, WT, XT, YT, ZT,
-  aT, bT, cT, dT, eT, pT, qT, rT, sT, tT, vT, wT, xT, yT, zT,
+  AT, BT, CT, DT, ET, MT, NT, PT, QT, RT, ST, TTr, VT, WT, XT, YT, ZT,
+  aT, bT, cT, dT, eT, mT, nT, pT, qT, rT, sT, tT, vT, wT, xT, yT, zT,
 ) = shorthand(trp)
 // Conjugate transposed.
 #let (
-  AH, BH, CH, DH, EH, PH, QH, RH, SH, TH, VH, WH, XH, YH, ZH,
-  aH, bH, cH, dH, eH, pH, qH, rH, sH, tH, vH, wH, xH, yH, zH,
+  AH, BH, CH, DH, EH, MH, NH, PH, QH, RH, SH, TH, VH, WH, XH, YH, ZH,
+  aH, bH, cH, dH, eH, mH, nH, pH, qH, rH, sH, tH, vH, wH, xH, yH, zH,
 ) = shorthand(ctrp)
 
 #let vec-shorthand(op, ..args) = shorthand(
@@ -120,38 +120,38 @@
 )
 // Vector absolute value.
 #let (
-  Ava, Bva, Cva, Dva, Eva, Pva, Qva, Rva, Sva, Tva, Vva, Wva, Xva, Yva, Zva,
-  ava, bva, cva, dva, eva, pva, qva, rva, sva, tva, vva, wva, xva, yva, zva,
+  Ava, Bva, Cva, Dva, Eva, Mva, Nva, Pva, Qva, Rva, Sva, Tva, Vva, Wva, Xva, Yva, Zva,
+  ava, bva, cva, dva, eva, mva, nva, pva, qva, rva, sva, tva, vva, wva, xva, yva, zva,
 ) = vec-shorthand(math.abs)
 // Vector boldfaced.
 #let (
-  Avb, Bvb, Cvb, Dvb, Evb, Pvb, Qvb, Rvb, Svb, Tvb, Vvb, Wvb, Xvb, Yvb, Zvb,
-  avb, bvb, cvb, dvb, evb, pvb, qvb, rvb, svb, tvb, vvb, wvb, xvb, yvb, zvb,
+  Avb, Bvb, Cvb, Dvb, Evb, Mvb, Nvb, Pvb, Qvb, Rvb, Svb, Tvb, Vvb, Wvb, Xvb, Yvb, Zvb,
+  avb, bvb, cvb, dvb, evb, mvb, nvb, pvb, qvb, rvb, svb, tvb, vvb, wvb, xvb, yvb, zvb,
 ) = vec-shorthand(math.bold)
 // Vector conjugate.
 #let (
-  Avc, Bvc, Cvc, Dvc, Evc, Pvc, Qvc, Rvc, Svc, Tvc, Vvc, Wvc, Xvc, Yvc, Zvc,
-  avc, bvc, cvc, dvc, evc, pvc, qvc, rvc, svc, tvc, vvc, wvc, xvc, yvc, zvc,
+  Avc, Bvc, Cvc, Dvc, Evc, Mvc, Nvc, Pvc, Qvc, Rvc, Svc, Tvc, Vvc, Wvc, Xvc, Yvc, Zvc,
+  avc, bvc, cvc, dvc, evc, mvc, nvc, pvc, qvc, rvc, svc, tvc, vvc, wvc, xvc, yvc, zvc,
 ) = vec-shorthand(ovl)
 // Vector norm.
 #let (
-  Avn, Bvn, Cvn, Dvn, Evn, Pvn, Qvn, Rvn, Svn, Tvn, Vvn, Wvn, Xvn, Yvn, Zvn,
-  avn, bvn, cvn, dvn, evn, pvn, qvn, rvn, svn, tvn, vvn, wvn, xvn, yvn, zvn,
+  Avn, Bvn, Cvn, Dvn, Evn, Mvn, Nvn, Pvn, Qvn, Rvn, Svn, Tvn, Vvn, Wvn, Xvn, Yvn, Zvn,
+  avn, bvn, cvn, dvn, evn, mvn, nvn, pvn, qvn, rvn, svn, tvn, vvn, wvn, xvn, yvn, zvn,
 ) = vec-shorthand(math.norm)
 // Vector tildized.
 #let (
-  Avt, Bvt, Cvt, Dvt, Evt, Pvt, Qvt, Rvt, Svt, Tvt, Vvt, Wvt, Xvt, Yvt, Zvt,
-  avt, bvt, cvt, dvt, evt, pvt, qvt, rvt, svt, tvt, vvt, wvt, xvt, yvt, zvt,
+  Avt, Bvt, Cvt, Dvt, Evt, Mvt, Nvt, Pvt, Qvt, Rvt, Svt, Tvt, Vvt, Wvt, Xvt, Yvt, Zvt,
+  avt, bvt, cvt, dvt, evt, mvt, nvt, pvt, qvt, rvt, svt, tvt, vvt, wvt, xvt, yvt, zvt,
 ) = vec-shorthand(math.tilde)
 // Vector transposed.
 #let (
-  AvT, BvT, CvT, DvT, EvT, PvT, QvT, RvT, SvT, TvT, VvT, WvT, XvT, YvT, ZvT,
-  avT, bvT, cvT, dvT, evT, pvT, qvT, rvT, svT, tvT, vvT, wvT, xvT, yvT, zvT,
+  AvT, BvT, CvT, DvT, EvT, MvT, NvT, PvT, QvT, RvT, SvT, TvT, VvT, WvT, XvT, YvT, ZvT,
+  avT, bvT, cvT, dvT, evT, mvT, nvT, pvT, qvT, rvT, svT, tvT, vvT, wvT, xvT, yvT, zvT,
 ) = vec-shorthand(trp)
 // Vector conjugate transposed.
 #let (
-  AvH, BvH, CvH, DvH, EvH, PvH, QvH, RvH, SvH, TvH, VvH, WvH, XvH, YvH, ZvH,
-  avH, bvH, cvH, dvH, evH, pvH, qvH, rvH, svH, tvH, vvH, wvH, xvH, yvH, zvH,
+  AvH, BvH, CvH, DvH, EvH, MvH, NvH, PvH, QvH, RvH, SvH, TvH, VvH, WvH, XvH, YvH, ZvH,
+  avH, bvH, cvH, dvH, evH, mvH, nvH, pvH, qvH, rvH, svH, tvH, vvH, wvH, xvH, yvH, zvH,
 ) = vec-shorthand(ctrp)
 
 // Short definition of a matrix' entries.
