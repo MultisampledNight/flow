@@ -20,6 +20,7 @@
   Re,
   Im,
   eig,
+  diag,
   rot,
 ) = (
   "span",
@@ -29,6 +30,7 @@
   "Re",
   "Im",
   "eig",
+  "diag",
   "rot",
 ).map(math.op)
 
