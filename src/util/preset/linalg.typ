@@ -19,6 +19,7 @@
   size,
   Re,
   Im,
+  eig,
   rot,
 ) = (
   "span",
@@ -27,6 +28,7 @@
   "size",
   "Re",
   "Im",
+  "eig",
   "rot",
 ).map(math.op)
 
