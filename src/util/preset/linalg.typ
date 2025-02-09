@@ -178,17 +178,17 @@
 // Geometric objects
 
 /// Straight, point-direction form.
-#let st-d(offset, dir) = $offset + lambda dir = xv$
+#let std(offset, dir) = $offset + lambda dir = xv$
 
 /// Straight, 2-point form.
-#let st-p(a, b) = $#a + lambda (#b - #a) = xv$
+#let stp(a, b) = $#a + lambda (#b - #a) = xv$
 
 /// Plane, directional form.
-#let pl-d(offset, dir-a, dir-b) = $offset + lambda dir-a + mu dir-b = xv$
+#let pld(offset, dir-a, dir-b) = $offset + lambda dir-a + mu dir-b = xv$
 
 /// Plane, normal form.
-#let pl-n(offset, normal) = $ipr(xv - offset, normal) = 0$
+#let pln(offset, normal) = $ipr(xv - offset, normal) = 0$
 
 /// Plane, 3-point form.
-#let pl-p(a, b, c) = $#a + lambda (#b - #a) + mu (#c - #a) = xv$
+#let plp(a, b, c) = $#a + lambda (#b - #a) + mu (#c - #a) = xv$
 
