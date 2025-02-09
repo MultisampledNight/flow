@@ -7,9 +7,9 @@
 
 /// Inversion.
 #let inv(it) = $it^(-1)$
-// Transposition.
+/// Transposition.
 #let trp(it) = $it^upright(T)$
-// Conjugate transposition.
+/// Conjugate transposition.
 #let ctrp(it) = $it^upright(H)$
 
 #let (
@@ -192,6 +192,9 @@
 }
 
 #let same(value) = $vec(value, dots.v, value)$
+
+/// Solutions of a SLE.
+#let solve = $scr(L)$
 
 // Geometric objects
 
