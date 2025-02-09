@@ -1,5 +1,7 @@
 // Utils for typing linear algebra.
 
+// Operations
+
 // Conjugation.
 #let ovl = math.overline
 
@@ -9,6 +11,26 @@
 #let trp(it) = $it^upright(T)$
 // Conjugate transposition.
 #let ctrp(it) = $it^upright(H)$
+
+#let (
+  span,
+  rank,
+  corank,
+  size,
+  Re,
+  Im,
+  rot,
+) = (
+  "span",
+  "rank",
+  "corank",
+  "size",
+  "Re",
+  "Im",
+  "rot",
+).map(math.op)
+
+// Shorthands
 
 /// Alternate calligraphic handstyle.
 /// Not supported by all math fonts.
@@ -23,10 +45,6 @@
 #let image = $scr(R)$
 
 #let null = $arrow(0)$
-
-#let (span, rank, corank, size, Re, Im) = (
-  "span", "rank", "corank", "size", "Re", "Im",
-).map(math.op)
 
 #let linco(..args) = $sum_(i = 1)^k #args.pos().join()$
 #let ipr(..args) = $lr(angle.l #args.pos().join[,] angle.r)$
