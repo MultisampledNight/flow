@@ -7,7 +7,7 @@
 #import "xlink.typ"
 
 #let _styling(body, ..args) = {
-  if not cfg.render {
+  if cfg.render != "all" {
     return {
       // PERF: consistently shaves off 0.02 seconds of query time
       // tested on i7 10th gen
@@ -162,7 +162,7 @@
 #let note(body, ..args) = {
   show: modern.with(..args)
 
-  if cfg.render {
+  if cfg.render == "all" {
     let (args, title) = _shared(args)
 
     text(2.5em, strong(title))
@@ -198,7 +198,7 @@
     fill: repeat[.],
   )
 
-  if cfg.render {
+  if cfg.render == "all" {
     let (args, title) = _shared(args)
 
     let title = text(2em, strong(title))

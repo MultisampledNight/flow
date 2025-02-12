@@ -154,7 +154,7 @@
 }
 
 #let process(body, cfg: none) = {
-  if cfg == none or not render {
+  if cfg == none {
     // no words to highlight → nothing to do!
     return body
   }

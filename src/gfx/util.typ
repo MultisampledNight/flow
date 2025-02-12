@@ -45,7 +45,7 @@
   // Arguments to forward to `canvas` if `contentize` is true.
   ..args,
 ) = {
-  if not cfg.render { return }
+  if cfg.render != "all" { return }
   import draw: *
 
   let cmds = group(

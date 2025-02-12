@@ -307,7 +307,7 @@ and just queries for what you've specified afterwards.
 
 Hence, here are a few tips to speed things up significantly:
 
-- Pass `--input render=false`.
+- Pass `--input render=text`.
   Flow will use this to avoid large imports,
   not render diagrams,
   layout everything in a "whatever" way as well as
