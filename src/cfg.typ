@@ -109,6 +109,11 @@
 ///     like the outline and cetz canvases
 ///   - Greatly impacts the visual result
 ///     while leaving most of the machine content same
+/// - info
+///   - Only offer metadata via the `<info>` label
+///   - The output is very likely just a blank PDF
+///   - Best used in combination with `typst query`
+///     - `flow-query` specifies this automatically
 ///
 /// Note on deprecated aliases (... is converted to ...):
 ///
@@ -119,7 +124,10 @@
 /// chances are you don't need "all" and
 /// could have a lot of performance boost
 /// by using "text" instead.
-#let render = (_define("render").enum)("all", "text", "false", "true", none)
+#let render = (_define("render").enum)(
+  "all", "text", "info",
+  "false", "true", none,
+)
 #let render = _default(render, "all")
-#let render = _alias(render, ("true": "all", "false": "text"))
+#let render = _alias(render, ("true": "all", "false": "info"))
 

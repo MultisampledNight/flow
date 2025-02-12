@@ -134,7 +134,11 @@
 
   info.queryize(args)
 
-  body
+  // looks super hacky, but is intended
+  // because in info mode, queryizing already did everything we want
+  if cfg.render != "info" {
+    body
+  }
 }
 
 /// Compromise between generic and note.

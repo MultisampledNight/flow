@@ -10,13 +10,18 @@ set -euo pipefail
 source `dirname $0`/common
 
 mode="$1"
-source="$2"
+source=`realpath "$2"`
 shift 2
 
 args=(
-	--root "$notes"
 	--input theme=duality
 )
+
+if [[ "$source" = $notes/* ]]; then
+	args+=(
+		--root "$notes"
+	)
+fi
 
 if [[ "$mode" = info ]]; then
 	mode=query
