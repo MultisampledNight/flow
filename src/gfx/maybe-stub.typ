@@ -7,7 +7,7 @@
 #import "../cfg.typ"
 
 #let cetz = if cfg.render == "all" {
-  import "@preview/cetz:0.3.1"
+  import "@preview/cetz:0.3.2"
   cetz
 } else {
   import "stub.typ"

@@ -41,13 +41,13 @@
 
   set heading(numbering: "1.1")
 
-  set outline(
-    indent: auto,
+  set outline.entry(
     fill: move(
       dy: -0.25em,
       line(length: 100%, stroke: gamut.sample(15%)),
     ),
   )
+  set outline(indent: auto)
 
   set math.equation(numbering: "(1)")
   set math.mat(delim: "[")
