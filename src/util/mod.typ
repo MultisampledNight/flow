@@ -54,9 +54,42 @@
 /// Both keys and values need to be keys.
 #let swap-kv(it) = it.pairs().map(array.rev).to-dict()
 
-/// Returns all combination possibilities of the two arrays.
-#let cartesian-product(a, b) = {
-  a
-    .map(x => b.map(y => (x, y)))
-    .join()
+/// Returns an array of all combination possibilities
+/// of the given `n` equally long arrays.
+/// 
+/// Each possibility is represented by an array again
+/// where the `i`-th element
+/// is from the `i`-th input array.
+///
+/// If no arguments are provided,
+/// an empty array is returned.
+#let cartesian-product(..args) = {
+  // could theoretically merge the n=2 and n>=3 cases
+  // but the distinction of concerns looks cleaner to me
+  // (n=2 is pairing up, n>=3 is recursing + flattening)
+  let args = args.pos()
+
+  if args.len() == 0 {
+    // trivial, see docs
+    return ()
+  }
+  if args.len() == 1 {
+    // also trivial, each possibility is just each element
+    return args.first().map(ele => (ele,))
+  }
+  if args.len() == 2 {
+    // bit more complicated, need to pair each up
+    let (a, b) = args
+    return a
+      .map(x => b.map(y => (x, y)))
+      .join()
+  }
+
+  // n >= 3
+  // recurse down and flatten other
+  let first = args.first()
+  let rest = cartesian-product(..args.slice(1))
+
+  cartesian-product(first, rest) // delegating to the n=2 case
+    .map(((a, b)) => (a,) + b) // flatten down
 }
