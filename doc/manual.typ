@@ -10,8 +10,13 @@
 #let version = toml("/typst.toml").package.version
 #let normal = text.with(font: "IBM Plex Sans")
 
+// Takes all args and ignores them, only passing through the body.
+#let passthrough(body, ..args) = {
+  body
+}
+
 #show raw.where(lang: "example"): it => {
-  let code = it.text
+  let code = it.text.replace("note", "passthrough")
   let label(body) = emph(fade(normal(body + v(-0.5em))))
   grid(
     columns: (1fr, 1fr),
