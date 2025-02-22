@@ -41,25 +41,18 @@
 
   set heading(numbering: "1.1")
 
+  let faded-line = move(
+    dy: -0.25em,
+    line(length: 100%, stroke: gamut.sample(15%)),
+  )
+
   show: versioned((
     "0.12": body => {
-      set outline(
-        fill: move(
-          dy: -0.25em,
-          line(length: 100%, stroke: gamut.sample(15%)),
-        ),
-      )
-
+      set outline(fill: faded-line)
       body
     },
     "0.13": body => {
-      set outline.entry(
-        fill: move(
-          dy: -0.25em,
-          line(length: 100%, stroke: gamut.sample(15%)),
-        ),
-      )
-
+      set outline.entry(fill: faded-line)
       body
     },
   ))
