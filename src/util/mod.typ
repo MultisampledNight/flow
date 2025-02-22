@@ -103,6 +103,7 @@
 /// it returns the newest one before that.
 /// Panics if there is no such version.
 #let versioned(table, searched: sys.version) = {
+  // NOTE: could be optimized with a binary search sometime
   let known = table.keys()
 
   // What is the first too-new version?

@@ -41,12 +41,28 @@
 
   set heading(numbering: "1.1")
 
-  set outline.entry(
-    fill: move(
-      dy: -0.25em,
-      line(length: 100%, stroke: gamut.sample(15%)),
-    ),
-  )
+  show: versioned((
+    "0.12": body => {
+      set outline(
+        fill: move(
+          dy: -0.25em,
+          line(length: 100%, stroke: gamut.sample(15%)),
+        ),
+      )
+
+      body
+    },
+    "0.13": body => {
+      set outline.entry(
+        fill: move(
+          dy: -0.25em,
+          line(length: 100%, stroke: gamut.sample(15%)),
+        ),
+      )
+
+      body
+    },
+  ))
   set outline(indent: auto)
 
   set math.equation(numbering: "(1)")
