@@ -4,6 +4,7 @@
   title: "flow manual",
   aliases: "how to procastinate",
   author: "MultisampledNight",
+  version: toml("/typst.toml").package.version,
   cw: "\"you\"",
 )
 
