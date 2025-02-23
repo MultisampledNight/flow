@@ -1,15 +1,15 @@
 #import "/src/lib.typ" as flow: *
 
+#let version = toml("/typst.toml").package.version
+#let normal = text.with(font: "IBM Plex Sans")
+
 #show: note.with(
   title: "flow manual",
   aliases: "how to procastinate",
   author: "MultisampledNight",
-  version: toml("/typst.toml").package.version,
+  version: (flow: version),
   cw: "\"you\"",
 )
-
-#let version = toml("/typst.toml").package.version
-#let normal = text.with(font: "IBM Plex Sans")
 
 // Takes all args and ignores them, only passing through the body.
 #let passthrough(body, ..args) = {

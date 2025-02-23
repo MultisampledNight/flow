@@ -1,0 +1,8 @@
+hayagriva:
+  type: web
+  title: Hayagriva
+  abstract: "Rusty bibliography management."
+  authors: ["Mädje, Laurenz", "Haug, Martin Haug"]
+  url:
+    value: https://github.com/typst/hayagriva
+    date: 2025-02-22
