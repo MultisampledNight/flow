@@ -438,7 +438,7 @@ see @maintenance.
   columns: 3,
   table.header[Urgency][Necessary today?][Assigned phase],
   c(rowspan: 2, $n in U$),
-    [Yes], $n in P_t$,
+    [Yes], $n in P_d$,
     [No], $n in P_S$,
   $n in.not U$,
     [No], $n in P_L$,

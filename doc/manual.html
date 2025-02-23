@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>flow manual</title>
+  </head>
+  <body>
+    <p><strong>flow manual</strong></p>
+    <p><span style="display: inline-block;"></span></p>
+    <h2>Contents</h2>
+    <div>1Introduction <span style="display: inline-block;"></span> ⁠1</div>
+    <div>2How do I get started? <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3Reference <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1Template <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.1Arguments <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.1.1<span style="display: inline-block;"><code>title</code></span> <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.1.2<span style="display: inline-block;"><code>keywords</code></span> <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.2Kinds <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.2.1<span style="display: inline-block;"><code>generic</code></span> <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.2.2<span style="display: inline-block;"><code>modern</code></span> <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.2.3<span style="display: inline-block;"><code>note</code></span> <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.2.4<span style="display: inline-block;"><code>latex-esque</code></span> <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.3Metadata <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.3.1Checking <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.3.2Querying <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.1.3.2.1Accelerating <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2Task <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.1Using them <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2Fill semantics <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2.1Not started <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2.2Urgent <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2.3In progress <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2.4Paused <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2.5Completed <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2.6Cancelled <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2.7Blocked <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.2.8Unknown <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.3More examples of tasks <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.2.4Examples of non-tasks <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.3Callout <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.3.1General <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.3.2Maths <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.4Effect <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.4.1Invert <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.4.2Affect first <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.5Diagram <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.5.1Using them <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.6Icons <span style="display: inline-block;"></span> ⁠1</div>
+    <div>3.7Presets <span style="display: inline-block;"></span> ⁠1</div>
+    <p><span style="display: inline-block;"></span></p>
+    <h2>1 Introduction</h2>
+    <p>Hi there! This document serves as a long-form manual for the use of flow. Flow is the template I use as basis for my own <strong>P</strong>ersonal <strong>K</strong>nowledge <strong>M</strong>anagement system.</p>
+    <p>It has the batteries of countless Typst documents written and hacks done included. This can make it quite overwhelming, but don't worry! You don't need to know everything about it in order to start using it.</p>
+    <p>This manual assumes you already know <a href="https://typst.app">Typst</a> a bit — if you don't, that's absolutely no problem! Just head on over to the excellent <a href="https://typst.app/docs/tutorial/">Typst tutorial</a>, I can guarantee you it is worthy of your time.</p>
+    <div></div>
+    <h2>2 How do I get started?</h2>
+    <ol>
+      <li>
+        <p>Use the the following boilerplate in your note:</p>
+        <div>
+          <pre>#import "@preview/flow:0.3.0": *<br>#show: note.with(<br>  title: "Super cool note title!",<br>)</pre>
+        </div>
+      </li>
+      <li>
+        <p>Start typing the actual note like any other typst document! uwu</p>
+      </li>
+    </ol>
+    <h2>3 Reference</h2>
+    <h3>3.1 Template</h3>
+    <p>The <span style="display: inline-block;"><code>#show: note</code></span> you usually put at the top of your file is already functional without any further configuration. However, sometimes one <em>does</em> want further configuration.</p>
+    <p>Behind the scenes, <span style="display: inline-block;"><code>note</code></span> is actually a shorthand for <span style="display: inline-block;"><code>template.note</code></span>. There are other useful templates in <span style="display: inline-block;"><code>template</code></span>, but notably they all use <span style="display: inline-block;"><code>template.generic</code></span> at their core.</p>
+    <h4>3.1.1 Arguments</h4>
+    <p>All of these are named arguments. In effect, if you choose to use any of them, most likely you want to transform your <span style="display: inline-block;"><code>#show: note</code></span> into a <a href="https://typst.app/docs/reference/foundations/function/#definitions-with"><span style="display: inline-block;"><code>function.with</code></span></a> call, for example:</p>
+    <div>
+      <pre>#show: note.with(<br>  title: "meow!",<br>  keywords: ("cat", "catnip"),<br>)</pre>
+    </div>
+    <p>Since <span style="display: inline-block;"><code>template.generic</code></span> is the actual processor of these arguments, you can use them with any other template in the <span style="display: inline-block;"><code>template</code></span> module as well!</p>
+    <h5>3.1.1.1 <span style="display: inline-block;"><code>title</code></span></h5>
+    <p>A string. It is encoded into the resulting PDF as the document title you usually see in the window title of the PDF viewer. A template might also display this somewhere, but this is not required.</p>
+    <p>If it is not specified or <span style="display: inline-block;"><code>none</code></span> is passed, the filename passed via <span style="display: inline-block;"><code>--input filename=...</code></span> on the CLI has its extension trimmed and is used instead. Otherwise, if <span style="display: inline-block;"><code>--input filename=...</code></span> has not been passed, <span style="display: inline-block;"><code>"Untitled"</code></span> is used as a last-resort default.</p>
+    <p>Given that it is usually the first thing the reader sees, it should try to very concisely relay what the document is about.</p>
+    <h5>3.1.1.2 <span style="display: inline-block;"><code>keywords</code></span></h5>
+    <p>Either an array of strings or a dictionary from strings to functions/colors/labels, where each function takes exactly one positional argument.</p>
+    <p>Which words to highlight specially in the document. Think of it as a short-hand for show rules, but for individual words, handling capitalization, plurals, verbification and word boundaries for you.</p>
+    <p>The function is the content with the word given to and it is supposed to return what should be displayed in-place. If it's an array, all items become keys with the <span style="display: inline-block;"><code>strong</code></span> function as value.</p>
+    <p>None are highlighted by default. It is not included in the metadata table.</p>
+    <h4>3.1.2 Kinds</h4>
+    <p>All of them are available under the <span style="display: inline-block;"><code>template</code></span> module and intended to be used via show rules. For example, for using the <span style="display: inline-block;"><code>latex-esque</code></span> template, you'd use something akin to this in your code:</p>
+    <div>
+      <pre>#show: template.latex-esque</pre>
+    </div>
+    <h5>3.1.2.1 <span style="display: inline-block;"><code>generic</code></span></h5>
+    <p>The core driver behind all templates. Specifically, it sets up the following:</p>
+    <ul>
+      <li>Basic styling according to the chosen theme</li>
+      <li>Page numbering</li>
+      <li>
+        <p>Processing of</p>
+        <ul>
+          <li>Checkboxes</li>
+          <li>Keywords</li>
+          <li>Metadata</li>
+        </ul>
+      </li>
+    </ul>
+    <p>Note that the styling does include colors and a few layout hints, but does notably <strong>not</strong> set the font or font size.</p>
+    <div></div>
+    <h5>3.1.2.2 <span style="display: inline-block;"><code>modern</code></span></h5>
+    <ul>
+      <li>Extends: <span style="display: inline-block;"><code>generic</code></span></li>
+    </ul>
+    <p><span style="display: inline-block;"><code>generic</code></span> but with nice, modern font choices.</p>
+    <h5>3.1.2.3 <span style="display: inline-block;"><code>note</code></span></h5>
+    <ul>
+      <li>Extends: <span style="display: inline-block;"><code>modern</code></span></li>
+    </ul>
+    <p>Usable for notes, short reports, quick sketchups and the works.</p>
+    <p>Sets up a nice boilerplate showing the document title, metadata and an outline.</p>
+    <h5>3.1.2.4 <span style="display: inline-block;"><code>latex-esque</code></span></h5>
+    <ul>
+      <li>Extends: <span style="display: inline-block;"><code>generic</code></span></li>
+    </ul>
+    <p>Usable for faking something was made in LaTeX when it actually wasn't. Only does so superficially, functionally nothing is changed and the icons will still look modern-ish.</p>
+    <h4>3.1.3 Metadata</h4>
+    <dl>
+      <dt>Metadata</dt>
+      <dd>Data about data.</dd>
+    </dl>
+    <p>Sometimes it might be useful to denote information <em>about</em> the document you're writing which doesn't quite belong into the document itself. Quite often this is also information you might wish to programmatically search for.</p>
+    <p>An example of this are aliases of what you're writing about. Sometimes they are just like the title, but you can have only one title, so they need to be put somewhere else. Metadata is <em>perfect</em> for this.</p>
+    <p>You can specify metadata by passing any additional named arguments that are not named under Section 3.1.1 to your chosen template (as long as it is from flow, that is).</p>
+    <h5>3.1.3.1 Checking</h5>
+    <p>Theoretically, metadata can be literally anything. Practically though a few commonly used metadata fields and their types crystallize out, and if one notices that afterwards it takes quite a while to get everything into order again.</p>
+    <p>For this reason, the metadata you specify is checked against a schema. The schema is lax — if you specify fields it doesn't know of, it will allow them anyway.</p>
+    <p>The schema currently is:</p>
+    <div>
+      <pre>dictionary&lt;"aliases":any&lt;str, array&lt;str>>, "author":any&lt;str, array&lt;str>>, "cw":any&lt;str, array&lt;str>>, "tags":any&lt;str, array&lt;str>>, "translation":dictionary&lt;str, any&lt;str, array&lt;str>>>, "keywords":any&lt;array&lt;str>, dictionary&lt;str, function>>, "lang":str></pre>
+    </div>
+    <p>It's checked via the <span style="display: inline-block;"><code>tyck</code></span> module, which you can also use to construct your own schemas and validating them.</p>
+    <h5>3.1.3.2 Querying</h5>
+    <p>In order to actually get the metadata out of one document, you can use the <span style="display: inline-block;"><code>typst query</code></span> command in a script. Specifically, querying for the <span style="display: inline-block;"><code>&lt;info></code></span> label yields all metadata you've specified.</p>
+    <p>For getting to the actual metadata, you probably want to pass <span style="display: inline-block;"><code>--one --field value</code></span>, which results in the JSON of what you've specified (plus some normalization).</p>
+    <h6>3.1.3.2.1 Accelerating</h6>
+    <p>If you've tried to <span style="display: inline-block;"><code>typst query</code></span> on a flow document without anything else, you've probably noticed that it is quite slow. That is mostly because Typst just compiles the whole document like it would when actually rendering it to a PDF and just queries for what you've specified afterwards.</p>
+    <p>Hence, here are a few tips to speed things up significantly:</p>
+    <ul>
+      <li>Pass <span style="display: inline-block;"><code>--input render=text</code></span>. Flow will use this to avoid large imports, not render diagrams, layout everything in a "whatever" way as well as do several smaller things.</li>
+      <li>Restrict what paths Typst should search fonts in. For example, you could try running Typst under a fake root to make sure it does not enumerate all system fonts (which it would do otherwise).</li>
+    </ul>
+    <h3>3.2 Task</h3>
+    <dl>
+      <dt>Task</dt>
+      <dd>Checkbox at the very beginning of a list item or enumeration item.</dd>
+      <dt>Checkbox</dt>
+      <dd>Opening bracket, one fill character or space, closing bracket.</dd>
+    </dl>
+    <p>Task lists allow you to gain a quick overview regarding where you are right now, what is actionable, what to next and what you can't do right now.</p>
+    <p>They are useful as an <strong>anchor point</strong>, a single source of truth for yourself to check what you are doing right now. For longer-form tasks and projects, you might want to consider using more specialized software like the ones emulating e.g. Kanban boards.</p>
+    <h4>3.2.1 Using them</h4>
+    <p>Just type a list or enum like you're used to (using e.g. <span style="display: inline-block;"><code>-</code></span> or <span style="display: inline-block;"><code>+</code></span>), then put the desired checkbox right afterwards and pad it with spaces. That's it!</p>
+    <h4>3.2.2 Fill semantics</h4>
+    <p>The variable  represents the hypothetical current progress of that task, where  is no progress done yet and  is fully finished. This is a model: In reality, progress is rarely well quantifiable. Hence, see these semantics merely as a suggestion.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Fill</th>
+          <th></th>
+          <th>Assigned to?</th>
+          <th>Actionable by you?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Not started</td>
+          <td><span style="display: inline-block;"><code>[ ]</code></span></td>
+          <td></td>
+          <td>Nobody yet</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Urgent</td>
+          <td><span style="display: inline-block;"><code>[!]</code></span></td>
+          <td></td>
+          <td>You</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>In progress</td>
+          <td><span style="display: inline-block;"><code>[>]</code></span></td>
+          <td></td>
+          <td>You</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Paused</td>
+          <td><span style="display: inline-block;"><code>[:]</code></span></td>
+          <td></td>
+          <td>You</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Completed</td>
+          <td><span style="display: inline-block;"><code>[x]</code></span></td>
+          <td></td>
+          <td>Nobody</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Cancelled</td>
+          <td><span style="display: inline-block;"><code>[/]</code></span></td>
+          <td></td>
+          <td>Nobody</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Blocked</td>
+          <td><span style="display: inline-block;"><code>[-]</code></span></td>
+          <td></td>
+          <td>Not you</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Unknown</td>
+          <td><span style="display: inline-block;"><code>[?]</code></span></td>
+          <td></td>
+          <td>Maybe you</td>
+          <td>Maybe</td>
+        </tr>
+      </tbody>
+    </table>
+    <h5>3.2.2.1 Not started</h5>
+    <ul>
+      <li>No progress done yet</li>
+      <li>May be started by anyone, possibly you</li>
+    </ul>
+    <h5>3.2.2.2 Urgent</h5>
+    <ul>
+      <li>Should be prioritized when selecting next tasks to put in progress</li>
+      <li>Consider putting tasks currently in progress on pause for this instead</li>
+      <li>Requires time-sensitive action</li>
+      <li>Otherwise like not started</li>
+    </ul>
+    <h5>3.2.2.3 In progress</h5>
+    <ul>
+      <li>Not finished yet, but being worked on</li>
+      <li>The point you look for when you try to remember what you were doing again</li>
+      <li>Ideally keep the count of those as low as possible, if not even just 1</li>
+    </ul>
+    <h5>3.2.2.4 Paused</h5>
+    <ul>
+      <li>Some progress already done</li>
+      <li>Can be continued anytime</li>
+      <li>Probably some notes flying around already</li>
+    </ul>
+    <h5>3.2.2.5 Completed</h5>
+    <ul>
+      <li>Was fully fulfilled</li>
+      <li>Nothing needs to be done anymore</li>
+    </ul>
+    <h5>3.2.2.6 Cancelled</h5>
+    <ul>
+      <li>Doesn't need or can't be fulfilled anymore</li>
+      <li>Can be just ignored</li>
+    </ul>
+    <h5>3.2.2.7 Blocked</h5>
+    <ul>
+      <li>Cannot be continued by you for the moment</li>
+      <li>Maybe just some time has to pass, maybe somebody else is working on it</li>
+      <li>Either way, not your responsibility for the moment</li>
+    </ul>
+    <h5>3.2.2.8 Unknown</h5>
+    <ul>
+      <li>Maybe some progress is already done, maybe none, maybe it's actually complete</li>
+      <li>Maybe it is your responsibility, maybe someone else's</li>
+      <li>Need to acquire more information to put it into a "proper" category</li>
+      <li>
+        <p>Try to have as few of these as possible as they make planning quite difficult</p>
+        <ul>
+          <li>And you might miss things that were your job</li>
+        </ul>
+      </li>
+    </ul>
+    <h4>3.2.3 More examples of tasks</h4>
+    <h4>3.2.4 Examples of non-tasks</h4>
+    <p>They are still completely fine text! Their checkboxes are just not rendered.</p>
+    <h3>3.3 Callout</h3>
+    <p>Callouts compress important statements and highlight them according to their semantic content.</p>
+    <p>Documents are usually not read linearly, these callouts will stand out and let the reader pay more attention. They can also serve as visual anchors for navigation in a document for already read parts. Hence, use them wisely: If everything is highlighted, nothing is highlighted.</p>
+    <h4>3.3.1 General</h4>
+    <h4>3.3.2 Maths</h4>
+    <h3>3.4 Effect</h3>
+    <p>Can highlight that some text is really important.</p>
+    <h4>3.4.1 Invert</h4>
+    <p>For when you need to add <span style="display: inline-block;"></span> to some text.</p>
+    <p>Note that <span style="display: inline-block;"></span></p>
+    <p><span style="display: inline-block;"></span></p>
+    <p>Hence it is best fit for <span style="display: inline-block;"></span></p>
+    <h4>3.4.2 Affect first</h4>
+    <p>Highlights the first character of each word in the given string. Useful for introducing specific terms and highlighting what their abbreviation is.</p>
+    <h3>3.5 Diagram</h3>
+    <dl>
+      <dt>Diagram</dt>
+      <dd>Visually explains a certain concept in a canvas, usually in the context of accompanying text.</dd>
+      <dt>State</dt>
+      <dd>Frozen state of certain properties. Usually represented by a node.</dd>
+      <dt>Transition</dt>
+      <dd>Properties changing from one state to another. Usually represented by an edge.</dd>
+      <dt>Canvas</dt>
+      <dd>Set of elements drawn into a confined <span style="display: inline-block;"><code>content</code></span>.</dd>
+    </dl>
+    <p>Some minds like to build graphical representations of thought models in addition to having them just described in text. Diagrams fill this role.</p>
+    <p>They are useful as a second line for conveying concepts. They do not replace a text description though: Since Typst doesn't support PDF accessibility yet, it is highly recommended that they don't add any new information that isn't in the text already.</p>
+    <p>Ultimately though your documents are your documents, so use them as you see fit.</p>
+    <h4>3.5.1 Using them</h4>
+    <p>For drawing, manipulating and connecting shapes, the <span style="display: inline-block;"><code>gfx</code></span> module is your friend, which re-exports <a href="https://typst.app/universe/package/cetz">cetz</a> and adds neat helpers. Assumed you've glob-imported all out of <span style="display: inline-block;"><code>flow</code></span>, the usual boilerplate for a diagram looks like this:</p>
+    <h3>3.6 Icons</h3>
+    <p>For labeling things concisely and memorably. They are all accessible via <span style="display: inline-block;"><code>gfx.markers</code></span>, which is a dictionary with the single-character identifier as value and this dictionary as key:</p>
+    <ul>
+      <li><span style="display: inline-block;"><code>accent</code></span> is the color the marker is typically used with.</li>
+      <li><span style="display: inline-block;"><code>icon</code></span> is a function that renders to a <span style="display: inline-block;"><code>content</code></span> if needed.</li>
+      <li><span style="display: inline-block;"><code>long</code></span> is the long-form name.</li>
+    </ul>
+    <p>For actually displaying it, just calling <span style="display: inline-block;"><code>icon</code></span> usually suffices. It already uses the accent of the marker. It can be customized using keyword arguments such as <span style="display: inline-block;"><code>invert</code></span>, <span style="display: inline-block;"><code>radius</code></span>, <span style="display: inline-block;"><code>accent</code></span> and the works, see <span style="display: inline-block;"><code>src/gfx/util.typ</code></span> where they're all commented.</p>
+    <p>Here's an overview over them all:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Icon</th>
+          <th>Short</th>
+          <th>Long</th>
+          <th>Accent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code> </code></span></td>
+          <td>empty</td>
+          <td><span style="display: inline-block;"><code>oklch(64.01%, 0.004, 332.17deg)</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>!</code></span></td>
+          <td>urgent</td>
+          <td><span style="display: inline-block;"><code>rgb("#ff9365")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>></code></span></td>
+          <td>progress</td>
+          <td><span style="display: inline-block;"><code>rgb("#aaa9ff")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>x</code></span></td>
+          <td>complete</td>
+          <td><span style="display: inline-block;"><code>rgb("#b6b3b4")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>:</code></span></td>
+          <td>pause</td>
+          <td><span style="display: inline-block;"><code>rgb("#11d396")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>-</code></span></td>
+          <td>block</td>
+          <td><span style="display: inline-block;"><code>rgb("#00c7f7")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>/</code></span></td>
+          <td>cancel</td>
+          <td><span style="display: inline-block;"><code>oklch(45.88%, 0.004, 300.59deg)</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>?</code></span></td>
+          <td>unknown</td>
+          <td><span style="display: inline-block;"><code>rgb("#c7b700")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>i</code></span></td>
+          <td>remark</td>
+          <td><span style="display: inline-block;"><code>rgb("#11d396")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>o</code></span></td>
+          <td>hint</td>
+          <td><span style="display: inline-block;"><code>rgb("#aaa9ff")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>a</code></span></td>
+          <td>axiom</td>
+          <td><span style="display: inline-block;"><code>rgb("#c7b700")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>d</code></span></td>
+          <td>define</td>
+          <td><span style="display: inline-block;"><code>rgb("#00c7f7")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>t</code></span></td>
+          <td>theorem</td>
+          <td><span style="display: inline-block;"><code>rgb("#ff9365")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>l</code></span></td>
+          <td>lemma</td>
+          <td><span style="display: inline-block;"><code>rgb("#fa86ce")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>p</code></span></td>
+          <td>propose</td>
+          <td><span style="display: inline-block;"><code>rgb("#aaa9ff")</code></span></td>
+        </tr>
+        <tr>
+          <td><span style="display: inline-block;"></span></td>
+          <td><span style="display: inline-block;"><code>c</code></span></td>
+          <td>corollary</td>
+          <td><span style="display: inline-block;"><code>rgb("#11d396")</code></span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>They can also be put into a cetz canvas by setting <span style="display: inline-block;"><code>contentize: false</code></span> on the icon and setting the position of the lower left corner via <span style="display: inline-block;"><code>at</code></span>:</p>
+    <h3>3.7 Presets</h3>
+    <p>There's a few utilities defined for typing e.g. linear algebra or mathematical operations. You can import them into your document via e.g. <span style="display: inline-block;"><code>#import preset.linalg: *</code></span> (if you've glob-imported flow).</p>
+    <p>Since those are mostly very short, listing them here would be quite inefficient: Consider checking out e.g. <span style="display: inline-block;"><code>src/util/preset/linalg.typ</code></span> in flow's source code instead.</p>
+  </body>
+</html>
