@@ -398,7 +398,7 @@ Mathematically speaking, $P_*, S_*, D_*, U$ are sets.
 - $A or B$ means that any of $A$, $B$ or both must be true
   in order for the whole expression to be true.
 
-- $A sect B$ contains all tasks that are in *both* sets $A$ and $B$.
+- $A inter B$ contains all tasks that are in *both* sets $A$ and $B$.
 
 - $A union B$ contanis all tasks that are in *any* of the sets $A$ or $B$.
 
@@ -425,7 +425,7 @@ the accompanying conditional actions in its body.
 
 === Day ends
 
-$ forall t in P_d sect D_P : t -> P_S $
+$ forall t in P_d inter D_P : t -> P_S $
 
 === $P_S$ becomes too short, long or boring
 

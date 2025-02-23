@@ -25,12 +25,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: typst
-          key: linux-typst-0.12.0
+          key: linux-typst-0.13.0
       - name: Download typst if uncached
         if: steps.cache-typst.outputs.cache-hit != 'true'
         # will I remember to update this version? no
         run: |
-          curl -LO https://github.com/typst/typst/releases/download/v0.12.0/typst-x86_64-unknown-linux-musl.tar.xz
+          curl -LO https://github.com/typst/typst/releases/download/v0.13.0/typst-x86_64-unknown-linux-musl.tar.xz
           du -h typst-x86_64-unknown-linux-musl.tar.xz
           tar -xf typst-x86_64-unknown-linux-musl.tar.xz
           mv typst-x86_64-unknown-linux-musl/typst ./typst
