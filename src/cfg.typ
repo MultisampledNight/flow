@@ -131,3 +131,10 @@
 #let render = _default(render, "all")
 #let render = _alias(render, ("true": "all", "false": "info"))
 
+/// What the target format is.
+/// One of "paged" (the default) or "html".
+/// Effectively a simulation of the built-in function `target`
+/// but not since it's gated behind the `html` feature.
+#let target = (_define("target").enum)("paged", "html", none)
+#let target = _default(target, "paged")
+

@@ -23,10 +23,15 @@
 
   let args = args.named()
 
-  set page(
-    fill: bg,
-    numbering: "1 / 1",
-  )
+  show: body => if cfg.target == "paged" {
+    set page(
+      fill: bg,
+      numbering: "1 / 1",
+    )
+    body
+  } else {
+    body
+  }
   set text(
     fill: fg,
     lang: args.at("lang", default: "en"),
