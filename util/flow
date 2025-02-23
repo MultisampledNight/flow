@@ -38,6 +38,14 @@ if [[ "$mode" = query ]]; then
 	)
 fi
 
+if [[ "$mode" = html ]]; then
+	mode=compile
+	args+=(
+		--features html
+		--input target=html
+	)
+fi
+
 typst "$mode" "$source" \
 	--input "filename=`basename "$source"`" \
 	$args \
