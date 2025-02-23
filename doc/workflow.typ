@@ -400,7 +400,7 @@ Mathematically speaking, $P_*, S_*, D_*, U$ are sets.
 
 - $A inter B$ contains all tasks that are in *both* sets $A$ and $B$.
 
-- $A union B$ contanis all tasks that are in *any* of the sets $A$ or $B$.
+- $A union B$ contains all tasks that are in *any* of the sets $A$ or $B$.
 
 
 == Events and actions
