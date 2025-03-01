@@ -9,6 +9,12 @@
 /// This is a bijection:
 /// Ambiguous characters are assigned exactly one
 /// representant.
+/// The tie-breaking rule is that
+/// numbers
+/// over latin uppercase alphabet
+/// over latin lowercase alphabet
+/// over special characters such as punctuation
+/// over other scripts.
 #let lookup = (
   // t  --------+
   // m  -------+|
@@ -30,19 +36,51 @@
   "8": 0b01111111,
   "9": 0b01011111,
 
-  // characters
+  // alphabetic
   "A": 0b01111011,
   "C": 0b00101101,
   "E": 0b00101111,
   "F": 0b00101011,
   "H": 0b01111010,
+  "N": 0b01111001,
   "J": 0b01110101,
   "L": 0b00101100,
   "P": 0b00111011,
   "U": 0b01111100,
   "Y": 0b00111010,
 
+  // lowercase alphabetic
+  "b": 0b01101110,
+  "c": 0b00100110,
+  "d": 0b01110110,
+  "h": 0b01101010,
+  "n": 0b01100010,
+  "o": 0b01100110,
+  "q": 0b01011011,
+  "r": 0b00100010,
+  "t": 0b00101010,
+  "u": 0b01100100,
+  "y": 0b00111010,
+
+  // special
   " ": 0b00000000,
+  "-": 0b00000010,
+  "/": 0b00110010,
+  "\\": 0b01001010,
+  "=": 0b00000110,
+  "]": 0b01010101,
+  "_": 0b00000100,
+  "?": 0b00110011,
+  "^": 0b00011001,
+  ">": 0b01000110,
+  "'": 0b00001000,
+  "\"": 0b00011000,
+  "`": 0b00010001,
+  "´": 0b00001001,
+  ".": 0b10000000,
+
+  // greek characters
+  "λ": 0b01110011,
 )
 
 /// Takes the `n`th bit out of `bits`,
