@@ -661,7 +661,11 @@ where:
 )
 ```
 
-== Icons
+== Graphics
+
+All stored in the `gfx` module.
+
+=== Icons
 
 For labeling things concisely and memorably.
 They are all accessible via `gfx.markers`, which is a dictionary
@@ -713,6 +717,32 @@ via `at`:
   unknown(at: (2, 2))
   empty(at: (3.25, 2))
 })
+```
+
+=== Segment displays
+
+A segment display
+represents a number
+using a low number of LEDs.
+In flow,
+a representation of them
+is available in `gfx.segment`.
+For example,
+let's show all characters
+representable on a 7-segment display:
+
+```example
+#import gfx.segment: *
+
+#let body = {
+  lookup
+    .keys()
+    .chunks(10)
+    .join(("\n",))
+    .join()
+}
+
+#run(body)
 ```
 
 == Presets

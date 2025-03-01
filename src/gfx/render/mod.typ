@@ -1,7 +1,8 @@
 // Actual implementations of individual rendered icons.
 
-#import "util.typ": *
-#import "draw.typ": *
+#import "segment.typ"
+#import "../util.typ": *
+#import "../draw.typ": *
 
 #let empty(
   // argument is simply ignored

@@ -1,5 +1,5 @@
 #import "util.typ": *
-#import "render.typ" as _render
+#import "render/mod.typ" as _render: segment
 #import "../palette.typ": *
 
 // make the icons easily accessible so that one can just key to 
