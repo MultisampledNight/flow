@@ -135,3 +135,25 @@
   table.at(known.at(idx - 1))
 }
 
+/// Zips all given dictionaries together
+/// such that returned dict
+/// holds all keys present in the given dicts,
+/// mapping them to arrays of the given dicts' values.
+///
+/// This is essentially zipAttrs from nixpkgs
+/// if the reader knows nix.
+///
+/// Panics if not all arguments are dictionaries.
+#let zip-dicts(..args) = args.pos().fold(
+  (:),
+  (acc, attrs) => acc + attrs
+    .pairs()
+    .map(
+      ((key, value)) => ((
+        key,
+        acc.at(key, default: ()) + (value,),
+      ),).to-dict(),
+    )
+    .join()
+)
+
