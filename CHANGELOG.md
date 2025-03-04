@@ -4,7 +4,9 @@ Note:
 This document
 only covers significant **user-facing** changes.
 
-## Unreleased
+## 0.3.0
+
+Compatible with both Typst versions 0.12 and 0.13.
 
 ### Breaking
 
@@ -12,6 +14,76 @@ only covers significant **user-facing** changes.
   - Linear algebra
     - Expand `linco` to accept any number of arguments
     - Add text operator `size`
+    - Tildized changed to `xvt` from `xva`
+- Text that is surrounded by `[]` is automatically shown in violet and
+  underlined now
+  - Aimed to become proper clickable xlinks in future
+- `cfg.render` aka `--input render=...` is an enum now
+  - Retains aliases from booleans, but with slightly different semantics
+  - New: `info` render mode which only returns metainfo at top of file and nothing else
+
+### Additions
+
+- New module: `hacks`
+  - Things that are likely to break across Typst versions
+  - Useful but also dangerous
+
+#### Graphics
+
+- Add 7-segment display
+
+#### Preset
+
+- New in linear algebra (`preset.linalg`)
+  - `mpr` → Mixed product, left/right matrix
+  - Conjugate → `xc`
+  - Absolute value → `xa`, `xva`
+  - Norm → `xn`, `xvn`
+  - Set with indexed values → `sn`
+  - Text operators `corank`, `size`, `Re`, `Im`, `eig`, `diag`, `rot`
+  - Add `i`, `m`, `n`, `o` to vector shortcuts
+  - Add geometric objects
+    - Straight
+      - Point-direction form → `std`
+      - 2-point form → `stp`
+    - Plane
+      - Directonal form → `pld`
+      - Normal form → `pln`
+      - 3-point form → `plp`
+- Added analysis (`preset.ana`)
+- Added directional arrows (`preset.arrow`)
+
+#### Template
+
+- Styling: Add slight stroke around codeblocks
+
+#### Metainfo
+
+- Schema: Allow multiple translations for one language
+
+#### Util
+
+- New shortcut: centered dots → `ccc`
+- Make `cartesian-product` variadic
+- Add `versioned` for
+  selecting a value based on the compiler version
+
+#### Docs
+
+- Add flow version to manual
+- Expand my personal workflow to much more detail
+
+#### Auxiliary
+
+- Add script `flow-query` for querying many notes at once
+
+#### Keyword
+
+- Add more conjugations
+
+### Refactor
+
+- Clean up assets to be a bit shorter
 
 ## 0.2.0
 
@@ -58,3 +130,4 @@ only covers significant **user-facing** changes.
 ## 0.1.2
 
 Initial published
+
