@@ -73,8 +73,6 @@
   show "!=": sym.eq.not
 
   show ref: text.with(fill: reference.same-file)
-
-  show ref: text.with(fill: reference.same-file)
   show link: it => {
     let accent = if type(it.dest) == str {
       reference.external
