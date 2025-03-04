@@ -1,43 +1,48 @@
 #import "gfx/mod.typ" as gfx
+#import "hacks.typ"
+#import "util/mod.typ": dbg
 
-// Returns `default` in place of missing values when slicing out-of-bounds towards the positive end.
-#let _graceful-slice(it, start, end, default: []) = {
-  if end == -1 {
-    end = it.len()
+/// Returns the fill as a string if `it`
+/// comes from a task list entry,
+/// returns `none` otherwise.
+#let _find-fill(it) = {
+  let source = hacks.reconstruct-text(it)
+  
+  let pattern = toml("/asset/data.toml").regex.checkbox
+  let checkbox = source.matches(regex("^" + pattern))
+
+  if checkbox == () {
+    // nothing to do, this is not a checkbox
+    return none
   }
 
-  let missing = calc.max(start, end - it.len(), 0)
-  it += (default,) * missing
-  it.slice(start, end)
+  // can be only one since the regex was anchored
+  checkbox.first().captures.first()
 }
 
+/// Returns a displayable checkbox icon as content
+/// for the given fill character.
+#let _get-icon(fill) = {
+  let icon = gfx.markers.at(fill, default: gfx.markers.at("?")).icon
+
+  // just a few minor positioning tweaks
+  // without the inset, the checkbox wiggles down a bit when typing the desc
+  box(move(dx: -0.1em, icon()), inset: 0.05em)
+}
+
+/// Show transformation for one kind of a list.
 #let _handle-item(it, kind: "list") = {
-  // body can be a sequence (=> have children) or be directly text
-  // either way we just want the children as array
-  let body = it.body.fields().at(
-    "children",
-    default: (it.body,),
-  )
-  let checkbox = _graceful-slice(body, 0, 3)
-  let fill = checkbox.at(1).fields().at("text", default: " ")
-
-  let is-checkbox = (
-    checkbox.at(0) == [\[] and
-    fill.len() == 1 and
-    checkbox.at(-1) == [\]]
-  )
-
-  if not is-checkbox {
+  let fill = _find-fill(it)
+  if fill == none {
     return it
   }
-
-  // convert the fill character to a showable icon
-  let checkbox = gfx.markers.at(fill, default: gfx.markers.at("?")).icon
-  // just a few minor positioning tweaks
-  let checkbox = box(move(dx: -0.1em, checkbox()))
+  let checkbox = _get-icon(fill)
 
   // and remove the description from the checkbox itself
-  let desc = _graceful-slice(body, 3, -1).join()
+  // HACK: we know `it.body` has to be a sequence
+  // since it contains "special characters" for the checkbox
+  // hence the desc must be the 4th element on in the sequence
+  let desc = it.body.children.slice(3).join()
 
   // then throw them together
   let full-entry = [#checkbox #desc]

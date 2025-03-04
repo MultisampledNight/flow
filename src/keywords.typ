@@ -1,14 +1,7 @@
 #import "cfg.typ": render
+#import "hacks.typ"
 #import "util/mod.typ": swap-kv, cartesian-product
 
-#let char-that-does-nothing = "\u{200B}"
-#let do-not-process(it) = {
-  // this is a hack to make sure other show rules do not process the same `it`
-  // but it works
-  it.text.at(0)
-  char-that-does-nothing
-  it.text.slice(1)
-}
 /// Regex alternates.
 #let any(..vars) = {
   "("
@@ -178,12 +171,10 @@
   let picker = construct-picker(cfg.keys())
 
   // skip codeblocks
-  show raw: it => {
-    show picker: do-not-process
-    it
-  }
-  // but do apply to everything else
-  show picker: it => apply-one(it, cfg)
+  show: hacks.only-main(
+    picker,
+    it => apply-one(it, cfg),
+  )
 
   body
 }

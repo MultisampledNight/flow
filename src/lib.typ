@@ -5,6 +5,7 @@
 #import "cfg.typ"
 #import "checkbox.typ"
 #import "gfx/mod.typ" as gfx: invert, fxfirst
+#import "hacks.typ"
 #import "info.typ"
 #import "keywords.typ"
 #import "palette.typ": *

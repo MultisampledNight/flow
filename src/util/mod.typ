@@ -157,3 +157,5 @@
     .join()
 )
 
+/// Shorthand for a nice repr to content.
+#let dbg(it) = raw(repr(it), block: true)
