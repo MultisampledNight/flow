@@ -56,11 +56,9 @@
   "h": 0b01101010,
   "n": 0b01100010,
   "o": 0b01100110,
-  "q": 0b01011011,
   "r": 0b00100010,
   "t": 0b00101010,
   "u": 0b01100100,
-  "y": 0b00111010,
 
   // special
   " ": 0b00000000,
@@ -114,7 +112,7 @@
   let cl = (bl, "|-", c) // Center left
   let cr = (c, "-|", tr) // Center right
 
-  let l(start, end, cut: 15%) = line(
+  let l(start, end, cut: 20%) = line(
     (start, cut, end),
     (start, 100% - cut, end),
   )
