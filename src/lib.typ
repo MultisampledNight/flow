@@ -1,6 +1,7 @@
 // Feel free to import this file's contents via a glob!
 // See `doc/manual.typ` for an example of how usage in practise looks like!
 
+#import "asset.typ"
 #import "callout.typ": *
 #import "cfg.typ"
 #import "checkbox.typ"

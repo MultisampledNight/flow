@@ -1,3 +1,4 @@
+#import "asset.typ"
 #import "gfx/mod.typ" as gfx
 #import "hacks.typ"
 #import "util/mod.typ": dbg
@@ -8,7 +9,7 @@
 #let _find-fill(it) = {
   let source = hacks.reconstruct-text(it)
   
-  let pattern = toml("/asset/data.toml").regex.checkbox
+  let pattern = asset.data.regex.checkbox
   let checkbox = source.matches(regex("^" + pattern))
 
   if checkbox == () {

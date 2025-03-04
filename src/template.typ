@@ -1,3 +1,4 @@
+#import "asset.typ"
 #import "cfg.typ"
 #import "checkbox.typ"
 #import "info.typ"
@@ -90,7 +91,7 @@
     radius: 0.25em,
   )
 
-  set raw(theme: "/asset/halcyon.tmTheme")
+  set raw(theme: asset.halcyon)
   show raw: text.with(fill: halcyon.fg)
   show raw.where(block: false): it => box(
     outset: (y: 0.3em),
