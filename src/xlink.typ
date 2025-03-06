@@ -19,8 +19,9 @@
 }
 
 #let process(body, ..args) = {
+  let nonzws = "[^" + sym.zws + "]"
   show: hacks.only-main(
-    regex("\[..+?\]"),
+    regex("\[" + nonzws + ".+?\]"),
     it => {
       let it = it.text.slice(1, -1)
       xlink(it)
