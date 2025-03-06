@@ -8,7 +8,7 @@
 /// returns `none` otherwise.
 #let _find-fill(it) = {
   let source = hacks.reconstruct-text(it)
-  
+
   let pattern = asset.data.regex.checkbox
   let checkbox = source.matches(regex("^" + pattern))
 

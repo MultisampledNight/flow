@@ -17,8 +17,7 @@
       columns: (1.5em, 1fr),
       gutter: 0.5em,
       align: (right + horizon, left),
-      icon(invert: false),
-      body,
+      icon(invert: false), body,
     )
   }
 

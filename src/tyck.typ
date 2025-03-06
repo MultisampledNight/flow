@@ -30,23 +30,19 @@
     if "array" in schema {
       ("array", (fmt(schema.array.ty),))
     } else if "dict" in schema {
-      ("dictionary", (
-        fmt(schema.dict.key),
-        fmt(schema.dict.value),
-      ))
+      (
+        "dictionary",
+        (
+          fmt(schema.dict.key),
+          fmt(schema.dict.value),
+        ),
+      )
     } else if "any" in schema {
       ("any", schema.any.map(fmt))
     } else if "attrs" in schema {
       (
         "dictionary",
-        schema
-          .attrs
-          .pairs()
-          .map(((key, value)) =>
-            fmt(key)
-            + ":"
-            + fmt(value)
-          ),
+        schema.attrs.pairs().map(((key, value)) => fmt(key) + ":" + fmt(value)),
       )
     } else {
       (repr(schema), ())
@@ -62,9 +58,7 @@
   }
 
   "<"
-  parts
-    .intersperse(", ")
-    .join()
+  parts.intersperse(", ").join()
   ">"
 }
 
@@ -175,14 +169,18 @@
 
   panic(
     "failed typecheck"
-    + if "key" in err {
-      " at key `" + err.key + "`"
-    } else {
-      ""
-    }
-    + ". "
-    + "expected: `" + _fmt-schema(err.expected) + "`, "
-    + "actual: `" + repr(type(err.found)) + "`"
+      + if "key" in err {
+        " at key `" + err.key + "`"
+      } else {
+        ""
+      }
+      + ". "
+      + "expected: `"
+      + _fmt-schema(err.expected)
+      + "`, "
+      + "actual: `"
+      + repr(type(err.found))
+      + "`",
   )
 }
 

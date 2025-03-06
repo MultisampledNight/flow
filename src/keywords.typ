@@ -88,9 +88,7 @@
   let rest = it.slice(1)
 
   // are there other possible suffices we need to account for?
-  let suffix = suffices
-    .keys()
-    .find(canonical => it.ends-with(canonical))
+  let suffix = suffices.keys().find(canonical => it.ends-with(canonical))
   let rest = if suffix == none {
     rest
   } else {
@@ -120,9 +118,7 @@
   let lookup = cartesian-product(
     normalize(selected.text),
     registered.pairs(),
-  ).find(
-    ((possibility, (kw, _op))) => regex(kw) in possibility
-  )
+  ).find(((possibility, (kw, _op))) => regex(kw) in possibility)
 
   if lookup == none {
     panic({

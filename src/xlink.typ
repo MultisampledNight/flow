@@ -24,7 +24,7 @@
     it => {
       let it = it.text.slice(1, -1)
       xlink(it)
-    }
+    },
   )
 
   body

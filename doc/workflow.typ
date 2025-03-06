@@ -1,12 +1,13 @@
 #import "/src/lib.typ" as flow: *
-#let accent = ("root", "vertex", "yield", "edge").zip(
-  duality.values().slice(2)
-)
+#let accent = ("root", "vertex", "yield", "edge").zip(duality.values().slice(2))
 #let steps = gradient-map(
   ("initialize", "gather", "extract", "condense", "refine"),
   (duality.orange, duality.yellow, duality.green),
 )
-#let bold = ("source", "target", "incoming", "outgoing").map(name => (name, strong))
+#let bold = ("source", "target", "incoming", "outgoing").map(name => (
+  name,
+  strong,
+))
 #show: note.with(
   title: "Multi's workflow",
   author: "MultisampledNight",
@@ -437,11 +438,9 @@ see @maintenance.
 #table(
   columns: 3,
   table.header[Urgency][Necessary today?][Assigned phase],
-  c(rowspan: 2, $n in U$),
-    [Yes], $n in P_d$,
-    [No], $n in P_S$,
-  $n in.not U$,
-    [No], $n in P_L$,
+  c(rowspan: 2, $n in U$), [Yes], $n in P_d$,
+  [No], $n in P_S$, $n in.not U$,
+  [No], $n in P_L$,
 )
 
 == Maintenance <maintenance>
@@ -459,8 +458,8 @@ see @maintenance.
 
 + Reach:
   Transfer tasks that one
-    wants to do and
-    likely can do
+  wants to do and
+  likely can do
   the next few weeks
   from $P_L$ to $P_S$
 

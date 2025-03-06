@@ -53,13 +53,10 @@
   // idea: take the `text` fields from the children
   // and join them together
   let it = ("body", "children")
-    .fold(it, get-or-self)
-    // space does not have a text field. it's just empty
+    .fold(it, get-or-self) // space does not have a text field. it's just empty
     // but we'd still like to have it represented in the return value
     // hence: default to the text = space if a node does not contain text
     .map(seq => (text: " ") + seq.fields())
 
-  zip-dicts(..it)
-    .at("text", default: ("",))
-    .join()
+  zip-dicts(..it).at("text", default: ("",)).join()
 }

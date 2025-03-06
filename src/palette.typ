@@ -13,11 +13,9 @@
 #let duality = (
   fg: rgb("#B6B3B4"),
   bg: rgb("#212224"),
-
   blue: rgb("#00C7F7"),
   violet: rgb("#AAA9FF"),
   pink: rgb("#FA86CE"),
-
   orange: rgb("#FF9365"),
   yellow: rgb("#C7B700"),
   green: rgb("#11D396"),
@@ -70,7 +68,6 @@
     bow: yellow,
     wob: yellow,
   ),
-
   remark: (
     duality: duality.green,
     bow: green,

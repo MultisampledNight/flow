@@ -35,7 +35,6 @@
   "7": 0b01011001,
   "8": 0b01111111,
   "9": 0b01011111,
-
   // alphabetic
   "A": 0b01111011,
   "C": 0b00101101,
@@ -49,7 +48,6 @@
   "Q": 0b11111101,
   "U": 0b01111100,
   "Y": 0b00111010,
-
   // lowercase alphabetic
   "a": 0b01110111,
   "b": 0b01101110,
@@ -63,7 +61,6 @@
   "r": 0b00100010,
   "t": 0b00101010,
   "u": 0b01100100,
-
   // special
   " ": 0b00000000,
   "-": 0b00000010,
@@ -82,7 +79,6 @@
   ".": 0b10000000,
   "@": 0b00111111,
   "°": 0b00011011,
-
   // greek characters
   "λ": 0b01110011,
 )
@@ -101,7 +97,6 @@
   "W": "LU",
   "X": "H",
   "Z": "2",
-
   "e": "6",
   "f": "F",
   "g": "9",
@@ -113,7 +108,6 @@
   "x": "H",
   "y": "Y",
   "z": "Z",
-
   "(": "C",
   ")": "]",
   "[": "C",
@@ -124,7 +118,6 @@
   "%": "°/o",
   "$": "S",
   "+": "-t",
-
   "α": "o=",
 )
 
@@ -145,7 +138,6 @@
   bottom-left: (0, 0),
   top-right: (1, 2),
   // How much space there is to the next character.
-
   off: round-stroke() + (paint: gamut.sample(30%)),
   on: round-stroke() + (paint: fg, thickness: 0.15em),
 ) = group({
@@ -203,7 +195,6 @@
   size: (1, 2),
   /// Horizontal and vertical space between characters.
   space: (0.5, 0.75),
-
   ..args,
 ) = canvas({
   let (width, height) = size

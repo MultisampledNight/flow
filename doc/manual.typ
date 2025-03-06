@@ -23,19 +23,20 @@
     columns: (1fr, 1fr),
     align: (top + left, left),
     gutter: 1em,
-    label[Typst code:]
-      + raw(lang: "typ", block: true, code),
+    label[Typst code:] + raw(lang: "typ", block: true, code),
     label[Rendered result:]
       + block(
         stroke: fg,
         radius: 0.5em,
         inset: 0.5em,
         width: 100%,
-        normal(eval(
-          mode: "markup",
-          scope: dictionary(flow),
-          code,
-        ))
+        normal(
+          eval(
+            mode: "markup",
+            scope: dictionary(flow),
+            code,
+          ),
+        ),
       ),
   )
 }
@@ -75,7 +76,7 @@ I can guarantee you it is worthy of your time.
   not as the ultimate goal to strive for.
   Feel free to take what you think is useful.
   Ideally, even introspect and improve on it.
-  
+
   Learning is highly individual, and
   so are PKMs.
   Find a solution that fits *you*. :3
@@ -93,7 +94,7 @@ I can guarantee you it is worthy of your time.
       "#show: note.with(\n"
       "  title: \"Super cool note title!\",\n"
       ")"
-    }
+    },
   )
 
 + Start typing the actual note like any other typst document! uwu
@@ -204,16 +205,16 @@ a few layout hints, but
 does notably *not* set the font or font size.
 
 #hint[
-Feel free to use this as base for your own templates!
-Chances are you want to forward passed arguments
-that aren't handled directly by your template to the `generic` driver,
-so something to the following show rule:
+  Feel free to use this as base for your own templates!
+  Chances are you want to forward passed arguments
+  that aren't handled directly by your template to the `generic` driver,
+  so something to the following show rule:
 
-```typc
-show: generic.with(..args)
-```
+  ```typc
+  show: generic.with(..args)
+  ```
 
-The same idea works for all other templates listed here, too.
+  The same idea works for all other templates listed here, too.
 ]
 
 ==== `modern`
@@ -369,23 +370,28 @@ Hence, see these semantics merely as a suggestion.
   align: left,
   inset: 0.5em,
   table.header(
-    [Name], [Fill], [$p in ...$], [Assigned to?], [Actionable by you?],
+    [Name],
+    [Fill],
+    [$p in ...$],
+    [Assigned to?],
+    [Actionable by you?],
   ),
   ..(
-    ([Not started], " ", [${ 0    }$], [Nobody yet], [Yes]),
-    ([Urgent],      "!", [$[ 0, 1 )$], [You],        [Yes]),
-    ([In progress], ">", [$[ 0, 1 )$], [You],        [Yes]),
-    ([Paused],      ":", [$( 0, 1 )$], [You],        [Yes]),
-    ([Completed],   "x", [${    1 }$], [Nobody],     [No]),
-    ([Cancelled],   "/", [$[ 0, 1 )$], [Nobody],     [No]),
-    ([Blocked],     "-", [$[ 0, 1 )$], [Not you],    [No]),
-    ([Unknown],     "?", [$[ 0, 1 ]$], [Maybe you],  [Maybe]),
+    ([Not started], " ", [${ 0 }$], [Nobody yet], [Yes]),
+    ([Urgent], "!", [$[ 0, 1 )$], [You], [Yes]),
+    ([In progress], ">", [$[ 0, 1 )$], [You], [Yes]),
+    ([Paused], ":", [$( 0, 1 )$], [You], [Yes]),
+    ([Completed], "x", [${ 1 }$], [Nobody], [No]),
+    ([Cancelled], "/", [$[ 0, 1 )$], [Nobody], [No]),
+    ([Blocked], "-", [$[ 0, 1 )$], [Not you], [No]),
+    ([Unknown], "?", [$[ 0, 1 ]$], [Maybe you], [Maybe]),
   )
-  .map(((name, fill, ..args)) => (
-    name,
-    raw("[" + fill + "]"),
-    ..args,
-  )).join()
+    .map(((name, fill, ..args)) => (
+      name,
+      raw("[" + fill + "]"),
+      ..args,
+    ))
+    .join()
 )
 
 ==== Not started <not-started>
@@ -687,7 +693,8 @@ Here's an overview over them all:
   columns: 4,
   align: (right, left, left, left),
   table.header([Icon], [Short], [Long], [Accent]),
-  ..gfx.markers
+  ..gfx
+    .markers
     .pairs()
     .map(((short, (accent, icon, long))) => (
       icon(invert: false),

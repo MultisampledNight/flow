@@ -40,10 +40,12 @@
 
   set rect(stroke: fg)
   set line(stroke: fg)
-  set table(stroke: (x, y) => {
-    if x > 0 { (left: gamut.sample(30%)) }
-    if y > 0 { (top: gamut.sample(30%)) }
-  })
+  set table(
+    stroke: (x, y) => {
+      if x > 0 { (left: gamut.sample(30%)) }
+      if y > 0 { (top: gamut.sample(30%)) }
+    },
+  )
 
   set heading(numbering: "1.1")
 
@@ -100,10 +102,13 @@
   show raw.where(block: true): it => block(
     inset: 0.75em,
     width: 100%,
-    stroke: 0.025em + gradient.linear(
-      halcyon.bg,
-      halcyon.fg,
-    ).sample(40%),
+    stroke: 0.025em
+      + gradient
+        .linear(
+          halcyon.bg,
+          halcyon.fg,
+        )
+        .sample(40%),
     it,
     ..cb,
   )
@@ -115,16 +120,19 @@
 
 #let _shared(args) = {
   let args = info.preprocess(args.named())
-  let title = args.at("title", default: {
-    if cfg.filename != none {
-      cfg.filename.trim(
-        ".typ",
-        repeat: false,
-      )
-    } else {
-      "Untitled"
-    }
-  })
+  let title = args.at(
+    "title",
+    default: {
+      if cfg.filename != none {
+        cfg.filename.trim(
+          ".typ",
+          repeat: false,
+        )
+      } else {
+        "Untitled"
+      }
+    },
+  )
 
   (args: args, title: title)
 }
@@ -223,30 +231,29 @@
     let extra = args
       .pairs()
       .filter(((key, value)) => key != "title")
-      .map(((key, value)) =>
-        (
-          (upper(key.at(0)) + key.slice(1))
-            .replace("Cw", "Content warning"),
-          if type(value) in (str, int, float, content) {
-            value
-          } else if type(value) == array {
-            value.join([, ], last: [ and ])
-          } else if type(value) == dictionary {
-            value.keys().join[, ]
-          } else {
-            repr(value)
-          }
-        )
-        .join[: ]
-      )
+      .map(((key, value)) => (
+        (upper(key.at(0)) + key.slice(1)).replace("Cw", "Content warning"),
+        if type(value) in (str, int, float, content) {
+          value
+        } else if type(value) == array {
+          value.join([, ], last: [ and ])
+        } else if type(value) == dictionary {
+          value.keys().join[, ]
+        } else {
+          repr(value)
+        },
+      ).join[: ])
       .join[\ ]
 
-    align(center, {
-      title
-      [\ ]
-      v(0.25em)
-      extra
-    })
+    align(
+      center,
+      {
+        title
+        [\ ]
+        v(0.25em)
+        extra
+      },
+    )
 
     outline()
   }

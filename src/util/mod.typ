@@ -13,10 +13,13 @@
 /// Useful for a conceptual or logical split.
 #let separator = box(
   height: 0.1em,
-  align(horizon + center, line(
-    length: 100%,
-    stroke: gamut.sample(25%),
-  )),
+  align(
+    horizon + center,
+    line(
+      length: 100%,
+      stroke: gamut.sample(25%),
+    ),
+  ),
 )
 
 /// Displays the given content highlighted and only when compiled in dev mode.
@@ -32,9 +35,7 @@
   if samples <= 1 {
     return (0%,) * samples
   }
-  range(samples)
-    .map(i => i / (samples - 1))
-    .map(x => x * 100%)
+  range(samples).map(i => i / (samples - 1)).map(x => x * 100%)
 }
 
 /// Maps the given strings linearly across the full width of the given colors.
@@ -56,7 +57,7 @@
 
 /// Returns an array of all combination possibilities
 /// of the given `n` equally long arrays.
-/// 
+///
 /// Each possibility is represented by an array again
 /// where the `i`-th element
 /// is from the `i`-th input array.
@@ -80,9 +81,7 @@
   if args.len() == 2 {
     // bit more complicated, need to pair each up
     let (a, b) = args
-    return a
-      .map(x => b.map(y => (x, y)))
-      .join()
+    return a.map(x => b.map(y => (x, y))).join()
   }
 
   // n >= 3
@@ -144,17 +143,24 @@
 /// if the reader knows nix.
 ///
 /// Panics if not all arguments are dictionaries.
-#let zip-dicts(..args) = args.pos().fold(
-  (:),
-  (acc, attrs) => acc + attrs
-    .pairs()
-    .map(
-      ((key, value)) => ((
-        key,
-        acc.at(key, default: ()) + (value,),
-      ),).to-dict(),
+#let zip-dicts(..args) = (
+  args
+    .pos()
+    .fold(
+      (:),
+      (acc, attrs) => (
+        acc
+          + attrs
+            .pairs()
+            .map(((key, value)) => (
+              (
+                key,
+                acc.at(key, default: ()) + (value,),
+              ),
+            ).to-dict())
+            .join()
+      ),
     )
-    .join()
 )
 
 /// Shorthand for a nice repr to content.

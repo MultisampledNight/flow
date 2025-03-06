@@ -39,11 +39,9 @@
     (edge.x,) * 2
   }
 
-  let point = xs.zip(ys).map(
-    ((x, y)) => object +
-    "." + to-anchor(y) +
-    "-" + to-anchor(x)
-  )
+  let point = xs
+    .zip(ys)
+    .map(((x, y)) => object + "." + to-anchor(y) + "-" + to-anchor(x))
   point.insert(1, value)
   point
 }
@@ -57,15 +55,16 @@
 // the `cfg` specifies additional arguments for the `trans` function.
 #let _modifier(queue, cfg) = (queue: queue, cfg: cfg)
 #let _is-modifier(part) = (
-  type(part) == dictionary and
-  "queue" in part and
-  "cfg" in part
+  type(part) == dictionary and "queue" in part and "cfg" in part
 )
 
 // Create a new branch. After all coordinates in this branch have been processed,
 // return to the node before it.
 // At the end of a branch, an arrow mark is always drawn.
-#let br(arrow: true, ..args) = _modifier(args.pos(), (branch: true, arrow: arrow))
+#let br(arrow: true, ..args) = _modifier(
+  args.pos(),
+  (branch: true, arrow: arrow),
+)
 
 // Branches out to each given argument.
 #let all(..args) = {
@@ -127,7 +126,7 @@
     coord.insert(key, _make-concrete(last))
   }
   if "rel" in coord and "to" not in coord {
-    coord.to = last;
+    coord.to = last
   }
   coord
 } else {
@@ -219,15 +218,13 @@
 
     let arrow = frame.cfg.at("arrow", default: true)
     let maybe-arrowhead = if (
-      queue.len() == 0
-      and arrow != false
+      queue.len() == 0 and arrow != false
     ) {
       // oh that means we want to draw an arrowhead
       // though if this is a modifier, that information needs to be propagated instead
 
       if (
-        _is-modifier(part)
-        and "arrow" not in part.cfg
+        _is-modifier(part) and "arrow" not in part.cfg
       ) {
         part.cfg.arrow = arrow
       }
@@ -253,8 +250,7 @@
       // if this is a style modifier, store the style
       if "styles" in part.cfg {
         let next-styles = (
-          styles-depth.at(-1, default: (:))
-          + part.cfg.styles
+          styles-depth.at(-1, default: (:)) + part.cfg.styles
         )
         styles-depth.push(next-styles)
       }

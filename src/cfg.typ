@@ -11,9 +11,15 @@
     }
 
     panic(
-      "input `" + name + "` received invalid value; " +
-      "expected: " + expected + "; " +
-      "actual: `" + actual + "`"
+      "input `"
+        + name
+        + "` received invalid value; "
+        + "expected: "
+        + expected
+        + "; "
+        + "actual: `"
+        + actual
+        + "`",
     )
   }
 
@@ -35,15 +41,12 @@
         name,
         source,
         source in variants,
-        "one of `" +
-        variants
-          .filter(var => var != none)
-          .intersperse("`, `")
-          .join()
-        + "`"
-        + if none in variants {
-          " or left unspecified"
-        },
+        "one of `"
+          + variants.filter(var => var != none).intersperse("`, `").join()
+          + "`"
+          + if none in variants {
+            " or left unspecified"
+          },
       )
 
       source
@@ -91,7 +94,7 @@
     "duality"
   } else {
     "bow"
-  }
+  },
 )
 
 /// The name of the file the note is stored in.
@@ -125,8 +128,12 @@
 /// could have a lot of performance boost
 /// by using "text" instead.
 #let render = (_define("render").enum)(
-  "all", "text", "info",
-  "false", "true", none,
+  "all",
+  "text",
+  "info",
+  "false",
+  "true",
+  none,
 )
 #let render = _default(render, "all")
 #let render = _alias(render, ("true": "all", "false": "info"))

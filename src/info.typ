@@ -19,8 +19,12 @@
   for key in it.keys() {
     if key in typos.keys() {
       panic(
-        "metadata key `" + key + "` passed to template, which is a typo. "
-        + "use `" + typos.at(key) + "` instead."
+        "metadata key `"
+          + key
+          + "` passed to template, which is a typo. "
+          + "use `"
+          + typos.at(key)
+          + "` instead.",
       )
     }
   }
@@ -83,9 +87,7 @@
     if "cw" in lower(name) {
       par(
         leading: 1.5em,
-        data
-          .map(gfx.invert)
-          .join(h(0.5em)),
+        data.map(gfx.invert).join(h(0.5em)),
       )
     } else if type(data) == array {
       data.join[, ]
@@ -111,12 +113,10 @@
     },
     row-gutter: 1em,
     ..it
-    .pairs()
-    .filter(((name, _)) => name not in ("keywords", "title"))
-    .map(
-      ((name, data)) => (fade(name), field(name, data))
-    )
-    .join()
+      .pairs()
+      .filter(((name, _)) => name not in ("keywords", "title"))
+      .map(((name, data)) => (fade(name), field(name, data)))
+      .join()
   )
 }
 

@@ -14,15 +14,14 @@
 #let canvas(body, length: 1em, ..args) = cetz.canvas(
   ..args,
   length: length,
-{
-  import draw: *
+  {
+    import draw: *
 
-  set-style(
-    stroke: round-stroke(),
-  )
+    set-style(stroke: round-stroke())
 
-  body
-})
+    body
+  },
+)
 
 #let icon(
   body,
@@ -75,7 +74,7 @@
             (name: name)
           } else {
             (:)
-          }
+          },
         )
         icon-accent = bg
       } else {
@@ -99,7 +98,7 @@
   if contentize {
     box(
       inset: (y: -0.175em),
-      canvas(..args, cmds)
+      canvas(..args, cmds),
     )
   } else {
     cmds
@@ -124,29 +123,26 @@
   //
   // The node names directly map to cetz names.
   nodes: (:),
-
   // Key is the name of the node used as source,
   // value is the target coordinate or node name.
   // Use the `br` function in `gfx.draw`
   // if you want to target more than node and/or
   // don't take the direct path.
   edges: (:),
-
   ..args,
 ) = {
   let cmds = {
     import draw: *
     for (name, cfg) in nodes {
       let cfg = if (
-        type(cfg) == dictionary
-        and "pos" in cfg
+        type(cfg) == dictionary and "pos" in cfg
       ) {
         cfg
       } else {
         (pos: cfg)
       }
 
-      cfg.accent  = cfg.at("accent", default: fg)
+      cfg.accent = cfg.at("accent", default: fg)
       let display = cfg.at(
         "display",
         default: text(fill: cfg.accent, name),
@@ -169,9 +165,7 @@
       trans(
         from,
         styled(
-          stroke: round-stroke(
-            paint: source-cfg.accent,
-          ),
+          stroke: round-stroke(paint: source-cfg.accent),
           fill: source-cfg.accent,
           to,
         ),

@@ -2,7 +2,7 @@
 #import "render/mod.typ" as _render: segment
 #import "../palette.typ": *
 
-// make the icons easily accessible so that one can just key to 
+// make the icons easily accessible so that one can just key to
 #let markers = (
   " ": "empty",
   "!": "urgent",
@@ -54,7 +54,7 @@
   shift: 1em,
   padding: (x: 1em),
   height: 1.4em,
-  body
+  body,
 ) = context box({
   let body = pad(..padding, body)
 
@@ -63,16 +63,21 @@
   // while the text is still drawn normally
   // (just with the bg fill)
   let size = measure(body)
-  let half-backdrop = box(canvas(length: 1em, {
-    import draw: *
-    parallelopiped(
-      (0, 0),
-      (size.width - 0.5em, height),
-      shift: shift,
-      fill: accent,
-      stroke: accent,
-    )
-  }))
+  let half-backdrop = box(
+    canvas(
+      length: 1em,
+      {
+        import draw: *
+        parallelopiped(
+          (0, 0),
+          (size.width - 0.5em, height),
+          shift: shift,
+          fill: accent,
+          stroke: accent,
+        )
+      },
+    ),
+  )
 
   place(
     dx: -shift / 4,
@@ -87,7 +92,8 @@
 // of each word
 // using the given function.
 #let fxfirst(it, fx: strong) = {
-  it.split()
+  it
+    .split()
     .map(word => {
       let clusters = word.clusters()
       let first = fx(clusters.first())

@@ -9,8 +9,14 @@
 
 #let cetz = if cfg.render == "all" {
   versioned((
-    "0.12": { import "@preview/cetz:0.3.2"; cetz },
-    "0.13": { import "@preview/cetz:0.3.3"; cetz },
+    "0.12": {
+      import "@preview/cetz:0.3.2"
+      cetz
+    },
+    "0.13": {
+      import "@preview/cetz:0.3.3"
+      cetz
+    },
   ))
 } else {
   import "stub.typ"
