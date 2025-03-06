@@ -50,7 +50,12 @@ push-to-index() {
 	popd
 }
 
+cleanup() {
+	rm -rf packages
+}
+
 clone-index
 copy-to-index
 push-to-repo
 push-to-index
+cleanup
