@@ -4,6 +4,7 @@
 #import "arrow.typ"
 #import "ana.typ"
 #import "calculus.typ"
+#import "chem.typ"
 #import "linalg.typ"
 #import "ops.typ"
 #import "quantum.typ"
