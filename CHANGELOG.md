@@ -4,6 +4,14 @@ Note:
 This document
 only covers significant **user-facing** changes.
 
+## Unreleased
+
+- Add `chem` preset for chemistry
+
+## 0.3.1
+
+- Fix checkboxes
+
 ## 0.3.0
 
 Compatible with both Typst versions 0.12 and 0.13.
