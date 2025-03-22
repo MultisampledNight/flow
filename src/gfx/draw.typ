@@ -93,6 +93,7 @@
   ..args,
   tag: none,
   offset: (0, 0),
+  anchor: none,
 ) = _modifier(
   args.pos(),
   (

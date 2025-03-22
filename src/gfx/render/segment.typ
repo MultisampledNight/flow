@@ -138,7 +138,7 @@
   bottom-left: (0, 0),
   top-right: (1, 2),
   // How much space there is to the next character.
-  off: round-stroke() + (paint: gamut.sample(30%)),
+  off: round-stroke() + (paint: gamut.sample(10%)),
   on: round-stroke() + (paint: fg, thickness: 0.15em),
 ) = group({
   let (bl, tr) = (bottom-left, top-right)
