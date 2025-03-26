@@ -5,7 +5,7 @@
 // Otherwise it offers do-nothing stubs in place.
 
 #import "../cfg.typ"
-#import "../util/mod.typ": *
+#import "../util/small.typ": *
 
 #let cetz = if cfg.render == "all" {
   versioned((

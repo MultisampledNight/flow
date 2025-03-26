@@ -10,6 +10,48 @@
 // Only uses the y component of the given coordinate.
 #let vert(coord) = (coord, "-|", ())
 
+#let dx(x, to: ()) = (rel: (x, 0), to: to)
+#let dy(y, to: ()) = (rel: (0, y), to: to)
+
+/// Returns a dictionary
+/// containing corner and edge points
+/// of the given rectangle,
+/// specified via bottom left and top right points.
+/// The keys of the dict follow the pattern
+/// `vh`, where
+/// `v` is the vertical specifier and
+/// `h` is the horizontal specifier.
+///
+/// Vertical specifiers are
+/// `t`op, `m`id and `b`ottom.
+/// Horizontal ones are
+/// `l`eft, `m`id and `r`ight.
+#let corners(bl, tr) = {
+  // Top left
+  let tl = (bl, "|-", tr)
+  // Bottom right
+  let br = (bl, "-|", tr)
+
+  // Bottom mid
+  let bm = (bl, 50%, br)
+  // Top mid
+  let tm = (tl, 50%, tr)
+
+  // Left mid
+  let ml = (bl, 50%, tl)
+  // Mid mid
+  let mm = (bl, 50%, tr)
+  // Right mid
+  let mr = (br, 50%, tr)
+
+  (
+    tl: tl, tm: tm, tr: tr,
+    ml: ml, mm: mm, mr: mr,
+    bl: bl, bm: bm, br: br,
+  )
+}
+
+
 // Convert from Typst alignment to cetz directions.
 #let to-anchor(it) = {
   if it == top {
