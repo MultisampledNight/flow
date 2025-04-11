@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-set -xeuo pipefail
+set -euo pipefail
 here=`dirname $0`
 source "$here/common"
 
