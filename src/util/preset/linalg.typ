@@ -88,7 +88,7 @@
 #let charset = "abcdeimnpqrstvwxyz"
 #let charset = upper(charset) + charset
 /// Maps each common character in equations to the given op.
-#let shorthand(op, space: charset) = space.clusters().map(op)
+#let shorthand(op, space: charset) = space.clusters().map(math.italic).map(op)
 
 // Absolute value.
 #let (
