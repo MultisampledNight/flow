@@ -5,3 +5,6 @@
 /// Variadic function.
 #let fn(var) = $f(var_1, ..., var_n)$
 
+/// Window becoming ever smaller, usually infinitesimally small.
+#let window = $epsilon.alt$
+
