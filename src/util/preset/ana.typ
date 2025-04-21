@@ -30,7 +30,7 @@
 }
 
 /// A polynomial, written as sum. See `ply`.
-#let plysum(
+#let plys(
   coeff: $alpha$,
   param: $x$,
   deg: $k$,
