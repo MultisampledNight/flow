@@ -1,6 +1,7 @@
 #import "asset.typ"
 #import "cfg.typ"
 #import "checkbox.typ"
+#import "hacks.typ"
 #import "info.typ"
 #import "keywords.typ"
 #import "palette.typ": *
@@ -70,9 +71,9 @@
   set math.mat(delim: "[")
   set math.vec(delim: "[")
 
-  show "->": sym.arrow
-  show "=>": sym.arrow.double
-  show "!=": sym.eq.not
+  show: hacks.only-main("->", sym.arrow)
+  show: hacks.only-main("=>", sym.arrow.double)
+  show: hacks.only-main("!=", sym.eq.not)
 
   show ref: text.with(fill: reference.same-file)
   show link: it => {
