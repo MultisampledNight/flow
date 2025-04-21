@@ -34,6 +34,7 @@
   coeff: $alpha$,
   param: $x$,
   deg: $k$,
+  idx: $i$,
 ) = {
   $sum^deg_(idx = 0) coeff_idx param^idx$
 }
