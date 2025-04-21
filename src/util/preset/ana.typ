@@ -29,8 +29,8 @@
   $coeff_0 + coeff_1 param + mid + coeff_deg param^deg$
 }
 
-/// A polynomial, written a sum. See `ply`.
-#let ply-sum(
+/// A polynomial, written as sum. See `ply`.
+#let plysum(
   coeff: $alpha$,
   param: $x$,
   deg: $k$,
