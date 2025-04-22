@@ -39,3 +39,17 @@
   $sum^deg_(idx = 0) coeff_idx param^idx$
 }
 
+/// A series definition.
+///
+/// If you want to specify your own sequence expression,
+/// pass it as positional argument,
+/// which will override the default.
+#let sri(
+  idx: $k$,
+  init: $1$,
+  ..args,
+) = {
+  let expr = args.pos().at(0, default: $a_idx$)
+  $sum_(idx = init)^oo expr$
+}
+
