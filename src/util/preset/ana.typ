@@ -5,9 +5,14 @@
 /// Variadic function.
 #let fn(var) = $f(var_1, ..., var_n)$
 
+/// Inverse function or preimage.
+#let finv = $f^(-1)$
+
 /// Window becoming ever smaller, usually infinitesimally small.
 #let window = $epsilon.alt$
 
+/// Can be both plus or minus.
+#let pm = sym.plus.minus
 /// Both negative and positive infinity.
 #let pmoo = $plus.minus oo$
 
