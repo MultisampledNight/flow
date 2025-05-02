@@ -1,4 +1,5 @@
 // Utils for mathematical analysis.
+#import "../small.typ": *
 
 /// Domain of a function.
 #let (dom,) = ("dom",).map(math.op)
@@ -11,8 +12,26 @@
 /// Window becoming ever smaller, usually infinitesimally small.
 #let window = $epsilon.alt$
 
-/// Sum from k to n with starting index 1.
-#let skn = $sum_(k = 1)^n$
+/// Various shorthands for sums.
+#let (
+  sk0n,
+  sk0m,
+  sk0p,
+  sk1n,
+  sk1m,
+  sk1p,
+  si0n,
+  si0m,
+  si0p,
+  si1n,
+  si1m,
+  si1p,
+) = cartesian-product(
+  "ki".codepoints(),
+  range(2),
+  "nmp".codepoints(),
+).map(((idx, start, end)) => $sum_(idx = start)^end$)
+#let (skn, skm) = (sk1n, sk1m)
 
 /// Can be both plus or minus.
 #let pm = sym.plus.minus
