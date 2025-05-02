@@ -2,10 +2,11 @@
 // which would be polluting the scope if imported for all.
 
 #import "arrow.typ"
-#import "ana.typ"
-#import "calculus.typ"
 #import "chem.typ"
-#import "linalg.typ"
+#import "math.typ"
 #import "ops.typ"
 #import "quantum.typ"
 #import "sew.typ"
+
+// Backwards compatibility module, should be removed with 0.4.0
+#let (ana, calculus, linalg) = (math,) * 3
