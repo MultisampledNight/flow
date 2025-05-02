@@ -11,6 +11,9 @@
 /// Window becoming ever smaller, usually infinitesimally small.
 #let window = $epsilon.alt$
 
+/// Sum from k to n with starting index 1.
+#let skn = $sum_(k = 1)^n$
+
 /// Can be both plus or minus.
 #let pm = sym.plus.minus
 /// Both negative and positive infinity.
