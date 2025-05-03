@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash gh tomlq rsync
+#!nix-shell -i sh -p gh
 set -eux
 source `dirname $0`/common
 

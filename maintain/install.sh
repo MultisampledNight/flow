@@ -1,5 +1,4 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bash tomlq
+#!/usr/bin/env sh
 set -eu
 source `dirname $0`/common
 
