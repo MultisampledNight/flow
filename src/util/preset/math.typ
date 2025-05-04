@@ -20,11 +20,13 @@
 
 /// Highlight shorthands.
 #let (
+  cnc,
   (uln, ubr, ubt, upn, ush),
   (oln, obr, obt, opn, osh),
 ) = {
   import math: *
   (
+    cancel,
     (underline, underbrace, underbracket, underparen, undershell),
     (overline, overbrace, overbracket, overparen, overshell),
   )

@@ -29,6 +29,8 @@
   "al": "ality",
   // responsible → responsibility
   "le": "ility",
+  // criterion → criteria
+  "ion": "ia",
   // suffix → suffices
   "ix": "ices",
   // vertex → vertices
