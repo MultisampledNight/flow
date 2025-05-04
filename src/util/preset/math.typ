@@ -18,6 +18,34 @@
 /// Both negative and positive infinity.
 #let pmoo = $plus.minus oo$
 
+/// Highlight shorthands.
+#let (
+  (uln, ubr, ubt, upn, ush),
+  (oln, obr, obt, opn, osh),
+) = {
+  import math: *
+  (
+    (underline, underbrace, underbracket, underparen, undershell),
+    (overline, overbrace, overbracket, overparen, overshell),
+  )
+}
+
+/// Annotation shorthands.
+/// The second argument is automatically faded out, ideal for just passing a string.
+#let (
+  ubra,
+  ubta,
+  upna,
+  usha,
+  obra,
+  obta,
+  opna,
+  osha,
+) = (ubr, ubt, upn, ush, obr, obt, opn, osh).map(f => (body, desc) => f(
+  body,
+  fade(desc),
+))
+
 /// A polynomial, written out explicitly.
 #let ply(
   /// The coefficient variables base.
@@ -810,6 +838,7 @@
   space: ("ki", range(2), "nmp"),
 )
 #let (skn, skm) = (sk1n, sk1m)
+#let sk = $sum_(k = 1)$
 
 // Short definition of a matrix' entries.
 #let sdef(entry) = $[entry_(y, x)]$
