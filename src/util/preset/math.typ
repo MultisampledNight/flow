@@ -2,8 +2,8 @@
 
 #import "../small.typ": *
 
-/// Domain of a function.
-#let (dom,) = ("dom",).map(math.op)
+/// Domain and codomain of a function.
+#let (dom, cdom) = ("dom", "cdom").map(math.op)
 /// Variadic function.
 #let fn(var) = $f(var_1, ..., var_n)$
 
