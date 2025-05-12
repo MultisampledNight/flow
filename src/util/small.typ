@@ -8,16 +8,10 @@
 
 /// Full-width dimmed line.
 /// Useful for a conceptual or logical split.
-#let separator = box(
-  height: 0.1em,
-  align(
-    horizon + center,
-    line(
-      length: 100%,
-      stroke: gamut.sample(25%),
-    ),
-  ),
-)
+#let separator = box(height: 0.1em, align(horizon + center, line(
+  length: 100%,
+  stroke: gamut.sample(25%),
+)))
 
 /// Displays the given content highlighted and only when compiled in dev mode.
 #let todo(it) = if cfg.dev {
@@ -86,7 +80,7 @@
   let first = args.first()
   let rest = cartesian-product(..args.slice(1))
 
-  cartesian-product(first, rest) // delegating to the n=2 case
+  cartesian-product(first, rest) // delegating to the n - 1 case
     .map(((a, b)) => (a,) + b) // flatten down
 }
 
@@ -143,22 +137,26 @@
 #let zip-dicts(..args) = (
   args
     .pos()
-    .fold(
-      (:),
-      (acc, attrs) => (
-        acc
-          + attrs
-            .pairs()
-            .map(((key, value)) => (
-              (
-                key,
-                acc.at(key, default: ()) + (value,),
-              ),
-            ).to-dict())
-            .join()
-      ),
-    )
+    .fold((:), (acc, attrs) => (
+      acc
+        + attrs
+          .pairs()
+          .map(((key, value)) => (
+            (
+              key,
+              acc.at(key, default: ()) + (value,),
+            ),
+          ).to-dict())
+          .join()
+    ))
 )
 
 /// Shorthand for a nice repr to content.
 #let dbg(it) = raw(repr(it), block: true)
+
+/// Languages.
+#let (en, de, ua, ru, kr, jp, cn) = {
+  ("en", "de", "ua", "ru", "kr", "jp", "cn").map(lang => (..args) => [
+    (#lang: #text(lang: lang, ..args))
+  ])
+}

@@ -38,6 +38,8 @@
   "ex": "(ices|exes)",
   // accuracy → accurate
   "cy": "te",
+  // elision -> elide
+  "sion": "de",
   // basis → bases
   // basis → based
   "is": "e(s|d)",
