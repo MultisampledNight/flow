@@ -48,7 +48,8 @@
 }
 
 /// Extracts the approximate text
-/// contained in a `content`.
+/// contained in a `content`,
+/// returning it as a string.
 #let reconstruct-text(it) = {
   // idea: take the `text` fields from the children
   // and join them together
@@ -60,3 +61,4 @@
 
   zip-dicts(..it).at("text", default: ("",)).join()
 }
+

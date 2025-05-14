@@ -74,6 +74,8 @@
   show: hacks.only-main("->", sym.arrow)
   show: hacks.only-main("=>", sym.arrow.double)
   show: hacks.only-main("!=", sym.eq.not)
+  show: hacks.only-main("<=>", sym.arrow.l.r.double)
+  show: hacks.only-main("<>", sym.harpoons.rtlb)
 
   show ref: text.with(fill: reference.same-file)
   show link: it => {
