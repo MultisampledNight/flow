@@ -8,6 +8,21 @@
 #import "util/mod.typ": *
 #import "xlink.typ"
 
+#let _shortcuts(body) = {
+  (
+    "->": sym.arrow,
+    "=>": sym.arrow.double,
+    "!=": sym.eq.not,
+    "<=>": sym.arrow.l.r.double,
+    "<>": sym.harpoons.rtlb,
+  )
+    .pairs()
+    .fold(body, (body, (source, target)) => {
+      show: hacks.only-main(source, target)
+      body
+    })
+}
+
 #let _styling(body, ..args) = {
   if cfg.render != "all" {
     return {
@@ -26,34 +41,25 @@
   let args = args.named()
 
   show: body => if cfg.target == "paged" {
-    set page(
-      fill: bg,
-      numbering: "1 / 1",
-    )
+    set page(fill: bg, numbering: "1 / 1")
     body
   } else {
     body
   }
-  set text(
-    fill: fg,
-    lang: args.at("lang", default: "en"),
-  )
+  set text(fill: fg, lang: args.at("lang", default: "en"))
 
   set rect(stroke: fg)
   set line(stroke: fg)
-  set table(
-    stroke: (x, y) => {
-      if x > 0 { (left: gamut.sample(30%)) }
-      if y > 0 { (top: gamut.sample(30%)) }
-    },
-  )
+  set table(stroke: (x, y) => {
+    if x > 0 { (left: gamut.sample(30%)) }
+    if y > 0 { (top: gamut.sample(30%)) }
+  })
 
   set heading(numbering: "1.1")
 
-  let faded-line = move(
-    dy: -0.25em,
-    line(length: 100%, stroke: gamut.sample(15%)),
-  )
+  let faded-line = move(dy: -0.25em, line(length: 100%, stroke: gamut.sample(
+    15%,
+  )))
 
   show: versioned((
     "0.12": body => {
@@ -71,11 +77,7 @@
   set math.mat(delim: "[")
   set math.vec(delim: "[")
 
-  show: hacks.only-main("->", sym.arrow)
-  show: hacks.only-main("=>", sym.arrow.double)
-  show: hacks.only-main("!=", sym.eq.not)
-  show: hacks.only-main("<=>", sym.arrow.l.r.double)
-  show: hacks.only-main("<>", sym.harpoons.rtlb)
+  show: _shortcuts
 
   show ref: text.with(fill: reference.same-file)
   show link: it => {
@@ -105,13 +107,7 @@
   show raw.where(block: true): it => block(
     inset: 0.75em,
     width: 100%,
-    stroke: 0.025em
-      + gradient
-        .linear(
-          halcyon.bg,
-          halcyon.fg,
-        )
-        .sample(40%),
+    stroke: 0.025em + gradient.linear(halcyon.bg, halcyon.fg).sample(40%),
     it,
     ..cb,
   )
@@ -123,19 +119,13 @@
 
 #let _shared(args) = {
   let args = info.preprocess(args.named())
-  let title = args.at(
-    "title",
-    default: {
-      if cfg.filename != none {
-        cfg.filename.trim(
-          ".typ",
-          repeat: false,
-        )
-      } else {
-        "Untitled"
-      }
-    },
-  )
+  let title = args.at("title", default: {
+    if cfg.filename != none {
+      cfg.filename.trim(".typ", repeat: false)
+    } else {
+      "Untitled"
+    }
+  })
 
   (args: args, title: title)
 }
@@ -151,10 +141,7 @@
   show: xlink.process
   show: checkbox.process
 
-  set document(
-    title: title,
-    author: args.at("author", default: ()),
-  )
+  set document(title: title, author: args.at("author", default: ()))
 
   info.queryize(args)
 
@@ -169,10 +156,7 @@
 /// Does not display any content but uses nice, legible fonts.
 #let modern(body, ..args) = {
   set text(font: "IBM Plex Sans", size: 14pt)
-  show raw: set text(
-    font: "JetBrainsMonoNL NF",
-    weight: "light",
-  )
+  show raw: set text(font: "JetBrainsMonoNL NF", weight: "light")
 
   set par(linebreaks: "optimized")
   show: generic.with(..args)
@@ -221,10 +205,7 @@
   show: generic.with(..args)
 
   set par(justify: true)
-  set outline(
-    title: [Table of contents],
-    fill: repeat[.],
-  )
+  set outline(title: [Table of contents], fill: repeat[.])
 
   if cfg.render == "all" {
     let (args, title) = _shared(args)
@@ -248,15 +229,12 @@
       ).join[: ])
       .join[\ ]
 
-    align(
-      center,
-      {
-        title
-        [\ ]
-        v(0.25em)
-        extra
-      },
-    )
+    align(center, {
+      title
+      [\ ]
+      v(0.25em)
+      extra
+    })
 
     outline()
   }
