@@ -5,12 +5,18 @@
 
 #import "../palette.typ": *
 
-// Only uses the x component of the given coordinate.
+/// Only uses the X component of the given coordinate.
 #let hori(coord) = (coord, "|-", ())
-// Only uses the y component of the given coordinate.
+/// Only uses the Y component of the given coordinate.
 #let vert(coord) = (coord, "-|", ())
 
+/// Locks the X component of `to` absolutely.
+#let lx(x, to: ()) = ((x, 0), "|-", to)
+/// Locks the Y component of `to` absolutely.
+#let ly(y, to: ()) = ((0, y), "-|", to)
+/// Adds this to the X component of `to` relatively.
 #let dx(x, to: ()) = (rel: (x, 0), to: to)
+/// Adds this to the Y component of `to` relatively.
 #let dy(y, to: ()) = (rel: (0, y), to: to)
 
 /// Returns a dictionary
@@ -45,9 +51,15 @@
   let mr = (br, 50%, tr)
 
   (
-    tl: tl, tm: tm, tr: tr,
-    ml: ml, mm: mm, mr: mr,
-    bl: bl, bm: bm, br: br,
+    tl: tl,
+    tm: tm,
+    tr: tr,
+    ml: ml,
+    mm: mm,
+    mr: mr,
+    bl: bl,
+    bm: bm,
+    br: br,
   )
 }
 
@@ -100,15 +112,15 @@
   type(part) == dictionary and "queue" in part and "cfg" in part
 )
 
-// Create a new branch. After all coordinates in this branch have been processed,
-// return to the node before it.
-// At the end of a branch, an arrow mark is always drawn.
-#let br(arrow: true, ..args) = _modifier(
-  args.pos(),
-  (branch: true, arrow: arrow),
-)
+/// Create a new branch. After all coordinates in this branch have been processed,
+/// return to the node before it.
+/// At the end of a branch, an arrow mark is always drawn.
+#let br(arrow: true, ..args) = _modifier(args.pos(), (
+  branch: true,
+  arrow: arrow,
+))
 
-// Branches out to each given argument.
+/// Branches out to each given argument.
 #let all(..args) = {
   let parts = args.pos()
   let br = br.with(..args.named())
@@ -118,12 +130,19 @@
   } else if parts.len() == 1 {
     br(parts.at(0), ..args.named())
   } else {
-    br(
-      all(..parts.slice(0, -1), ..args.named()),
-      parts.last(),
-      ..args.named(),
-    )
+    br(all(..parts.slice(0, -1), ..args.named()), parts.last(), ..args.named())
   }
+}
+
+/// Much like `br`, but putting arrow before _each_ element
+/// instead of just the last.
+#let seq(arrow: true, ..args) = {
+  // the diagram engine doesn't care if the arrow is requested by a branch or by some other frame
+  // so we can just invent our own frame type that's just an cfg-ing an arrow
+  // and put each element in one so an arrow is drawn for each
+  // /shrug
+  let queue = args.pos().map(ele => _modifier((ele,), (arrow: arrow)))
+  _modifier(queue, (:))
 }
 
 // Label the edges created in this call.
@@ -136,14 +155,11 @@
   tag: none,
   offset: (0, 0),
   anchor: none,
-) = _modifier(
-  args.pos(),
-  (
-    tag: tag,
-    offset: offset,
-    content-args: args.named(),
-  ),
-)
+) = _modifier(args.pos(), (
+  tag: tag,
+  offset: offset,
+  content-args: args.named(),
+))
 
 // Style all edges inside this call.
 // Use named arguments for doing so, just like any other cetz element.
@@ -304,12 +320,7 @@
     }
 
     let current = part
-    line(
-      last,
-      current,
-      ..styles-depth.at(-1, default: (:)),
-      ..maybe-arrowhead,
-    )
+    line(last, current, ..styles-depth.at(-1, default: (:)), ..maybe-arrowhead)
 
     last = current
   }
@@ -319,12 +330,7 @@
   for (pos, display, content-args) in tags {
     content(
       pos,
-      box(
-        fill: bg,
-        inset: 0.25em,
-        radius: 0.1em,
-        display,
-      ),
+      box(fill: bg, inset: 0.25em, radius: 0.1em, display),
       ..content-args,
     )
   }
