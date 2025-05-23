@@ -195,8 +195,9 @@
   size: (1, 2),
   /// Horizontal and vertical space between characters.
   space: (0.5, 0.75),
+  figure: false,
   ..args,
-) = canvas({
+) = canvas(figure: figure, {
   let (width, height) = size
   let (space-h, space-v) = space
   // Logical position in the text at the moment.

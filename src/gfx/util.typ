@@ -1,8 +1,12 @@
 // Utilities for defining icons and other graphics.
 
-#import "maybe-stub.typ": cetz
 #import "../palette.typ": *
+#import "../util/small.typ": *
+#import "maybe-stub.typ": cetz
 #import "draw.typ"
+
+// just an alias so we can use `figure` as arg below
+#let _figure = figure
 
 #let round-stroke(paint: fg) = (
   cap: "round",
@@ -11,17 +15,20 @@
   thickness: 0.1em,
 )
 
-#let canvas(body, length: 1em, ..args) = cetz.canvas(
-  ..args,
-  length: length,
-  {
+#let canvas(body, length: 1em, figure: true, caption: none, ..args) = {
+  // most canvasses (canvae? what's the plural) are for showing data or to illustrate something in-body
+  // in which case it makes sense to center + index them
+  // if the user doesn't desire that, they can set `figure: false`
+  show: maybe-do(figure, _figure.with(caption: caption))
+
+  cetz.canvas(..args, length: length, {
     import draw: *
 
     set-style(stroke: round-stroke())
 
     body
-  },
-)
+  })
+}
 
 #let icon(
   body,
@@ -83,10 +90,7 @@
       }
 
       // intended to be selectively disabled via passing `none` explicitly
-      set-style(
-        stroke: (paint: icon-accent),
-        fill: icon-accent,
-      )
+      set-style(stroke: (paint: icon-accent), fill: icon-accent)
 
       // so the user can just draw from 0 to 1 while the padding is outside
       set-origin((0.2, 0.2))
@@ -97,8 +101,10 @@
 
   if contentize {
     box(
-      inset: (y: -0.175em),
-      canvas(..args, cmds),
+      inset: (
+        y: -0.175em,
+      ),
+      canvas(cmds, figure: false, ..args),
     )
   } else {
     cmds
@@ -149,10 +155,7 @@
       }
 
       cfg.accent = cfg.at("accent", default: fg)
-      let display = cfg.at(
-        "display",
-        default: text(fill: cfg.accent, name),
-      )
+      let display = cfg.at("display", default: text(fill: cfg.accent, name))
 
       content(
         cfg.pos,
@@ -168,14 +171,11 @@
 
     for (from, to) in edges {
       let source-cfg = nodes.at(from)
-      trans(
-        from,
-        styled(
-          stroke: round-stroke(paint: source-cfg.accent),
-          fill: source-cfg.accent,
-          to,
-        ),
-      )
+      trans(from, styled(
+        stroke: round-stroke(paint: source-cfg.accent),
+        fill: source-cfg.accent,
+        to,
+      ))
     }
 
     args.pos().at(0, default: none)

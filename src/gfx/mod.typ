@@ -66,6 +66,7 @@
   let half-backdrop = box(
     canvas(
       length: 1em,
+      figure: false,
       {
         import draw: *
         parallelopiped(

@@ -125,6 +125,16 @@
   table.at(known.at(idx - 1))
 }
 
+/// Return the `action` function if `condition`,
+/// else return `default`.
+/// Shorthand `if` statement for use in show rules,
+/// since `default` defaults to the identity function.
+#let maybe-do(condition, action, default: x => x) = if condition {
+  action
+} else {
+  default
+}
+
 /// Zips all given dictionaries together
 /// such that returned dict
 /// holds all keys present in the given dicts,
