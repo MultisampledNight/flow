@@ -912,8 +912,8 @@
   palette: duality.values().slice(2),
   /// Positional arguments are the function(s) to plot.
   /// Can be an array or just a function.
-  /// They must be functions to call,
-  /// consider using lambdas (e.g. `x => x`).
+  /// They must be functions to call (consider using lambdas (e.g. `x => x`))
+  /// or an array of point tuples.
   ///
   /// Named arguments are forwarded to `gfx.canvas`.
   ..args,

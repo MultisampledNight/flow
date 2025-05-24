@@ -769,7 +769,33 @@ Use `plot` from the `math` preset!
   x => 3 * calc.sin(x),
   x => 0.5 * calc.tan(0.5 * x + 1),
   size: (12, 8),
-  caption: [Few wonderful functions.],
+  caption: [A few curves.],
 )
+```
+
+Functions can also output 2-dimensional vectors directly!
+
+```example
+#import preset.math: *
+
+#plot(
+  x: (-4, 4),
+  t => (
+    calc.cos(2 * t) * calc.cos(t),
+    calc.cos(2 * t) + calc.sin(t),
+  ),
+)
+```
+
+Actually, the plot doesn't need to get functions as input,
+arrays of points work, too!
+
+```example
+#import preset.math: *
+
+#plot((
+  (0, -2), (2, 1), (1, 2), (0, 1),
+  (-1, 2), (-2, 1), (0, -2)
+))
 ```
 
