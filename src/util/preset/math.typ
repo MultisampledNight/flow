@@ -895,12 +895,18 @@
 #let plot(
   /// The domain interval.
   x: (-5, 5),
-  /// The codomain interval.
+  /// The codomain interval. Only relevant if `fixed` is `false`.
   y: (-5, 5),
   /// How much space the plot area occupies in the document.
   /// This is an imaginary unit, set `length` (as forwarded to `canvas`)
   /// to set what `1` refers to.
   size: (12, 8),
+  /// If `true` (the default), set the displayed codomain automatically
+  /// such that a 1:1 ratio for x:y is maintained.
+  /// If `false`, you can instead set `y` to set the range
+  /// you want for the Y axis separately.
+  /// The plot will be squished appropriately.
+  fixed: true,
   /// Over what color palette to display the functions.
   /// Note that it'll be lerped over a gradient.
   palette: duality.values().slice(2),
@@ -944,6 +950,7 @@
       y-grid: "both",
       y-min: y-min,
       y-max: y-max,
+      y-equal: if fixed { "x" },
       y-tick-step: 5,
       y-minor-tick-step: 1,
 
