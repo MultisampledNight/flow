@@ -25,19 +25,11 @@
     gutter: 1em,
     label[Typst code:] + raw(lang: "typ", block: true, code),
     label[Rendered result:]
-      + block(
-        stroke: fg,
-        radius: 0.5em,
-        inset: 0.5em,
-        width: 100%,
-        normal(
-          eval(
-            mode: "markup",
-            scope: dictionary(flow),
-            code,
-          ),
-        ),
-      ),
+      + block(stroke: fg, radius: 0.5em, inset: 0.5em, width: 100%, normal(eval(
+        mode: "markup",
+        scope: dictionary(flow),
+        code,
+      ))),
   )
 }
 
@@ -86,16 +78,12 @@ I can guarantee you it is worthy of your time.
 
 + Use the the following boilerplate in your note:
 
-  #raw(
-    block: true,
-    lang: "typ",
-    {
-      "#import \"@preview/flow:" + version + "\": *\n"
-      "#show: note.with(\n"
-      "  title: \"Super cool note title!\",\n"
-      ")"
-    },
-  )
+  #raw(block: true, lang: "typ", {
+    "#import \"@preview/flow:" + version + "\": *\n"
+    "#show: note.with(\n"
+    "  title: \"Super cool note title!\",\n"
+    ")"
+  })
 
 + Start typing the actual note like any other typst document! uwu
 
@@ -120,7 +108,9 @@ All of these are named arguments.
 In effect, if you choose to use any of them,
 most likely you want to transform your `#show: note`
 into a
-#link("https://typst.app/docs/reference/foundations/function/#definitions-with")[`function.with`]
+#link(
+  "https://typst.app/docs/reference/foundations/function/#definitions-with",
+)[`function.with`]
 call, for example:
 
 ```typst
@@ -548,7 +538,7 @@ visiting a very #invert[spooky] place?
 For when you need to add #invert[extra importance] to some text.
 
 Note that #invert[it should always fit on one line though,
-otherwise it'll go out of page like this one.]
+  otherwise it'll go out of page like this one.]
 
 #v(2.5em, weak: true)
 
@@ -764,3 +754,22 @@ Since those are mostly very short,
 listing them here would be quite inefficient:
 Consider checking out e.g. `src/util/preset/linalg.typ`
 in flow's source code instead.
+
+=== Math: Plot
+
+In a hurry and just want to show the behavior
+of a function in a specific case?
+Use `plot` from the `math` preset!
+
+```example
+#import preset.math: *
+
+#plot(
+  x => -x,
+  x => 3 * calc.sin(x),
+  x => 0.5 * calc.tan(0.5 * x + 1),
+  size: (12, 8),
+  caption: [Few wonderful functions.],
+)
+```
+

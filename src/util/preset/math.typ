@@ -1,6 +1,8 @@
 //! Utils for mathematics.
 
+#import "@preview/cetz-plot:0.1.1"
 #import "../small.typ": *
+#import "../../gfx/mod.typ" as gfx
 
 /// Domain and codomain of a function.
 #let (dom, cdom) = ("dom", "cdom").map(math.op)
@@ -128,10 +130,7 @@
 
 /// Alternate calligraphic handstyle.
 /// Not supported by all math fonts.
-#let scr(it) = text(
-  features: ("ss01",),
-  box($cal(it)$),
-)
+#let scr(it) = text(features: ("ss01",), box($cal(it)$))
 #let dmat(..args) = $display(#math.mat(..args))$
 #let damat(..args) = dmat(..args, augment: -1)
 
@@ -158,10 +157,7 @@
     ($entry_(rows, 1)$, $dots.c$, $entry_(rows, cols)$),
   )
 
-  return math.mat(
-    ..data,
-    ..args,
-  )
+  return math.mat(..data, ..args)
 }
 
 #let matset = $KK^(m times n)$
@@ -179,16 +175,14 @@
 #let charset = upper(charset) + charset
 /// Maps each common character in equations to the given op.
 #let shorthand(op, space: (charset,)) = {
-  cartesian-product(
-    ..space.map(part => {
-      // allow the user to just enter a string and each cluster is used as a char
-      if type(part) == str {
-        part.clusters().map(math.italic)
-      } else {
-        part
-      }
-    }),
-  ).map(args => op(..args))
+  cartesian-product(..space.map(part => {
+    // allow the user to just enter a string and each cluster is used as a char
+    if type(part) == str {
+      part.clusters().map(math.italic)
+    } else {
+      part
+    }
+  })).map(args => op(..args))
 }
 
 // Absolute value.
@@ -543,10 +537,7 @@
   zH,
 ) = shorthand(ctrp)
 
-#let vec-shorthand(op, ..args) = shorthand(
-  ch => op(math.arrow(ch)),
-  ..args,
-)
+#let vec-shorthand(op, ..args) = shorthand(ch => op(math.arrow(ch)), ..args)
 // Vector absolute value.
 #let (
   Ava,
@@ -890,4 +881,88 @@
 #let iinf = $integral_(-infinity)^infinity$
 
 // use $dif$ for the step
+
+// General analysis: Anybody said functions?
+
+/// Plot 2D functions.
+///
+/// A function in this sense
+/// is a transformation
+/// of values from its domain
+/// to values from its codomain.
+/// Here, both the domain and codomain
+/// must be subsets of the real numbers.
+#let plot(
+  /// The domain interval.
+  x: (-5, 5),
+  /// The codomain interval.
+  y: (-5, 5),
+  /// How much space the plot area occupies in the document.
+  /// This is an imaginary unit, set `length` (as forwarded to `canvas`)
+  /// to set what `1` refers to.
+  size: (12, 8),
+  /// Over what color palette to display the functions.
+  /// Note that it'll be lerped over a gradient.
+  palette: duality.values().slice(2),
+  /// Positional arguments are the function(s) to plot.
+  /// Can be an array or just a function.
+  /// They must be functions to call,
+  /// consider using lambdas (e.g. `x => x`).
+  ///
+  /// Named arguments are forwarded to `gfx.canvas`.
+  ..args,
+) = {
+  import gfx.draw: *
+  import cetz-plot.plot: add, plot
+
+  let fns = args.pos()
+  if fns.len() == 0 {
+    // nothing to do, nothing to plot /shrug
+    return
+  }
+
+  let ((x-min, x-max), (y-min, y-max)) = (x, y)
+
+  gfx.canvas(..args.named(), {
+    set-style(axes: (
+      minor-grid: (
+        stroke: gamut.sample(7.5%),
+      ),
+      grid: (
+        stroke: gamut.sample(25.0%),
+      ),
+      tick: (stroke: fg),
+    ))
+
+    plot(
+      x-min: x-min,
+      x-max: x-max,
+      x-grid: "both",
+      x-tick-step: 5,
+      x-minor-tick-step: 1,
+
+      y-grid: "both",
+      y-min: y-min,
+      y-max: y-max,
+      y-tick-step: 5,
+      y-minor-tick-step: 1,
+
+      plot-style: i => {
+        let gamut = gradient.linear(..palette)
+        let accent = gamut.sample(100% * (i / fns.len()))
+        (
+          stroke: accent,
+          fill: accent.transparentize(70%),
+        )
+      },
+
+      size: size,
+      {
+        for fn in fns {
+          add(domain: x, fn)
+        }
+      },
+    )
+  })
+}
 
