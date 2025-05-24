@@ -768,7 +768,6 @@ Use `plot` from the `math` preset!
   x => -x,
   x => 3 * calc.sin(x),
   x => 0.5 * calc.tan(0.5 * x + 1),
-  size: (12, 8),
   caption: [A few curves.],
 )
 ```
@@ -793,9 +792,14 @@ arrays of points work, too!
 ```example
 #import preset.math: *
 
-#plot((
-  (0, -2), (2, 1), (1, 2), (0, 1),
-  (-1, 2), (-2, 1), (0, -2)
-))
+#plot(
+  size: (6, 6),
+  length: 2em,
+  x: (-2.5, 2.5),
+  (
+    (0, -2), (2, 1), (1, 2), (0, 1),
+    (-1, 2), (-2, 1), (0, -2)
+  ),
+)
 ```
 
