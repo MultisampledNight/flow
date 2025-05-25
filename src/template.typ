@@ -50,7 +50,7 @@
 
   set rect(stroke: fg)
   set line(stroke: fg)
-  set table(stroke: (x, y) => {
+  set table(inset: 0.5em, stroke: (x, y) => {
     if x > 0 { (left: gamut.sample(30%)) }
     if y > 0 { (top: gamut.sample(30%)) }
   })
