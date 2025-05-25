@@ -170,3 +170,17 @@
     (#lang: #text(lang: lang, ..args))
   ])
 }
+
+// is this overengineered? yeah
+// does it work? also yeah
+/// Table and grid cells.
+/// Typing out `table.cell` and `grid.cell` is just getting too tedious.
+#let (tcl, gcl) = (table.cell, grid.cell)
+#let (tclr, tclc, gclr, gclc) = cartesian-product((tcl, gcl), (
+  fn => (y, ..args) => fn(rowspan: y, ..args),
+  fn => (x, ..args) => fn(colspan: x, ..args),
+)).map(((fn, variant)) => variant(fn))
+
+/// Rotate any content by 90 degrees clockwise.
+#let flop = rotate.with(90deg, reflow: true)
+
