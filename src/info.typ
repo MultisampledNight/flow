@@ -83,21 +83,19 @@
 // the key denotes the metadata field name and
 // the value its, well, actual data.
 #let render(it) = {
+  // Serialize to opaque but displayable content.
+  let display(it) = [#it]
+
   let field(name, data) = {
     if "cw" in lower(name) {
-      par(
-        leading: 1.5em,
-        data.map(gfx.invert).join(h(0.5em)),
-      )
+      par(leading: 1.5em, data.map(gfx.invert).join(h(0.5em)))
     } else if type(data) == array {
-      data.join[, ]
+      // need to serialize each element, otherwise e.g. integers couldn't be joined
+      data.map(display).join[, ]
     } else if type(data) == dictionary {
-      grid.cell(
-        render(data),
-        stroke: (left: gamut.sample(20%)),
-      )
+      grid.cell(render(data), stroke: (left: gamut.sample(20%)))
     } else {
-      [#data]
+      display(data)
     }
   }
 
