@@ -77,6 +77,7 @@
   "`": 0b00010001,
   "´": 0b00001001,
   ".": 0b10000000,
+  "!": 0b10010000,
   "@": 0b00111111,
   "°": 0b00011011,
   // greek characters
@@ -84,8 +85,8 @@
 )
 
 /// Maps from character to best-effort representation
-/// if the character is not already defined in `lookup`.
-#let fallback = (
+/// if the character is not already defined in `lookup-map`.
+#let fallback-map = (
   "B": "8",
   "D": "0",
   "G": "6",
@@ -97,17 +98,19 @@
   "W": "LU",
   "X": "H",
   "Z": "2",
-  "e": "6",
+  "e": "E",
   "f": "F",
   "g": "9",
-  "i": "I",
+  "m": "nn",
+  "i": "1",
   "j": "J",
   "p": "P",
   "s": "5",
   "v": "u",
+  "w": "uu",
   "x": "H",
   "y": "Y",
-  "z": "Z",
+  "z": "2",
   "(": "C",
   ")": "]",
   "[": "C",
@@ -116,8 +119,9 @@
   "&": "6",
   ":": "=",
   "%": "°/o",
-  "$": "S",
+  "$": "5",
   "+": "-t",
+  "*": "`´",
   "α": "o=",
 )
 
@@ -131,7 +135,7 @@
 }
 
 /// Display one particular bit combination.
-/// Use `lookup` to, well, look up which character
+/// Use `lookup-map` to, well, look up which character
 /// belongs to which bit combination this function expects.
 #let direct(
   bits,
@@ -201,6 +205,9 @@
   size: (1, 2),
   /// Horizontal and vertical space between characters.
   space: (0.5, 0.75),
+  /// Resort to characters that are possibly misinterpretable.
+  /// Off by default, use with care.
+  fallback: false,
   figure: false,
   ..args,
 ) = canvas(figure: figure, {
@@ -209,7 +216,15 @@
   // Logical position in the text at the moment.
   let (x, y) = (0, 0)
 
-  for ch in body.clusters() {
+  let chs = body.clusters()
+
+  // need to do this before the loop
+  // as fallbacks may expand to multiple characters
+  if fallback {
+    chs = chs.map(ch => fallback-map.at(ch, default: ch)).join().clusters()
+  }
+
+  for ch in chs {
     if ch == "\n" {
       x = 0
       y -= 1

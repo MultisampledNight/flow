@@ -726,21 +726,40 @@ a representation of them
 is available in `gfx.segment`.
 For example,
 let's show all characters
-representable on a 7-segment display:
+unambiguously representable
+on an 8-segment display:
 
 ```example
-#import gfx.segment: *
+#import gfx.segment as sg
 
-#let body = {
-  lookup
+#grid(
+  columns: 10,
+  inset: (x: 0.5em, y: 0.75em),
+  ..sg
+    .lookup
     .keys()
-    .chunks(10)
-    .join(("\n",))
-    .join()
-}
-
-#run(body)
+    .map(ch => grid(gutter: 0.5em, sg.run(ch), raw(ch))),
+)
 ```
+
+But one can also just throw some text into `gfx.segment.run`
+and get a 8 segment display out:
+
+#pagebreak(weak: true)
+
+````example
+#gfx.segment.run(
+  fallback: true,
+  ```
+  Almost
+  anything
+  can be
+  written!
+  ( 1 + 2 )
+      * 3 = 9
+  ```.text,
+)
+````
 
 == Presets
 
