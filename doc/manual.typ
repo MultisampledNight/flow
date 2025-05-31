@@ -747,13 +747,16 @@ representable on a 7-segment display:
 There's a few utilities defined for typing
 e.g. linear algebra or mathematical operations.
 You can import them into your document
-via e.g. `#import preset.linalg: *`
+via e.g. `#import preset.math: *`
 (if you've glob-imported flow).
 
 Since those are mostly very short,
 listing them here would be quite inefficient:
-Consider checking out e.g. `src/util/preset/linalg.typ`
+Look into `src/util/preset`
 in flow's source code instead.
+If you are annoyed by boilerplate
+in a topic you type a lot in,
+consider checking the corresponding preset module!
 
 === Math: Plot
 
@@ -778,7 +781,11 @@ Functions can also output 2-dimensional vectors directly!
 #import preset.math: *
 
 #plot(
-  x: (-4, 4),
+  x: (-2, 2),
+  t => (
+    calc.cos(t),
+    calc.sin(t),
+  ),
   t => (
     calc.cos(2 * t) * calc.cos(t),
     calc.cos(2 * t) + calc.sin(t),
@@ -796,6 +803,7 @@ arrays of points work, too!
   size: (6, 6),
   length: 2em,
   x: (-2.5, 2.5),
+  ((-1, 1), (0, -0.5), (1, 1)),
   (
     (0, -2), (2, 1), (1, 2), (0, 1),
     (-1, 2), (-2, 1), (0, -2)
