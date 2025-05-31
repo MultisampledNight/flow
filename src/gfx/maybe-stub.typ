@@ -14,7 +14,7 @@
       cetz
     },
     "0.13": {
-      import "@preview/cetz:0.3.3"
+      import "@preview/cetz:0.3.4"
       cetz
     },
   ))
