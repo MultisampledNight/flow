@@ -738,7 +738,11 @@ on an 8-segment display:
   ..sg
     .lookup
     .keys()
-    .map(ch => grid(gutter: 0.5em, sg.run(ch), raw(ch))),
+    .map(ch => grid(
+      gutter: 0.5em,
+      sg.run(ch),
+      raw(ch),
+    )),
 )
 ```
 
