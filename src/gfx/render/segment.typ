@@ -138,8 +138,16 @@
   bottom-left: (0, 0),
   top-right: (1, 2),
   // How much space there is to the next character.
-  off: round-stroke() + (paint: gamut.sample(10%)),
-  on: round-stroke() + (paint: fg, thickness: 0.15em),
+  off: gamut.sample(7.5%),
+  dot: (
+    radius: 0.15,
+    offset: (0.1, -0.1),
+  ),
+  stroke: (
+    thickness: 0.175em,
+    cap: "square",
+  ),
+  on: fg,
 ) = group({
   let (bl, tr) = (bottom-left, top-right)
 
@@ -151,10 +159,11 @@
   let cl = (bl, "|-", c) // Center left
   let cr = (c, "-|", tr) // Center right
 
-  let l(start, end, cut: 20%) = line(
-    (start, cut, end),
-    (start, 100% - cut, end),
-  )
+  let l(start, end, cut: 20%) = line((start, cut, end), (
+    start,
+    100% - cut,
+    end,
+  ))
 
   let leds = (
     () => l(tl, tr),
@@ -164,7 +173,7 @@
     () => l(tr, cr),
     () => l(cl, bl),
     () => l(cr, br),
-    () => circle(br, radius: 0.025),
+    () => circle((rel: dot.offset, to: br), radius: dot.radius, stroke: none),
   )
   leds
     .enumerate()
@@ -175,10 +184,7 @@
         off
       }
 
-      set-style(
-        fill: accent.paint,
-        stroke: accent,
-      )
+      set-style(fill: accent, stroke: (paint: accent) + stroke)
       led()
     })
     .join()

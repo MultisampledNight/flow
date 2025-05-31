@@ -781,10 +781,12 @@ Functions can also output 2-dimensional vectors directly!
 #import preset.math: *
 
 #plot(
-  x: (-2, 2),
+  size: (14, 14),
+  x: (-3, 3),
+  domain: (0, 7),
   t => (
-    calc.cos(t),
-    calc.sin(t),
+    2.25 * calc.cos(t),
+    2.25 * calc.sin(t),
   ),
   t => (
     calc.cos(2 * t) * calc.cos(t),

@@ -893,20 +893,26 @@
 /// Here, both the domain and codomain
 /// must be subsets of the real numbers.
 #let plot(
-  /// The domain interval.
+  /// How much of the X axis is displayed.
+  /// If `domain` is `"x"` (the default),
+  /// this is also the domain sampled over.
   x: (-5, 5),
-  /// The codomain interval. Only relevant if `fixed` is `false`.
+  /// How much of the Y axis is displayed. Only relevant if `fixed` is `false`.
   y: (-5, 5),
   /// How much space the plot area occupies in the document.
   /// This is an imaginary unit, set `length` (as forwarded to `canvas`)
   /// to set what `1` refers to.
   size: (12, 8),
-  /// If `true` (the default), set the displayed codomain automatically
+  /// If `true` (the default), set `y` automatically
   /// such that a 1:1 ratio for x:y is maintained.
   /// If `false`, you can instead set `y` to set the range
   /// you want for the Y axis separately.
   /// The plot will be squished appropriately.
   fixed: true,
+  /// Which values the functions are sampled over.
+  /// Can be `"x"` or `"y"`, in which case the axis size is taken as domain,
+  /// or a 2-element array, specifying an inclusive interval.
+  domain: "x",
   /// Over what color palette to display the functions.
   /// Note that it'll be lerped over a gradient.
   palette: duality.values().slice(2),
@@ -927,6 +933,9 @@
     return
   }
 
+  if type(domain) == str {
+    domain = (x: x, y: y).at(domain)
+  }
   let ((x-min, x-max), (y-min, y-max)) = (x, y)
 
   gfx.canvas(..args.named(), {
@@ -966,7 +975,7 @@
       size: size,
       {
         for fn in fns {
-          add(domain: x, fn)
+          add(domain: domain, fn)
         }
       },
     )
