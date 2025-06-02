@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i sh -p gh
+#!nix-shell -i zsh -p zsh gh
 set -eux
 source `dirname $0`/common
 
