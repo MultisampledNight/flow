@@ -942,6 +942,10 @@
   /// Can be an array or just a function.
   /// They must be functions to call (consider using lambdas (e.g. `x => x`))
   /// or an array of point tuples.
+  /// Optionally, you can wrap the function to render
+  /// in a dictionary
+  /// to throw arguments to `plot.add`.
+  /// Name the to-be-rendered function under the key `fn` then.
   ///
   /// Named arguments are forwarded to `gfx.canvas`.
   ..args,
@@ -996,8 +1000,16 @@
 
       size: size,
       {
-        for fn in fns {
-          add(domain: domain, samples: samples, fn)
+        for cfg in fns {
+          let (args, fn) = if type(cfg) == dictionary {
+            let fn = cfg.remove("fn")
+            (cfg, fn)
+          } else if type(cfg) in (function, array) {
+            ((:), cfg)
+          } else {
+            panic("unknown function configuration type `" + type(cfg) + "`")
+          }
+          add(domain: domain, samples: samples, fn, ..args)
         }
       },
     )
