@@ -18,16 +18,20 @@
 /// Both negative and positive infinity.
 #let pmoo = $plus.minus oo$
 
-/// Limit of x towards infinity.
-#let limoo = $lim_(x -> oo)$
-/// Limit of x towards negative infinity.
-#let lim-oo = $lim_(x -> -oo)$
-/// Limit of x towards positive/negative infinity.
-#let limpmoo = $lim_(x -> pmoo)$
+/// Limit but as a function. Verbose, if you will.
+#let limv(variable, target) = $lim_(variable -> target)$
 /// Limit of x towards the passed value.
-#let limx(target) = $lim_(x -> target)$
+#let limx = limv.with($x$)
 /// Limit of k towards the passed value.
-#let limk(target) = $lim_(k -> target)$
+#let limn = limv.with($n$)
+/// Limit of x towards infinity.
+#let limoo = $limx(oo)$
+/// Limit of x towards negative infinity.
+#let lim-oo = $limx(-oo)$
+/// Limit of x towards positive/negative infinity.
+#let limpmoo = $limx(pmoo)$
+/// Limit of x towards 0.
+#let lim0 = $limx(0)$
 
 /// Highlight shorthands.
 #let (
