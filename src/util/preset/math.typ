@@ -4,8 +4,6 @@
 #import "../small.typ": *
 #import "../../gfx/mod.typ" as gfx
 
-/// Domain and codomain of a function.
-#let (dom, cdom) = ("dom", "cdom").map(math.op)
 /// Variadic function.
 #let fn(var) = $f(var_1, ..., var_n)$
 
@@ -19,6 +17,17 @@
 #let pm = sym.plus.minus
 /// Both negative and positive infinity.
 #let pmoo = $plus.minus oo$
+
+/// Limit of x towards infinity.
+#let limoo = $lim_(x -> oo)$
+/// Limit of x towards negative infinity.
+#let lim-oo = $lim_(x -> -oo)$
+/// Limit of x towards positive/negative infinity.
+#let limpmoo = $lim_(x -> pmoo)$
+/// Limit of x towards the passed value.
+#let limx(target) = $lim_(x -> target)$
+/// Limit of k towards the passed value.
+#let limk(target) = $lim_(k -> target)$
 
 /// Highlight shorthands.
 #let (
@@ -114,6 +123,9 @@
   eig,
   diag,
   rot,
+  dom,
+  cdom,
+  sign,
 ) = (
   "span",
   "rank",
@@ -124,6 +136,9 @@
   "eig",
   "diag",
   "rot",
+  "dom",
+  "cdom",
+  "sign",
 ).map(math.op)
 
 // Shorthands
@@ -909,6 +924,9 @@
   /// you want for the Y axis separately.
   /// The plot will be squished appropriately.
   fixed: true,
+  /// How many values to sample and interpolate in-between.
+  /// Higher values trade longer rendering for higher accuracy.
+  samples: 50,
   /// Which values the functions are sampled over.
   /// Can be `"x"` or `"y"`, in which case the axis size is taken as domain,
   /// or a 2-element array, specifying an inclusive interval.
@@ -975,7 +993,7 @@
       size: size,
       {
         for fn in fns {
-          add(domain: domain, fn)
+          add(domain: domain, samples: samples, fn)
         }
       },
     )
