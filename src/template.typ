@@ -15,6 +15,9 @@
     "!=": sym.eq.not,
     "<=>": sym.arrow.l.r.double,
     "<>": sym.harpoons.rtlb,
+    // can be just typed with .<shift on>.<shift off>. on Bone (https://neo-layout.org/Layouts/bone/)
+    ".•.": $therefore$,
+    "•.•": $because$,
   )
     .pairs()
     .fold(body, (body, (source, target)) => {
