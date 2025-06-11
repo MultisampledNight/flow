@@ -31,14 +31,10 @@
   )
 }
 
-#let question = callout.with(marker: "?")
-#let remark = callout.with(marker: "i")
-#let hint = callout.with(marker: "o")
-#let caution = callout.with(marker: "!")
+#let (
+  (question, remark, hint, caution),
+  (define, axiom, theorem, lemma, propose, corollary),
+) = ("?io!", "datlpc").map(chs => chs
+  .clusters()
+  .map(marker => callout.with(marker: marker)))
 
-#let define = callout.with(marker: "d")
-#let axiom = callout.with(marker: "a")
-#let theorem = callout.with(marker: "t")
-#let lemma = callout.with(marker: "l")
-#let propose = callout.with(marker: "p")
-#let corollary = callout.with(marker: "c")
