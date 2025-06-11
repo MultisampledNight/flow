@@ -10,7 +10,7 @@
   /// If `accent` is `none` (the default), this is also where the highlight color is taken from instead.
   marker: none,
   /// Who said or wrote down what is in that callout.
-  author: none,
+  source: none,
   /// How this callout should be titled.
   name: none,
 ) = {
@@ -27,7 +27,7 @@
 
     #body
 
-    #if author != none [ \~#info.render(author) ]
+    #if source != none [ \~#info.render(source) ]
   ]
   let body = if marker == none {
     body

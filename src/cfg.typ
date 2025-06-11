@@ -88,14 +88,11 @@
 ///   - Default if `dev` is true
 ///   - **Not quite colorblind-safe**
 #let theme = (_define("theme").enum)("bow", "wob", "duality", none)
-#let theme = _default(
-  theme,
-  if dev {
-    "duality"
-  } else {
-    "bow"
-  },
-)
+#let theme = _default(theme, if dev {
+  "duality"
+} else {
+  "bow"
+})
 
 /// The name of the file the note is stored in.
 /// It is trimmed and used as default for the document title
