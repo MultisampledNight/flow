@@ -7,6 +7,3 @@
 #import "ops.typ"
 #import "quantum.typ"
 #import "sew.typ"
-
-// Backwards compatibility module, should be removed with 0.4.0
-#let (ana, calculus, linalg) = (math,) * 3

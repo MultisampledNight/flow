@@ -19,11 +19,10 @@
 #let pmoo = $plus.minus oo$
 
 /// Limit but as a function. Verbose, if you will.
-#let limv(variable, target) = $lim_(variable -> target)$
-/// Limit of x towards the passed value.
-#let limx = limv.with($x$)
-/// Limit of k towards the passed value.
-#let limn = limv.with($n$)
+#let _lim(variable, target) = $lim_(variable -> target)$
+/// Limit of a variable towards the passed value.
+#let (limx, limn, limk) = ($x$, $n$, $k$).map(var => _lim.with(var))
+
 /// Limit of x towards infinity.
 #let limoo = $limx(oo)$
 /// Limit of x towards negative infinity.
