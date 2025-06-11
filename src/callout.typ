@@ -13,6 +13,8 @@
   source: none,
   /// How this callout should be titled.
   name: none,
+  /// Any other configuration arguments. Forwarded to `text`, useful is `lang`.
+  ..args
 ) = {
   let accent = if accent != none {
     accent
@@ -22,7 +24,7 @@
     fg
   }
 
-  let body = [
+  let body = text(..args)[
     *#name*
 
     #body
