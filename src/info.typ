@@ -6,6 +6,7 @@
 #import "gfx/mod.typ" as gfx
 #import "palette.typ": *
 #import "tyck.typ"
+#import "util/small.typ": maybe-do
 
 // Panics if known typo'd metadata fields are contained.
 #let _check-typos(it) = {
@@ -79,42 +80,43 @@
   #metadata(it) <info>
 ]
 
-// Accepts a dictionary where
-// the key denotes the metadata field name and
-// the value its, well, actual data.
-#let render(it) = {
-  // Serialize to opaque but displayable content.
-  let display(it) = [#it]
+/// Renders data in a best-effort pretty way. Returns opaque content.
+/// Accepts dictionaries, lists, almost any data structure.
+///
+/// `ctx` is used for recursion, it is the most recent field key.
+/// You can set it to denote the name this is in
+/// for context but you don't need to.
+#let render(data, name: none) = {
+  if name != none and "cw" in lower(name) {
+    par(leading: 1.5em, data.map(gfx.invert).join(h(0.5em)))
+  } else if type(data) == array {
+    // need to serialize each element, otherwise e.g. integers couldn't be joined
+    data.map(render.with(name: name)).join[, ]
+  } else if type(data) == dictionary {
+    show: maybe-do(name != none, grid.cell.with(stroke: (
+      left: (gamut.sample(20%)),
+    )))
 
-  let field(name, data) = {
-    if "cw" in lower(name) {
-      par(leading: 1.5em, data.map(gfx.invert).join(h(0.5em)))
-    } else if type(data) == array {
-      // need to serialize each element, otherwise e.g. integers couldn't be joined
-      data.map(display).join[, ]
-    } else if type(data) == dictionary {
-      grid.cell(render(data), stroke: (left: gamut.sample(20%)))
-    } else {
-      display(data)
-    }
+    grid(
+      columns: 2,
+      align: (right, left),
+      inset: (x, y) => {
+        if x == 0 {
+          (right: 0.5em)
+        } else {
+          (left: 0.5em)
+        }
+      },
+      row-gutter: 1em,
+      ..data
+        .pairs()
+        .filter(((name, _)) => name not in ("keywords", "title"))
+        .map(((name, data)) => (fade(name), render(data, name: name)))
+        .join()
+    )
+  } else {
+    // content/int/string/function
+    [#data]
   }
-
-  grid(
-    columns: 2,
-    align: (right, left),
-    inset: (x, y) => {
-      if x == 0 {
-        (right: 0.5em)
-      } else {
-        (left: 0.5em)
-      }
-    },
-    row-gutter: 1em,
-    ..it
-      .pairs()
-      .filter(((name, _)) => name not in ("keywords", "title"))
-      .map(((name, data)) => (fade(name), field(name, data)))
-      .join()
-  )
 }
 
