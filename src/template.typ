@@ -44,14 +44,35 @@
   body
 }
 
-#let _styling(body, ..args) = {
+/// Selects all targets from here until the start of the next note.
+#let _in-note(here, target: heading) = (
+  selector(target).after(here).before(<info>)
+)
+
+#let _if-any(then) = context {
+  if query(_in-note(here())).len() > 0 {
+    then
+  }
+}
+
+#let _styling(body, ..args) = context {
   if cfg.render != "all" {
     return _machinize(body, ..args)
   }
 
   let args = args.named()
+  let faded-line = move(dy: -0.25em, line(length: 100%, stroke: gamut.sample(
+    15%,
+  )))
 
   show: _numbering
+
+  set outline.entry(fill: faded-line)
+  // when using multiple notes in one document,
+  // we want to only show the outline for the headings in the same note
+  // notes are delimited by <info> labels (they are before any other content)
+  set outline(indent: auto, target: _in-note(here()))
+
   show: body => if cfg.target == "paged" {
     set page(fill: bg, numbering: "1 / 1")
     body
@@ -66,13 +87,6 @@
     if x > 0 { (left: gamut.sample(30%)) }
     if y > 0 { (top: gamut.sample(30%)) }
   })
-
-  let faded-line = move(dy: -0.25em, line(length: 100%, stroke: gamut.sample(
-    15%,
-  )))
-
-  set outline.entry(fill: faded-line)
-  set outline(indent: auto)
 
   set math.mat(delim: "[")
   set math.vec(delim: "[")
@@ -118,7 +132,7 @@
 }
 
 #let _shared(args) = {
-  let args = info.preprocess(args.named())
+  let data = info.preprocess(args.named())
   let title = args.at("title", default: {
     if cfg.filename != none {
       cfg.filename.trim(".typ", repeat: false)
@@ -127,23 +141,23 @@
     }
   })
 
-  (args: args, title: title)
+  (data: data, title: title)
 }
 
 /// The args sink is used as metadata.
 /// It'll exposed both in a table in the document and via `typst query`.
 /// See the manual for details.
 #let generic(body, ..args) = {
-  let (args, title) = _shared(args)
+  let (data, title) = _shared(args)
 
-  show: _styling.with(..args)
-  show: keywords.process.with(cfg: args.at("keywords", default: none))
+  show: _styling.with(..data)
+  show: keywords.process.with(cfg: data.at("keywords", default: none))
   show: xlink.process
   show: checkbox.process
 
-  set document(title: title, author: args.at("author", default: ()))
+  set document(title: title, author: data.at("author", default: ()))
 
-  info.queryize(args)
+  info.queryize(data)
   body
 }
 
@@ -170,24 +184,19 @@
   show: modern.with(..args)
 
   if cfg.render == "all" {
-    let (args, title) = _shared(args)
+    let (data, title) = _shared(args)
 
     text(2.5em, strong(title))
 
-    if args.len() > 0 {
-      v(-1.75em)
-      info.render(args)
-      separator
-    }
+    v(-1.75em)
+    info.render(forget-keys(data, ("keywords", "title")))
+    separator
 
     // Are there any headings? If so, no need to render an outline.
-    context {
-      if query(heading).len() > 0 {
-        v(-0.75em)
-        outline()
-        separator
-      }
-    }
+    _if-any({
+      outline()
+      separator
+    })
   }
 
   body
@@ -203,11 +212,11 @@
   set outline(title: [Table of contents], fill: repeat[.])
 
   if cfg.render == "all" {
-    let (args, title) = _shared(args)
+    let (data, title) = _shared(args)
 
     let title = text(2em, strong(title))
 
-    let extra = args
+    let extra = data
       .pairs()
       .filter(((key, value)) => key != "title")
       .map(((key, value)) => (

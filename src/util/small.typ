@@ -183,3 +183,8 @@
 /// Capitalize the first grapheme cluster of each word.
 #let tcase = fxfirst.with(fx: upper)
 
+/// Forget the given keys from the dictionary, then return it.
+#let forget-keys(lookup, keys) = {
+  lookup.pairs().filter(((key, _)) => key not in keys).to-dict()
+}
+

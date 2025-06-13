@@ -80,16 +80,16 @@
   #metadata(it) <info>
 ]
 
-/// Renders data in a best-effort pretty way. Returns opaque content.
-/// Accepts dictionaries, lists, almost any data structure.
-///
-/// `ctx` is used for recursion, it is the most recent field key.
-/// You can set it to denote the name this is in
-/// for context but you don't need to.
-#let render(data, name: none) = {
-  if name != none and "cw" in lower(name) {
-    par(leading: 1.5em, data.map(gfx.invert).join(h(0.5em)))
-  } else if type(data) == array {
+#let _render-cw(data, _name, _render) = {
+  par(leading: 1.5em, data.map(gfx.invert).join(h(0.5em)))
+}
+
+#let _render-collection(data, name, render) = {
+  if data.len() == 0 {
+    return
+  }
+
+  if type(data) == array {
     // need to serialize each element, otherwise e.g. integers couldn't be joined
     data.map(render.with(name: name)).join[, ]
   } else if type(data) == dictionary {
@@ -110,13 +110,36 @@
       row-gutter: 1em,
       ..data
         .pairs()
-        .filter(((name, _)) => name not in ("keywords", "title"))
         .map(((name, data)) => (fade(name), render(data, name: name)))
         .join()
     )
   } else {
-    // content/int/string/function
-    [#data]
+    panic()
   }
+}
+
+#let _render-fallback(data, _name, _render) = [#data]
+
+/// Renders data in a best-effort pretty way. Returns opaque content.
+/// Accepts dictionaries, lists, almost any data structure.
+///
+/// `ctx` is used for recursion, it is the most recent field key.
+/// You can set it to denote the name this is in
+/// for context but you don't need to.
+#let render(data, name: none) = {
+  let handler = if (
+    name != none and "cw" in lower(name) and type(data) == array
+  ) {
+    _render-cw
+  } else if (
+    type(data) in (array, dictionary)
+  ) {
+    _render-collection
+  } else {
+    // content/int/string/function
+    _render-fallback
+  }
+
+  handler(data, name, render)
 }
 
