@@ -135,7 +135,7 @@
 // does it work? also yeah
 /// Table and grid cells.
 /// Typing out `table.cell` and `grid.cell` is just getting too tedious.
-#let (tcl, gcl) = (table.cell, grid.cell)
+#let (thd, tcl, gcl) = (table.header, table.cell, grid.cell)
 #let (tclr, tclc, gclr, gclc) = cartesian-product(
   (tcl, gcl),
   (
