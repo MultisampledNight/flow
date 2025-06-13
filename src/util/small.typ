@@ -150,6 +150,7 @@
 ///
 /// You can use this function to easily put several similar notes
 /// into one document!
+/// Imagine it a bit like a macro: Give one example, then you can parametrize over it.
 #let expand(inputs, transform, reduce: array.join) = {
   let variants = inputs.map(args => {
     if type(args) in (array, dictionary) {
