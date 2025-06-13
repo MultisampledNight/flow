@@ -146,6 +146,10 @@
 /// Rotate any content by 90 degrees clockwise.
 #let flop = rotate.with(90deg, reflow: true)
 
+/// Array map, but thought for content with some extra ergonomics.
+///
+/// You can use this function to easily put several similar notes
+/// into one document!
 #let expand(inputs, transform, reduce: array.join) = {
   let variants = inputs.map(args => {
     if type(args) in (array, dictionary) {
