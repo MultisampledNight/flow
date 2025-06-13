@@ -135,11 +135,46 @@
 /// Table and grid cells.
 /// Typing out `table.cell` and `grid.cell` is just getting too tedious.
 #let (tcl, gcl) = (table.cell, grid.cell)
-#let (tclr, tclc, gclr, gclc) = cartesian-product((tcl, gcl), (
-  fn => (y, ..args) => fn(rowspan: y, ..args),
-  fn => (x, ..args) => fn(colspan: x, ..args),
-)).map(((fn, variant)) => variant(fn))
+#let (tclr, tclc, gclr, gclc) = cartesian-product(
+  (tcl, gcl),
+  (
+    fn => (y, ..args) => fn(rowspan: y, ..args),
+    fn => (x, ..args) => fn(colspan: x, ..args),
+  ),
+).map(((fn, variant)) => variant(fn))
 
 /// Rotate any content by 90 degrees clockwise.
 #let flop = rotate.with(90deg, reflow: true)
+
+#let expand(inputs, transform, reduce: array.join) = {
+  let variants = inputs.map(args => {
+    if type(args) in (array, dictionary) {
+      transform(..args)
+    } else {
+      transform(args)
+    }
+  })
+
+  reduce(variants)
+}
+
+// Highlight the first grapheme cluster
+// (can approximately think of it as a character)
+// of each word
+// using the given function.
+#let fxfirst(it, fx: strong) = {
+  it
+    .split()
+    .map(word => {
+      let clusters = word.clusters()
+      let first = fx(clusters.first())
+      let rest = clusters.slice(1).join()
+
+      first + rest
+    })
+    .join(" ")
+}
+
+/// Capitalize the first grapheme cluster of each word.
+#let tcase = fxfirst.with(fx: upper)
 

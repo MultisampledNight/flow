@@ -109,11 +109,6 @@
 ///     like the outline and cetz canvases
 ///   - Greatly impacts the visual result
 ///     while leaving most of the machine content same
-/// - info
-///   - Only offer metadata via the `<info>` label
-///   - The output is very likely just a blank PDF
-///   - Best used in combination with `typst query`
-///     - `flow-query` specifies this automatically
 ///
 /// Note on deprecated aliases (... is converted to ...):
 ///
@@ -122,18 +117,17 @@
 ///
 /// When looking programmatically through documents,
 /// chances are you don't need "all" and
-/// could have a lot of performance boost
+/// could have a large performance boost
 /// by using "text" instead.
 #let render = (_define("render").enum)(
   "all",
   "text",
-  "info",
   "false",
   "true",
   none,
 )
 #let render = _default(render, "all")
-#let render = _alias(render, ("true": "all", "false": "info"))
+#let render = _alias(render, ("true": "all", "false": "text"))
 
 /// What the target format is.
 /// One of "paged" (the default) or "html".

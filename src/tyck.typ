@@ -176,7 +176,7 @@
       }
       + ". "
       + "expected: `"
-      + _fmt-schema(err.expected)
+      + fmt(err.expected)
       + "`, "
       + "actual: `"
       + repr(type(err.found))

@@ -7,7 +7,7 @@ mkdir -p "$target"
 query="$here/flow-query"
 
 for source in "$@"; do
-	title=`"$here/flow-query" "$source" | jq -r .title`
+  title=`"$here/flow-query" "$source" | jq -r 'map(.title) | join(", ")'`
 
 	"$here/flow" compile \
 		"$source" "$target/$title.pdf" \

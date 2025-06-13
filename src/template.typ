@@ -26,23 +26,32 @@
     })
 }
 
+#let _numbering(body, ..args) = {
+  set heading(numbering: "1.1")
+  set math.equation(numbering: "(1)")
+
+  body
+}
+
+#let _machinize(body, ..args) = {
+  // PERF: consistently shaves off 0.02 seconds of query time
+  // tested on i7 10th gen
+  set page(width: auto, height: auto)
+  set text(size: 0pt)
+
+  show: _numbering
+
+  body
+}
+
 #let _styling(body, ..args) = {
   if cfg.render != "all" {
-    return {
-      // PERF: consistently shaves off 0.02 seconds of query time
-      // tested on i7 10th gen
-      set page(width: auto, height: auto)
-      set text(size: 0pt)
-
-      // purely to make references not crash when querying
-      set heading(numbering: "1.1")
-
-      body
-    }
+    return _machinize(body, ..args)
   }
 
   let args = args.named()
 
+  show: _numbering
   show: body => if cfg.target == "paged" {
     set page(fill: bg, numbering: "1 / 1")
     body
@@ -58,8 +67,6 @@
     if y > 0 { (top: gamut.sample(30%)) }
   })
 
-  set heading(numbering: "1.1")
-
   let faded-line = move(dy: -0.25em, line(length: 100%, stroke: gamut.sample(
     15%,
   )))
@@ -67,7 +74,6 @@
   set outline.entry(fill: faded-line)
   set outline(indent: auto)
 
-  set math.equation(numbering: "(1)")
   set math.mat(delim: "[")
   set math.vec(delim: "[")
 
@@ -138,12 +144,7 @@
   set document(title: title, author: args.at("author", default: ()))
 
   info.queryize(args)
-
-  // looks super hacky, but is intended
-  // because in info mode, queryizing already did everything we want
-  if cfg.render != "info" {
-    body
-  }
+  body
 }
 
 /// Compromise between generic and note.
