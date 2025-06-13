@@ -17,9 +17,26 @@ Or just `typst init @preview/flow` which does the same!
 
 ## What's in here?
 
-### Well, templates!
+A set of utils for actual application.
+While there's many amazing libraries for Typst,
+such as [cetz], [cetz-plot] or [whalogen],
+often they're *too* flexible for just getting things down.
 
-- Just typing a note and need a few defaults?
+Flow aims to fill that missing spot between
+flexible unlimited libraries and ad-hoc application.
+It offers a set of explicitly biased defaults and
+different fields, but doesn't force them:
+Anyone can add or change them as-needed.
+
+So, get ready for a quick tour on what's offered!
+
+[cetz]: https://typst.app/universe/package/cetz
+[cetz-plot]: https://typst.app/universe/package/cetz-plot
+[whalogen]: https://typst.app/universe/package/whalogen
+
+### Notes
+
+- Just typing some text and want some metadata, outline, formatting and todo lists?
   `#show: note`, that's it!
 - Need to pass something through as LaTeX
   under significant time pressure?
@@ -30,12 +47,32 @@ Or just `typst init @preview/flow` which does the same!
 
 ### Callouts!
 
+They're functions that accept content,
+e.g.:
+
+```typst
+#question[
+  Are birds real?
+]
+```
+
 - `question`, `hint`, `remark` and `caution` for
   quickly communicating intent of some text!
 - `axiom`, `define`, `theorem`, `propose`, `lemma` and `corollary` for
   math and structured workflows!
 
 ### Todo lists!
+
+```typst
+= Shopping list
+
+- [ ] Still to do
+- [>] Currently doing this
+- [:] Some paused item
+- [/] Aww this has been cancelled
+- [?] Not sure what to do
+- [!] *Really* need to do this
+```
 
 - Want something to be an unchecked task?
   Just make it a list entry in the form of `- [ ] thing`!
@@ -44,6 +81,35 @@ Or just `typst init @preview/flow` which does the same!
 - In progress? Paused? Blocked? Cancelled? Unknown? Urgent?
   Just use other characters instead of `x`,
   like `>`, `:`, `-`, `/`, `?` and `!`
+
+### Field-specific presets!
+
+- Typing a lot of math? Check out `preset.math`
+  (mostly just linear algebra for now)!
+  - Bored of `abs`, `bold`, `norm`, `arrow`, `tilde`
+    being too long to type?
+    Common math characters are double-defined
+    to have common shortcuts!
+    - Bold x?
+      `xb`
+    - Vector c?
+      `cv`
+    - Conjugate transposed M?
+      `MH`
+    - Absolute value of vector p?
+      `pva`
+  - Null vector?
+    `null`
+  - Plane defined via 3 points?
+    `plp(a, b, c)`
+  - Want to quickly throw a function plot in?
+    `plot(x => pow(x, 2))`
+  - `integral_(-oo)^oo` is too long?
+    `iinf`
+  - Sum with index k starting at 1 ending at n?
+    `sk1n` or even just `sk1n`
+  - Limit of k towards infinity?
+    `limk(oo)`
 
 ### Themes!
 
@@ -70,8 +136,18 @@ Or just `typst init @preview/flow` which does the same!
 
 ### Diagrams!
 
-- Nodes and edges!
-- Edges can be tagged, colored, stroked, branched!
+- Want to render a directed graph? Use `gfx.diagram`!
+  - Pass
+    - a dictionary as a keyword argument to `nodes`,
+      keyed by name and position as value
+    - a dictionary to `edges`,
+      keyed by source and target as string
+      - the target can also be several (`all("a", "b", "c")`)
+        or in a row (`seq("a", "b", "c")`)!
+  - Edges can be tagged, colored, stroked, branched!
+    - E.g. `tag("a", tag: [hi!])`,
+      `styled("a", stroke: blue)`,
+      `br(br("a", "b"), "c")`
 
 ## I'm sold, where do I find out more?
 
