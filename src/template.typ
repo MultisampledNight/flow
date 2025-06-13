@@ -180,6 +180,7 @@
   }
 
   context {
+    v(-0.75em)
     outline(target: target)
     separator
   }
