@@ -14,7 +14,11 @@ if [[ ${#@} -gt 0 ]]; then
 		$cmd "$note"
 	done
 else
-	fd -0 --exclude zero/template '\.typ$' "$notes" \
-		| xargs -P `nproc` -0 -n 1 $cmd \
-		2>/dev/null
+	fd -0 \
+		--exclude '_template' \
+		--exclude '_template.*' \
+		--extension 'typ' \
+		. "$notes" \
+	| xargs -P `nproc` -0 -n 1 $cmd 2>/dev/null \
+	| jq --slurp add
 fi

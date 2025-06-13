@@ -27,7 +27,6 @@ if [[ "$mode" = info ]]; then
 	mode=query
 	args+=(
 		'<info>'
-		--one
 		--field value
 	)
 fi
