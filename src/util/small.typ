@@ -1,5 +1,6 @@
 // Various smaller utilities.
 #import "../palette.typ": *
+#import "@preview/oxifmt:1.0.0": strfmt as fmt
 
 /// Vertical dots.
 #let vvv = $dots.v$
