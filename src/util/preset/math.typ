@@ -1,6 +1,6 @@
 //! Utils for mathematics.
 
-#import "@preview/cetz-plot:0.1.1"
+#import "@preview/cetz-plot:0.1.2"
 #import "../small.typ": *
 #import "../../gfx/mod.typ" as gfx
 

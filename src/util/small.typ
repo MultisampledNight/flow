@@ -84,47 +84,6 @@
     .map(((a, b)) => (a,) + b) // flatten down
 }
 
-/// Selects a value according to Typst's version.
-/// The argument `lookup` has to be a dictionary
-/// mapping semvers
-/// to values.
-///
-/// If the exact version is not contained,
-/// it returns the newest one before that.
-/// Panics if there is no such version.
-#let versioned(table, searched: sys.version) = {
-  // NOTE: could be optimized with a binary search sometime
-  let known = table.keys()
-
-  // What is the first too-new version?
-  let pair = known
-    .map(v => v.split(".").map(int))
-    .map(version)
-    .sorted()
-    .enumerate()
-    .find(((_, candidate)) => candidate > searched)
-
-  let idx = if pair == none {
-    known.len()
-  } else {
-    pair.at(0)
-  }
-
-  // Is there any one matching? Or was even the first one already too high?
-  if idx == 0 {
-    // Well then, can't select anything
-    panic({
-      "version is "
-      str(searched)
-      " while only values for ["
-      known.join(", ")
-      "] are known"
-    })
-  }
-
-  table.at(known.at(idx - 1))
-}
-
 /// Return the `action` function if `condition`,
 /// else return `default`.
 /// Shorthand `if` statement for use in show rules,

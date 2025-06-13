@@ -64,16 +64,7 @@
     15%,
   )))
 
-  show: versioned((
-    "0.12": body => {
-      set outline(fill: faded-line)
-      body
-    },
-    "0.13": body => {
-      set outline.entry(fill: faded-line)
-      body
-    },
-  ))
+  set outline.entry(fill: faded-line)
   set outline(indent: auto)
 
   set math.equation(numbering: "(1)")

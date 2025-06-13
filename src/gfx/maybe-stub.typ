@@ -8,16 +8,8 @@
 #import "../util/small.typ": *
 
 #let cetz = if cfg.render == "all" {
-  versioned((
-    "0.12": {
-      import "@preview/cetz:0.3.2"
-      cetz
-    },
-    "0.13": {
-      import "@preview/cetz:0.3.4"
-      cetz
-    },
-  ))
+  import "@preview/cetz:0.4.0"
+  cetz
 } else {
   import "stub.typ"
   stub
