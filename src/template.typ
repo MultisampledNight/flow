@@ -44,17 +44,6 @@
   body
 }
 
-/// Selects all targets from here until the start of the next note.
-#let _in-note(here, target: heading) = (
-  selector(target).after(here).before(<info>)
-)
-
-#let _if-any(then) = context {
-  if query(_in-note(here())).len() > 0 {
-    then
-  }
-}
-
 #let _styling(body, ..args) = context {
   if cfg.render != "all" {
     return _machinize(body, ..args)
@@ -68,10 +57,7 @@
   show: _numbering
 
   set outline.entry(fill: faded-line)
-  // when using multiple notes in one document,
-  // we want to only show the outline for the headings in the same note
-  // notes are delimited by <info> labels (they are before any other content)
-  set outline(indent: auto, target: _in-note(here()))
+  set outline(indent: auto)
 
   show: body => if cfg.target == "paged" {
     set page(fill: bg, numbering: "1 / 1")
@@ -180,6 +166,25 @@
   body
 }
 
+#let _note-outline = context {
+  // When using multiple notes in one document,
+  // we want to only show the outline for the headings in the same note
+  // notes are delimited by <info> labels (they are before any other content)
+  let target = selector(heading.where(outlined: true))
+    .after(here())
+    .before(selector(<info>).after(here()))
+
+  // Are there any headings? If so, no need to render an outline.
+  if query(target).len() == 0 {
+    return
+  }
+
+  context {
+    outline(target: target)
+    separator
+  }
+}
+
 #let note(body, ..args) = {
   show: modern.with(..args)
 
@@ -192,11 +197,7 @@
     info.render(forget-keys(data, ("keywords", "title")))
     separator
 
-    // Are there any headings? If so, no need to render an outline.
-    _if-any({
-      outline()
-      separator
-    })
+    _note-outline
   }
 
   body
