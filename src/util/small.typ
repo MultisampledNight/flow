@@ -149,9 +149,14 @@
 
 /// Array map, but thought for content with some extra ergonomics.
 ///
-/// You can use this function to easily put several similar notes
-/// into one document!
-/// Imagine it a bit like a macro: Give one example, then you can parametrize over it.
+/// You can use this function to easily put several similar notes into one document!
+/// Imagine it a bit like a macro:
+///
+/// - Write out one concrete example first.
+/// - Move the entire note as a function into this.
+/// - Find the terms you want to be parametric over.
+///   Those are your inputs, extract and use them accordingly in the body.
+/// - Add more variants.
 #let expand(inputs, transform, reduce: array.join) = {
   let variants = inputs.map(args => {
     if type(args) in (array, dictionary) {
