@@ -946,7 +946,7 @@
   fixed: true,
   /// How many values to sample and interpolate in-between.
   /// Higher values trade longer rendering for higher accuracy.
-  samples: 50,
+  samples: 100,
   /// Which values the functions are sampled over.
   /// Can be `"x"` or `"y"`, in which case the axis size is taken as domain,
   /// or a 2-element array, specifying an inclusive interval.
