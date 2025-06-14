@@ -62,7 +62,7 @@
   fade(desc),
 ))
 
-/// A polynomial, written out explicitly.
+/// A polynomial in standard form.
 #let ply(
   /// The coefficient variables base.
   /// It is indexed for the value to use as multiplier.
@@ -80,7 +80,7 @@
   $coeff_0 + coeff_1 param + mid + coeff_deg param^deg$
 }
 
-/// A polynomial, written as sum. See `ply`.
+/// A polynomial in standard form, written as sum. See `ply`.
 #let plys(
   coeff: $alpha$,
   param: $x$,
@@ -89,6 +89,21 @@
 ) = {
   $sum^deg_(idx = 0) coeff_idx param^idx$
 }
+
+/// A polynomial in factored form. See `ply`.
+#let plyf(
+  coeff: $alpha$,
+  zero: $x$,
+  param: $x$,
+  deg: $k$,
+  idx: $i$,
+  long: false,
+  mul: $dot$,
+) = {
+  let mid = if long { $... mul (param - zero_idx) mul ...$ } else { $...$ }
+  $coeff (param - zero_1) mul mid mul (param - zero_deg)$
+}
+
 
 /// A series definition.
 ///
