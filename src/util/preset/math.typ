@@ -25,8 +25,10 @@
 
 /// Limit of x towards infinity.
 #let limoo = $limx(oo)$
+/// Limit of x towards (explicitly) positive infinity.
+#let limpoo = $limx(+oo)$
 /// Limit of x towards negative infinity.
-#let lim-oo = $limx(-oo)$
+#let limmoo = $limx(-oo)$
 /// Limit of x towards positive/negative infinity.
 #let limpmoo = $limx(pmoo)$
 /// Limit of x towards 0.
