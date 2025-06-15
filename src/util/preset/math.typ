@@ -938,13 +938,13 @@
 ).map(ch => $dif ch$)
 #let (
   ddx,
-  dfdx,
-  dgdx,
   ddy,
-  dfdy,
-  dgdy,
   ddt,
+  dfdx,
+  dfdy,
   dfdt,
+  dgdx,
+  dgdy,
   dgdt,
 ) = cartesian-product(($dif$, df, dg), (dx, dy, dt)).map((
   (num, denom),
