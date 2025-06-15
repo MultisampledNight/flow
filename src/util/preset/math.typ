@@ -13,6 +13,9 @@
 /// Window becoming ever smaller, usually infinitesimally small.
 #let window = $epsilon.alt$
 
+/// The real local neighborhood of the pivot.
+#let nbhd(pivot, radius: window) = $(pivot - radius, pivot + radius)$
+
 /// Can be both plus or minus.
 #let pm = sym.plus.minus
 /// Both negative and positive infinity.
