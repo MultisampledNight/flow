@@ -21,7 +21,14 @@
 /// Limit but as a function. Verbose, if you will.
 #let _lim(variable, target) = $lim_(variable -> target)$
 /// Limit of a variable towards the passed value.
-#let (limx, limn, limk) = ($x$, $n$, $k$).map(var => _lim.with(var))
+#let (limx, limy, limh, limt, limn, limk) = (
+  $x$,
+  $y$,
+  $h$,
+  $t$,
+  $n$,
+  $k$,
+).map(var => _lim.with(var))
 
 /// Limit of x towards infinity.
 #let limoo = $limx(oo)$
@@ -915,7 +922,33 @@
 #let iba = $integral_b^a$
 #let iinf = $integral_(-infinity)^infinity$
 
-// use $dif$ for the step
+// use dif instead of d for the step: it's always upright
+#let (
+  df,
+  dg,
+  dx,
+  dy,
+  dt,
+) = (
+  $f$,
+  $g$,
+  $x$,
+  $y$,
+  $t$,
+).map(ch => $dif ch$)
+#let (
+  ddx,
+  dfdx,
+  dgdx,
+  ddy,
+  dfdy,
+  dgdy,
+  ddt,
+  dfdt,
+  dgdt,
+) = cartesian-product(($dif$, df, dg), (dx, dy, dt)).map((
+  (num, denom),
+) => $num / denom$)
 
 // General analysis: Anybody said functions?
 
