@@ -10,6 +10,9 @@
 /// Inverse function or preimage.
 #let finv = $f^(-1)$
 
+/// Disjoint but as relation. No common elements.
+#let disjoint = move(flop(sym.multimap), dy: -0.05em, dx: 0.1em)
+
 /// Window becoming ever smaller, usually infinitesimally small.
 #let window = $epsilon.alt$
 
