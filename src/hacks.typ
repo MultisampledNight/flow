@@ -25,7 +25,7 @@
 /// `op` the show rule transformation.
 #let only-main(picker, op) = body => {
   // skip codeblocks
-  show raw: it => {
+  show selector(raw).or(link).or(cite): it => {
     show picker: do-not-process
     it
   }
