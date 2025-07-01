@@ -138,8 +138,8 @@
 
   show: _styling.with(..data)
   show: keywords.process.with(cfg: data.at("keywords", default: none))
-  show: xlink.process
-  show: checkbox.process
+  show: maybe-do(data.at("xlink", default: true), xlink.process)
+  show: maybe-do(data.at("checkbox", default: true), checkbox.process)
 
   set document(title: title, author: data.at("author", default: ()))
 
