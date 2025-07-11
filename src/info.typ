@@ -49,6 +49,7 @@
       // TODO: one day, implement auto which searches through all keywords
     ),
     lang: str,
+    slug: str,
   )
 }
 
