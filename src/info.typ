@@ -90,33 +90,38 @@
     return
   }
 
-  if type(data) == array {
-    // need to serialize each element, otherwise e.g. integers couldn't be joined
-    data.map(render.with(name: name)).join[, ]
+  // convert into an array of duplits with (key, value)
+  let data = if type(data) == array {
+    // just treat the index as key
+    data.enumerate().map(((idx, value)) => (str(idx), value))
   } else if type(data) == dictionary {
-    show: maybe-do(name != none, grid.cell.with(stroke: (
-      left: (gamut.sample(20%)),
-    )))
-
-    grid(
-      columns: 2,
-      align: (right, left),
-      inset: (x, y) => {
-        if x == 0 {
-          (right: 0.5em)
-        } else {
-          (left: 0.5em)
-        }
-      },
-      row-gutter: 1em,
-      ..data
-        .pairs()
-        .map(((name, data)) => (fade(name), render(data, name: name)))
-        .join()
-    )
+    data.pairs()
   } else {
-    panic()
+    panic("unknown collection type: `" + str(type(data)) + "`")
   }
+
+  show: maybe-do(name != none, grid.cell.with(stroke: (
+    left: (gamut.sample(20%)),
+  )))
+
+  grid(
+    columns: 2,
+    align: (right, left),
+    inset: (x, y) => {
+      if x == 0 {
+        (right: 0.5em)
+      } else {
+        (left: 0.5em)
+      }
+    },
+    row-gutter: 1em,
+    ..data
+      .map(((name, data)) => (
+        fade(name),
+        render(data, name: name),
+      ))
+      .join()
+  )
 }
 
 #let _render-fallback(data, _name, _render) = [#data]

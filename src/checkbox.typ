@@ -7,7 +7,7 @@
 /// comes from a task list entry,
 /// returns `none` otherwise.
 #let _find-fill(it) = {
-  let source = hacks.reconstruct-text(it)
+  let source = hacks.stringify(it)
 
   let pattern = asset.data.regex.checkbox
   let checkbox = source.matches(regex("^" + pattern))
