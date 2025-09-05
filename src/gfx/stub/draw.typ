@@ -4,6 +4,7 @@
 #let scale(..args) = none
 
 #let group(..args) = none
+#let scope(..args) = none
 
 #let line(..args) = none
 #let rect(..args) = none
@@ -12,3 +13,7 @@
 #let bezier(..args) = none
 
 #let content(..args) = none
+
+#let merge-path(..args) = none
+#let compound-path(..args) = none
+
