@@ -100,9 +100,12 @@
     panic("unknown collection type: `" + str(type(data)) + "`")
   }
 
-  show: maybe-do(name != none, grid.cell.with(stroke: (
-    left: (gamut.sample(20%)),
-  )))
+  show: maybe-do(name != none, grid.cell.with(
+    stroke: (
+      left: (gamut.sample(20%)),
+    ),
+    inset: (y: 0.5em),
+  ))
 
   grid(
     columns: 2,
