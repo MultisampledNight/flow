@@ -52,7 +52,8 @@ e.g.:
 
 ```typst
 #question[
-  Are birds real?
+  What's the Deal with Birds?
+  (https://www.chm.bris.ac.uk/sillymolecules/birds.pdf)
 ]
 ```
 
