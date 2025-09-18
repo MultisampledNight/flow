@@ -9,6 +9,7 @@
 #import "hacks.typ"
 #import "info.typ"
 #import "keywords.typ"
+#import "meta.typ"
 #import "palette.typ": *
 #import "template.typ" as template: note
 #import "tyck.typ"

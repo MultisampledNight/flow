@@ -2,6 +2,7 @@
 #let set-origin(..args) = none
 
 #let scale(..args) = none
+#let rotate(..args) = none
 
 #let group(..args) = none
 #let scope(..args) = none

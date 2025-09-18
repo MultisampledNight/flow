@@ -1,13 +1,12 @@
 #import "/src/lib.typ" as flow: *
 
-#let version = toml("/typst.toml").package.version
 #let normal = text.with(font: "IBM Plex Sans")
 
 #show: note.with(
   title: "flow manual",
   aliases: "how to procastinate",
   author: "MultisampledNight",
-  version: (flow: version),
+  version: (flow: meta.version),
   cw: "\"you\"",
 )
 
@@ -79,7 +78,7 @@ I can guarantee you it is worthy of your time.
 + Use the the following boilerplate in your note:
 
   #raw(block: true, lang: "typ", {
-    "#import \"@preview/flow:" + version + "\": *\n"
+    "#import \"@preview/flow:" + meta.version + "\": *\n"
     "#show: note.with(\n"
     "  title: \"Super cool note title!\",\n"
     ")"
