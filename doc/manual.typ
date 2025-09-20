@@ -8,6 +8,7 @@
   author: "MultisampledNight",
   version: (flow: meta.version),
   cw: "\"you\"",
+  meta: (publish: true, access: 0),
 )
 
 // Takes all args and ignores them, only passing through the body.

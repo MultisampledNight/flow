@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+# [notes=] [target=] all
+# Static site builder for flow.
+# vim: ft=zsh ts=2 sw=2 et
+set -euo pipefail
+
+export PATH="$(dirname -- $(realpath -- "$0")):$PATH"
+
+export notes="${notes:-"$HOME/notes"}"
+
+cd "$notes"
+fd '.*' '.' \
+  --type file \
+  --extension typ \
+  --exclude '_template*' \
+  --exec one
+

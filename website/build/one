@@ -1,0 +1,33 @@
+#!/usr/bin/env zsh
+# [target=] one [path/to/source.typ] -- compiles the typst file into html
+# vim: ft=zsh ts=2 sw=2 et
+# Note: Just exits with an nonzero code if the file given shouldn't be published.
+set -euo pipefail
+
+export PATH="$(dirname -- $(dirname -- $(dirname -- $(realpath -- "$0"))))/util:$PATH"
+
+note="$1"
+export target="${target:-$HOME/public_html}"
+
+mkdir -p target
+
+metadata=`flow info "$note"`
+if ! (
+  echo "$metadata" |
+  jq --exit-status '.[0].meta | (.publish and .access <= 0)' \
+  >/dev/null
+); then
+  if (( $+verbose )) echo " / skipping $note" >/dev/stderr
+  exit 1
+fi
+
+output="$target/${note%.*}.html"
+
+mkdir -p "$(dirname -- "$output")"
+flow html \
+  "$note" \
+  "$output" \
+  --diagnostic-format short
+
+echo " x compiled $output"
+

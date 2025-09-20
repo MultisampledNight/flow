@@ -42,6 +42,7 @@ if [[ "$mode" = html ]]; then
 	args+=(
 		--features html
 		--input target=html
+		--format html
 	)
 fi
 
