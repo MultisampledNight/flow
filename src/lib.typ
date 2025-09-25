@@ -11,7 +11,7 @@
 #import "keywords.typ"
 #import "meta.typ"
 #import "palette.typ": *
-#import "template.typ" as template: note
+#import "template/mod.typ" as template: note
 #import "tyck.typ"
 #import "util/mod.typ": *
 #import "xlink.typ": xlink
