@@ -7,6 +7,7 @@ only covers significant **user-facing** changes.
 ## Unreleased
 
 - Add `chem` preset for chemistry
+- Export segment display into dedicated package, `lowres`
 
 ## 0.3.1
 
