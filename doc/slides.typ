@@ -31,7 +31,7 @@
       it
     }
 
-    mirror(line((0, 0.75), (1, 1.5), (1, 0)))
+    mirror(line((0, 0.75), (1, 1.5), (1, 0), fill: fg))
     circle(o, radius: 1, fill: bg)
     mirror(arc(
       (0.25, 0.15),
@@ -43,6 +43,8 @@
     let nose = (0, -0.125)
   }),
 )
+
+#outline
 
 = Animals
 

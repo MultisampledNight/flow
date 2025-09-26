@@ -1,3 +1,5 @@
+// mostly based on https://touying-typ.github.io/docs/build-your-own-theme
+
 #import "@preview/touying:0.6.1": *
 
 #import "common.typ": *
@@ -7,6 +9,24 @@
 #let typst = (outline: outline)
 
 #let next = pagebreak()
+
+#let sidebar(actual) = self => h(2em) + fade(actual(self))
+
+/// Ordinary, not anything special. Use `touying-slide` for full control.
+#let slide(..args) = touying-slide-wrapper(self => {
+  // yes, this is intentional. even the example does this,
+  // so i assume this is an example of "exposed" internals? /j
+  self = utils.merge-dicts(
+    self,
+    config-page(
+      header: sidebar(self => {
+        utils.display-current-short-heading()
+      }),
+    ),
+  )
+
+  touying-slide(self: self, ..args)
+})
 
 #let split-slide(
   west,
@@ -53,6 +73,15 @@
     .join[\ ],
 )
 
+// https://touying-typ.github.io/docs/sections
+#let outline = slide(context {
+  set align(mid)
+  set outline(depth: 1, title: none)
+  show: box.with(width: 60%)
+
+  (typst.outline)()
+})
+
 #let flow-theme(
   body,
   aspect-ratio: "16-9",
@@ -63,12 +92,12 @@
   show: modern.with(..args)
   let (data, title) = _shared(args)
 
-  // https://touying-typ.github.io/docs/build-your-own-theme
-  set text(26pt)
+  set text(28pt)
   show: touying-slides.with(
     config-page(paper: "presentation-" + aspect-ratio),
     config-colors(..slides-scheme),
     config-common(
+      slide-fn: slide,
       new-section-slide-fn: section => touying-slide-wrapper(
         self => {
           touying-slide(self: self, {
@@ -90,6 +119,3 @@
 
   body
 }
-
-// https://touying-typ.github.io/docs/sections
-#let outline = components.adaptive-columns(typst.outline)
