@@ -16,17 +16,26 @@
   strong(it),
 )
 
-/// Ordinary, not anything special. Use `touying-slide` for full control.
-#let slide(..args) = touying-slide-wrapper(self => {
+#let slide(
+  header: self => pseudo-heading(
+    utils.display-current-short-heading(),
+  ),
+  footer: self => context fade({
+    h(1fr)
+    utils.slide-counter.display()
+    [ #sym.slash ]
+    utils.last-slide-number
+  }),
+  ..args,
+) = touying-slide-wrapper(self => {
   // yes, this is intentional. even the example does this,
   // so i assume this is an example of "exposed" internals? /j
   self = utils.merge-dicts(
     self,
     config-page(
       margin: (rest: 0.5em, top: 3.5em),
-      header: self => pseudo-heading(
-        utils.display-current-short-heading(),
-      ),
+      header: header,
+      footer: footer,
     ),
   )
 
@@ -78,19 +87,21 @@
     .join[\ ],
 )
 
-#let outline = slide(context {
+#let outline = {
+  show: slide.with(header: none, footer: none)
   set align(mid)
-  set outline(depth: 1, title: none)
+  set outline(depth: 1)
+
   show: box.with(width: 60%)
 
   (typst.outline)()
-})
+}
 
 #let new-section-slide(section) = touying-slide-wrapper(
   self => {
     touying-slide(self: self, {
       set align(mid)
-      show: pseudo-heading.with(scale: 3)
+      show: pseudo-heading.with(scale: 2)
       utils.display-current-short-heading()
     })
   },

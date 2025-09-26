@@ -56,7 +56,7 @@
 - Sometimes playful
 - Always interesting
 
--> Definitely worth considering
+#pause -> Definitely worth considering
 
 == Squirrels
 
@@ -69,7 +69,11 @@
 
 == Mreow
 
+You need to
+
 == Symmetric --- there's just 1 key
+
+wait where the fuck
 
 == Asymmetric --- 2 of them
 
