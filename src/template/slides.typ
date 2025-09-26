@@ -1,4 +1,6 @@
-// mostly based on https://touying-typ.github.io/docs/build-your-own-theme
+// mostly based on:
+// https://touying-typ.github.io/docs/build-your-own-theme
+// https://touying-typ.github.io/docs/sections
 
 #import "@preview/touying:0.6.1": *
 
@@ -9,8 +11,10 @@
 #let typst = (outline: outline)
 
 #let next = pagebreak()
-
-#let sidebar(actual) = self => h(2em) + fade(actual(self))
+#let pseudo-heading(it, scale: 1) = text(
+  1.25em * scale,
+  strong(it),
+)
 
 /// Ordinary, not anything special. Use `touying-slide` for full control.
 #let slide(..args) = touying-slide-wrapper(self => {
@@ -19,9 +23,10 @@
   self = utils.merge-dicts(
     self,
     config-page(
-      header: sidebar(self => {
-        utils.display-current-short-heading()
-      }),
+      margin: (rest: 0.5em, top: 3.5em),
+      header: self => pseudo-heading(
+        utils.display-current-short-heading(),
+      ),
     ),
   )
 
@@ -73,7 +78,6 @@
     .join[\ ],
 )
 
-// https://touying-typ.github.io/docs/sections
 #let outline = slide(context {
   set align(mid)
   set outline(depth: 1, title: none)
@@ -81,6 +85,16 @@
 
   (typst.outline)()
 })
+
+#let new-section-slide(section) = touying-slide-wrapper(
+  self => {
+    touying-slide(self: self, {
+      set align(mid)
+      show: pseudo-heading.with(scale: 3)
+      utils.display-current-short-heading()
+    })
+  },
+)
 
 #let flow-theme(
   body,
@@ -98,14 +112,7 @@
     config-colors(..slides-scheme),
     config-common(
       slide-fn: slide,
-      new-section-slide-fn: section => touying-slide-wrapper(
-        self => {
-          touying-slide(self: self, {
-            set align(mid)
-            utils.display-current-short-heading()
-          })
-        },
-      ),
+      new-section-slide-fn: new-section-slide,
     ),
   )
 
