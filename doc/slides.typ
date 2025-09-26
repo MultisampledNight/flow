@@ -8,6 +8,7 @@
   when: "2025-09-26 03:05:00",
   banner: gfx.canvas(length: 3em, {
     import gfx.draw: *
+    set-style(stroke: 0.15em + fg)
 
     let o = (0, 0)
     let mirror(
@@ -39,8 +40,6 @@
       stop: 0deg,
       radius: 0.5em,
     ))
-
-    let nose = (0, -0.125)
   }),
 )
 

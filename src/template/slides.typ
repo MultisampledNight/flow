@@ -46,6 +46,7 @@
   west,
   east,
   main: right,
+  ..args,
 ) = {
   assert(
     main in (left, right),
@@ -59,15 +60,13 @@
     sizes
   }
 
-  show: slide
   set align(horizon)
-  set page(margin: 0pt)
 
-  grid(
-    columns: sizes,
-    align: (center, left),
-    west,
-    east,
+  slide(
+    composer: sizes,
+    align(mid, west),
+    align(left + horizon, east),
+    ..args,
   )
 }
 
@@ -85,6 +84,7 @@
   )
     .filter(part => part != none)
     .join[\ ],
+  footer: none,
 )
 
 #let outline = {
@@ -117,7 +117,7 @@
   show: modern.with(..args)
   let (data, title) = _shared(args)
 
-  set text(28pt)
+  set text(24pt)
   show: touying-slides.with(
     config-page(paper: "presentation-" + aspect-ratio),
     config-colors(..slides-scheme),
