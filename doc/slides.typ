@@ -4,7 +4,10 @@
 #show: flow-theme.with(
   title: "Cats are amazing",
   subtitle: [And here's why],
-  presenter: [MultisampledNight],
+  presenter: (
+    name: [MultisampledNight],
+  ),
+  institution: [Øl Tele],
   when: "2025-09-26 03:05:00",
   banner: gfx.canvas(length: 3em, {
     import gfx.draw: *
@@ -43,7 +46,11 @@
   }),
 )
 
-#outline
+#overview[
+  = Goals
+
+  - Show you how cats do things.
+]
 
 = Animals
 
@@ -77,4 +84,12 @@ wait where the fuck
 == Asymmetric --- 2 of them
 
 #todo[Image of 2 cats]
+
+= More?
+
+= Moooore
+
+= Ok well
+
+= Takeaways
 

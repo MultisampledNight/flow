@@ -7,14 +7,21 @@
 #import "common.typ": *
 #import "modern.typ": modern
 
-// avoid recursion
-#let typst = (outline: outline)
-
-#let next = pagebreak()
+#let no-deco = (header: none, footer: none)
 #let pseudo-heading(it, scale: 1) = text(
   1.25em * scale,
   strong(it),
 )
+#let sidebar-outline(highlight: "current") = {
+  assert(highlight in ("all", "current"))
+
+  set outline(depth: 1, title: none)
+  set outline.entry(fill: none)
+
+  components.progressive-outline(
+    alpha: if highlight == "all" { 100% } else { 40% },
+  )
+}
 
 #let slide(
   header: self => pseudo-heading(
@@ -60,12 +67,10 @@
     sizes
   }
 
-  set align(horizon)
-
   slide(
     composer: sizes,
-    align(mid, west),
-    align(left + horizon, east),
+    align(mid, box(height: 100%, west)),
+    align(left + horizon, box(height: 100%, east)),
     ..args,
   )
 }
@@ -84,27 +89,29 @@
   )
     .filter(part => part != none)
     .join[\ ],
-  footer: none,
+  ..no-deco,
 )
 
-#let outline = {
-  show: slide.with(header: none, footer: none)
+/// Semi-outline. Actually more of an outlook on what to expect.
+#let overview(body, ..args) = {
   set align(mid)
-  set outline(depth: 1)
+  set heading(outlined: false, numbering: none)
 
-  show: box.with(width: 60%)
-
-  (typst.outline)()
+  split-slide(
+    sidebar-outline(highlight: "all"),
+    body,
+    ..no-deco,
+  )
 }
 
-#let new-section-slide(section) = touying-slide-wrapper(
-  self => {
-    touying-slide(self: self, {
-      set align(mid)
-      show: pseudo-heading.with(scale: 2)
-      utils.display-current-short-heading()
-    })
+#let new-section-slide(section) = split-slide(
+  sidebar-outline(),
+  {
+    set align(mid)
+    show: pseudo-heading.with(scale: 2)
+    utils.display-current-short-heading()
   },
+  ..no-deco,
 )
 
 #let flow-theme(
