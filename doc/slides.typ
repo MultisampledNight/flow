@@ -6,6 +6,8 @@
   subtitle: [And here's why],
   presenter: (
     name: [MultisampledNight],
+    role: [OSS maintainer],
+    is: [cat],
   ),
   institution: [Øl Tele],
   when: "2025-09-26 03:05:00",
@@ -50,11 +52,16 @@
   = Goals
 
   - Show you how cats do things.
+  - Consider squirrels.
 ]
 
 = Animals
 
 :neocat_floof:
+
+#center-slide(
+  scale(1000%)[A]
+)
 
 == Cats are very cool
 

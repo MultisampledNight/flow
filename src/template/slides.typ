@@ -112,6 +112,11 @@
   ..no-deco,
 )
 
+#let center-slide(body, ..args) = slide(
+  align(mid, body),
+  ..args,
+)
+
 /// Semi-outline. Actually more of an outlook on what to expect.
 #let overview(body, ..args) = {
   set align(mid)
@@ -124,12 +129,15 @@
   )
 }
 
-#let new-section-slide(section) = split-slide(
+#let _new-section-slide(section) = split-slide(
   sidebar-outline(),
   {
-    set align(mid)
-    show: pseudo-heading.with(scale: 2)
-    utils.display-current-short-heading()
+    pseudo-heading(
+      scale: 2,
+      utils.display-current-short-heading(),
+    )
+    [\ ]
+    section
   },
   ..no-deco,
 )
@@ -150,7 +158,7 @@
     config-colors(..slides-scheme),
     config-common(
       slide-fn: slide,
-      new-section-slide-fn: new-section-slide,
+      new-section-slide-fn: _new-section-slide,
     ),
   )
 
