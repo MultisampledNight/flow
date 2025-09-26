@@ -15,11 +15,31 @@
 #let sidebar-outline(highlight: "current") = {
   assert(highlight in ("all", "current"))
 
+  set align(right)
   set outline(depth: 1, title: none)
-  set outline.entry(fill: none)
+
+  // the idea for this selective sizing + weighting was taken from lineal by ellsphillips
+  // https://typst.app/universe/package/lineal (licensed under MIT)
+  // thanks for sharing it with the world!!
+  let transform(it, cover: false, ..args) = {
+    let body = it.element.body
+    let body = if highlight == "current" {
+      if cover {
+        text(0.75em, slides-scheme.neutral-lightest, body)
+      } else {
+        text(1.5em, fg, strong(body))
+      }
+    } else {
+      text(fg, strong(body))
+    }
+
+    link(it.element.location(), body)
+    [\ ]
+  }
 
   components.progressive-outline(
-    alpha: if highlight == "all" { 100% } else { 40% },
+    alpha: if highlight == "all" { 100% } else { 30% },
+    transform: transform,
   )
 }
 
