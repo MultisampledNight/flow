@@ -30,14 +30,25 @@
   bg: luma(100%),
 )
 
-#let fg = (duality: duality.fg, bow: print.fg, wob: print.bg).at(cfg.theme)
-#let bg = (duality: duality.bg, bow: print.bg, wob: print.fg).at(cfg.theme)
+#let fg = (
+  duality: duality.fg,
+  bow: print.fg,
+  wob: print.bg,
+).at(cfg.theme)
+#let bg = (
+  duality: duality.bg,
+  bow: print.bg,
+  wob: print.fg,
+).at(cfg.theme)
 #let gamut = gradient.linear(bg, fg, space: oklch)
 
 /// Set the text to the given brightness.
 /// 0% is merging with the background,
 /// 100% is fully visible just like the foreground color.
-#let fade(body, value: 60%) = text(fill: gamut.sample(value), body)
+#let fade(body, value: 60%) = text(
+  fill: gamut.sample(value),
+  body,
+)
 
 #let status = _key-on-theme((
   empty: gamut.sample(75%),
@@ -127,3 +138,25 @@
     wob: purple,
   ),
 ))
+
+// https://touying-typ.github.io/docs/build-your-own-theme#color-theme
+#let slides = (
+  primary: duality.violet,
+  secondary: duality.blue,
+  tertiary: duality.green,
+  neutral-default: fg,
+  neutral-light: gamut.sample(75%),
+  neutral-lighter: gamut.sample(60%),
+  neutral-lightest: gamut.sample(40%),
+)
+// dim the accent when on black-on-white -- rather unreadable otherwise
+#let slides-scheme = if cfg.theme == "bow" {
+  slides
+  (
+    "primary",
+    "secondary",
+    "tertiary",
+  )
+    .map(key => (key, oklch(slides.at(key)).darken(15%)))
+    .to-dict()
+} else { slides }

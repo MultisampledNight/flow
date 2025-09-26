@@ -7,11 +7,23 @@
   let (data, title) = _shared(args)
 
   show: _styling.with(..data)
-  show: keywords.process.with(cfg: data.at("keywords", default: none))
-  show: maybe-do(data.at("xlink", default: true), xlink.process)
-  show: maybe-do(data.at("checkbox", default: true), checkbox.process)
+  show: keywords.process.with(cfg: data.at(
+    "keywords",
+    default: none,
+  ))
+  show: maybe-do(
+    data.at("xlink", default: true),
+    xlink.process,
+  )
+  show: maybe-do(
+    data.at("checkbox", default: true),
+    checkbox.process,
+  )
 
-  set document(title: title, author: data.at("author", default: ()))
+  set document(
+    title: title,
+    author: data.at("author", default: ()),
+  )
 
   info.queryize(data)
   body

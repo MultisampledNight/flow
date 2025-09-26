@@ -15,6 +15,7 @@
 
 #let content(..args) = none
 
+#let intersections(..args) = none
 #let merge-path(..args) = none
 #let compound-path(..args) = none
 

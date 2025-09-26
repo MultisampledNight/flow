@@ -4,4 +4,5 @@
 #import "gfx.typ": gfx
 #import "note.typ": note
 #import "latex-esque.typ": latex-esque
+#import "slides.typ"
 

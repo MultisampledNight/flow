@@ -2,10 +2,15 @@
 #import "../palette.typ": *
 #import "@preview/oxifmt:1.0.0": strfmt as fmt
 
+#let golden-ratio = (1 + calc.sqrt(5)) / 2
+
 /// Vertical dots.
 #let vvv = $dots.v$
 /// Horizontal dots, centered.
 #let ccc = $dots.c$
+
+/// Both horizontally and vertically centered.
+#let mid = center + horizon
 
 /// Full-width dimmed line.
 /// Useful for a conceptual or logical split.

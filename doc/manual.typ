@@ -23,13 +23,20 @@
     columns: (1fr, 1fr),
     align: (top + left, left),
     gutter: 1em,
-    label[Typst code:] + raw(lang: "typ", block: true, code),
+    label[Typst code:]
+      + raw(lang: "typ", block: true, code),
     label[Rendered result:]
-      + block(stroke: fg, radius: 0.5em, inset: 0.5em, width: 100%, normal(eval(
-        mode: "markup",
-        scope: dictionary(flow),
-        code,
-      ))),
+      + block(
+        stroke: fg,
+        radius: 0.5em,
+        inset: 0.5em,
+        width: 100%,
+        normal(eval(
+          mode: "markup",
+          scope: dictionary(flow),
+          code,
+        )),
+      ),
   )
 }
 
@@ -178,6 +185,15 @@ you'd use something akin to this in your code:
 #show: template.latex-esque
 ```
 
+#caution[
+  An exception to this is the `slides` template.
+  It follows the hegemonial structure of polylux/touying templates,
+  hence `template.slides` is actually a module
+  intended to be glob-imported.
+  Slides are a bit different than most documents,
+  see `doc/slides.typ` for an example of how to use flow's theme.
+]
+
 ==== `generic`
 
 The core driver behind all templates.
@@ -237,6 +253,13 @@ when it actually wasn't.
 Only does so superficially,
 functionally nothing is changed and
 the icons will still look modern-ish.
+
+==== `slides` <slides>
+
+- Extends: `modern`
+
+Used for presentations.
+Example usage may look like this:
 
 === Metadata
 
@@ -381,7 +404,7 @@ Hence, see these semantics merely as a suggestion.
       raw("[" + fill + "]"),
       ..args,
     ))
-    .join()
+    .join(),
 )
 
 ==== Not started <not-started>
@@ -692,7 +715,7 @@ Here's an overview over them all:
       long,
       [#accent],
     ))
-    .join()
+    .join(),
 )
 
 They can also be put into a cetz canvas
