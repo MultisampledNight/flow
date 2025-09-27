@@ -1,3 +1,8 @@
+> [!CAUTION]
+> This repository has migrated to Codeberg!
+>
+> Please check out the new repo here: https://codeberg.org/MultisampledNight/flow
+
 # flow
 
 A bundle of template and a few more utils, written in and for [Typst].
